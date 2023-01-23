@@ -1,16 +1,26 @@
-import { Paper } from '@mui/material'
-import { Container } from '@mui/system'
-import { NextPage } from 'next'
-import React from 'react'
-import Image from 'next/image'
+import * as React from 'react';
+import { NextPage } from 'next';
+
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const TestPage: NextPage = () => {
 
   return (
-    <Container>
-      <Paper><Image src="/auth_icon1.jpeg" alt="icon" width={400} height={700} /></Paper>
-    </Container>
-  )
+    <div>
+      `Cras mattis consectetur purus sit amet fermentum.
+    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et
+    `Cras mattis consectetur purus sit amet fermentum.
+    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et
+    `Cras mattis consectetur purus sit amet fermentum.
+    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et`
+    </div>
+  );
 }
 
 export default TestPage

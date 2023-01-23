@@ -143,15 +143,14 @@ const Auth = () => {
             />
             <Grid container justifyItems="center" alignItems="center">
               <Grid item sx={{ mt: 1, mb: 0 }} xs={4} onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? '新規登録へ ->' : 'ログインへ ->'}
+                {isLogin ? '新規登録へ' : 'ログインへ'}
               </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
-              variant="outlined"
-              color="secondary"
-              sx={{ mt: 3, mb: 2 }}
+              variant="contained"
+              sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
             >
               {isLogin ? 'ログイン' : '新規登録'}
             </Button>  
