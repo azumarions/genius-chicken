@@ -146,7 +146,7 @@ MEDIA_URL = '/media/'
 # 追加
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=60),
 }
 
 REST_FRAMEWORK = {
