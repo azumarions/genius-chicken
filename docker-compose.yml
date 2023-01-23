@@ -47,9 +47,36 @@ services:
       - ./sql:/docker-entrypoint-initdb.d
     networks:
       - backend_network
-
+  client:
+    container_name: react-frontend
+    image: node:18.0.0
+    volumes:
+      - ./frontend/client:/home/app/frontend
+      # - node-modules:/frontend/node_modules
+    environment:
+    - WATCHPACK_POLLING=true
+    ports:
+      - 3000:3000
+    working_dir: /home/app/frontend
+    command: [bash, -c, npm upgrade && npm run dev]
+    networks:
+      - frontend_network
+  frontend-server:
+    container_name: nginx_frontend
+    build:
+      context: ./frontend/nginx/.
+      dockerfile: Dockerfile.dev
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+    networks:
+      - frontend_network
 networks:
   backend_network:
     driver: bridge
+  frontend_network:
+    driver: bridge
 volumes:
   static_volume:
+  # node-modules:
