@@ -2,6 +2,15 @@ import React, { useState } from "react"
 import { useRouter } from "next/router"
 import Cookie from "universal-cookie"
 import { createProf, getProf, getMyProf } from "../../api/account";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const cookie = new Cookie();
 
@@ -66,10 +75,90 @@ const Auth = () => {
     }
   }
 
-  
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+  });
 
   return (
-    <div>hello</div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {isLogin ? <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon1.jpeg" alt="icon">
+          </Avatar> : <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon2.jpeg" alt="icon">
+          </Avatar> }
+          
+          <Typography component="h1" variant="h5" fontFamily="serif">
+            {isLogin? 'Log in' : 'Sign up'}
+          </Typography>
+          <Box component="form" onSubmit={onSubmit} method="POST" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="メールアドレス"
+              name="email"
+              type="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="パスワード"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+            />
+            <Grid container justifyItems="center" alignItems="center">
+              <Grid item sx={{ mt: 1, mb: 0 }} xs={4} onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? '新規登録へ ->' : 'ログインへ ->'}
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="outlined"
+              color="secondary"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {isLogin ? 'ログイン' : '新規登録'}
+            </Button>  
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   )
 }
 
