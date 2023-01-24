@@ -20,6 +20,10 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
+import Cookie from "universal-cookie";
+import router, { useRouter } from "next/router";
+
+const cookie = new Cookie();
 
 interface Props {
   /**
@@ -90,6 +94,11 @@ export default function Header() {
       setState({ ...state, [anchor]: open });
     };
 
+    const logout = () => {
+      cookie.remove("access_token");
+      router.push("/auth");
+    };
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -142,7 +151,7 @@ export default function Header() {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={logout}>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
