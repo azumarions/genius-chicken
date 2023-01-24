@@ -67,6 +67,11 @@ class Profile(models.Model):
 
 
 class Task(models.Model):
+    STATES = (
+        ('1', 'Not started'),
+        ('2', 'On going'),
+        ('3', 'Done'),
+    )
     id = models.CharField(primary_key=True, default=uuid4,
                           editable=False, max_length=33, unique=True)
     userTask = models.ForeignKey(
@@ -76,6 +81,7 @@ class Task(models.Model):
     title = models.CharField(verbose_name='タイトル', max_length=50)
     description = models.TextField(
         verbose_name='概要', max_length=1000, blank=True, null=True)
+    status = models.CharField(max_length=40, choices=STATES, default='1')
     created_at = models.DateTimeField(verbose_name='作成日', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='更新日', auto_now=True)
 
