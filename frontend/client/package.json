@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "WATCHPACK_POLLING=true next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,10 +21,12 @@
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
     "next": "13.1.4",
+    "node-fetch": "^3.3.0",
     "react": "18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.1",
+    "swr": "^2.0.1",
     "typescript": "4.9.4",
     "universal-cookie": "^4.0.4"
   }

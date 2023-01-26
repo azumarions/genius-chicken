@@ -49,7 +49,7 @@ services:
       - backend_network
   client:
     container_name: react-frontend
-    image: node:18.0.0
+    image: node:16.18.0
     volumes:
       - ./frontend/client:/home/app/frontend
       # - node-modules:/frontend/node_modules

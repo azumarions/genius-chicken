@@ -14,7 +14,7 @@ const cookie = new Cookie();
 
 const Auth = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false); //global stateにする
   const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
   const [open, setOpen] = React.useState(false);
@@ -66,7 +66,7 @@ const Auth = () => {
       ).then((data) => {
         const options = { path: '/' };
         cookie.set('access_token', data.access, options);
-        setIsAuth(true)
+        setIsLogin(true)
         // getProf();
       });
       router.push('/home');
@@ -76,7 +76,7 @@ const Auth = () => {
   };
 
   const onSubmit: SubmitHandler<AUTH> = async (data) => {
-    if (isAuth === true) {
+    if (isLogin === true) {
       login(data);
     } else {
       try {
