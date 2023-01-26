@@ -1,3 +1,9 @@
+import { KeyedMutator } from "swr"
+
+export interface MUTATE {
+    mutate: KeyedMutator<any>
+}
+
 export interface AUTH {
     email: string
     password: string
@@ -27,6 +33,8 @@ export interface TASK {
     userTask: number
     title: string
     description: string
+    status: string
+    created_at: string
 }
 
 export interface SnackbarMessage {
