@@ -34,7 +34,16 @@ export interface TASK {
     title: string
     description: string
     status: string
+    status_name: string;
     created_at: string
+}
+
+export interface EDIT_TASK {
+    id: number
+    userTask: number
+    title: string
+    description: string
+    status: string;
 }
 
 export interface SnackbarMessage {
