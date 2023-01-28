@@ -18,8 +18,22 @@ type Type = {
 
 const Task: React.FC<Type> = ({ task, mutate }) => {
   const { setEditTask, setSelectedTask } = useContext(TaskContext);
-  
 
+  const deleteTask = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/${task.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${cookie.get("access_token")}`,
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        alert("JWT Token not valid");
+      }
+    });
+    mutate();
+  };
+  
   return (
     <React.Fragment>
       <ListItem
@@ -40,18 +54,7 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
             }}>
               <BlurOnIcon />
             </IconButton>
-            <IconButton sx={{ float: "right"}} onClick={() => {
-              setEditTask(task);
-              setSelectedTask({
-                id: 0,
-                userTask: 0,
-                title: "",
-                description: "",
-                status: "1",
-                status_name: "",
-                created_at: "",
-              })
-            }}>
+            <IconButton sx={{ float: "right"}} onClick={deleteTask}>
               <DeleteIcon />
             </IconButton>
           </ButtonGroup>

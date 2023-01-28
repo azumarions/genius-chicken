@@ -7,10 +7,10 @@ import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Text
 const cookie = new Cookie();
 
 type Type = {
-    taskCreated: KeyedMutator<any>
+    mutate: KeyedMutator<any>
 }
 
-const TaskForm: React.FC<Type> = ({ taskCreated }) => {
+const TaskForm: React.FC<Type> = ({ mutate }) => {
   const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
 
   const handleSelectStatusChange = (
@@ -20,7 +20,43 @@ const TaskForm: React.FC<Type> = ({ taskCreated }) => {
     setEditTask({ ...editTask, status: value })
   };
 
-  
+  const create = async (e) => {
+    e.preventDefault();
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/`, {
+      method: "POST",
+      body: JSON.stringify({ title: editTask.title, description: editTask.description, status: editTask.status }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${cookie.get("access_token")}`,
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        alert("JWT Token not valid");
+      }
+    });
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", });
+    mutate();
+  };
+  const update = async (e) => {
+    e.preventDefault();
+    await fetch(
+      `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/${editTask.id}/`,
+      {
+        method: "PUT",
+        body: JSON.stringify({title: editTask.title, description: editTask.description, status: editTask.status }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${cookie.get("access_token")}`,
+        },
+      }
+    ).then((res) => {
+      if (res.status === 401) {
+        alert("JWT Token not valid");
+      }
+    });
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", });
+    mutate();
+  };
   return (
     <Container component="main">
       <Box component="form" onSubmit={editTask.id !== 0 ? update : create} sx={{ width: "100%", flexDirection: 'column', alignItems: 'center',}}>
