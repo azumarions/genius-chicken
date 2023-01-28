@@ -1,11 +1,14 @@
 import { Layout } from '@/components/Layout'
+import TaskContextProvider from '@/context/task'
 import type { AppProps } from 'next/app'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
-      <Component {...pageProps} />
+      <TaskContextProvider>
+        <Component {...pageProps} />
+      </TaskContextProvider>
     </Layout>
   )
 }
