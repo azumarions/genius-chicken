@@ -57,7 +57,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
           タスク作成
         </Button>
             {selectedTask.id ? <TaskDetail /> :
-            <TaskForm taskCreated={mutate} />
+            <TaskForm mutate={mutate} />
             }
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: 280,}}>
