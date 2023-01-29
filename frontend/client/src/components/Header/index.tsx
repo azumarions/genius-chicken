@@ -22,6 +22,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Cookie from "universal-cookie";
 import router, { useRouter } from "next/router";
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { ColorModeContext } from '../../context/layout'
+
 
 const cookie = new Cookie();
 
@@ -99,6 +104,9 @@ export default function Header() {
       router.push("/auth");
     };
 
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -108,7 +116,7 @@ export default function Header() {
     >
       <List>
         <ListItem>
-          <ListItemButton href='/home'>
+          <ListItemButton href='/task'>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
@@ -182,7 +190,10 @@ export default function Header() {
           ))}
           <Typography variant="h6" component="div">
             Todo App
-          </Typography>        
+          </Typography>   
+          <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>     
         </Toolbar>
       </AppBar>
       </Box>
