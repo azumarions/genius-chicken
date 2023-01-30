@@ -66,6 +66,13 @@ class Profile(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    item = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.item
+
+
 class Task(models.Model):
     STATES = (
         ('1', 'Not started'),
@@ -82,6 +89,7 @@ class Task(models.Model):
     description = models.TextField(
         verbose_name='概要', max_length=1000, blank=True, null=True)
     status = models.CharField(max_length=40, choices=STATES, default='1')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name='作成日', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='更新日', auto_now=True)
 

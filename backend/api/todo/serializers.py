@@ -1,7 +1,7 @@
 from dataclasses import fields
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Profile, Task
+from .models import Profile, Task, Category
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,6 +28,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'userProfile', 'name', 'description',
                   'img', 'created_at', 'updated_at')
         extra_kwargs = {'userProfile': {'read_only': True}}
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'item']
 
 
 class TaskSerializer(serializers.ModelSerializer):

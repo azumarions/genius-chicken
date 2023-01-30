@@ -1,7 +1,8 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, status
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from . import serializers
-from .models import Profile, Task
+from .models import Profile, Task, Category
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -35,6 +36,23 @@ class MyProfileListView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(userProfile=self.request.user)
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategorySerializer
+
+    def destroy(self, request, *args, **kwargs):
+        response = {'message': 'DELETE method is not allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'PUT method is not allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, *args, **kwargs):
+        response = {'message': 'PATCH method is not allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TaskViewSet(viewsets.ModelViewSet):
