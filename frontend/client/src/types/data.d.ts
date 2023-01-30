@@ -34,8 +34,11 @@ export interface TASK {
     title: string
     description: string
     status: string
-    status_name: string;
+    status_name: string
+    category: number
+    category_name: string
     created_at: string
+    updated_at: string
 }
 
 export interface EDIT_TASK {
@@ -44,6 +47,13 @@ export interface EDIT_TASK {
     title: string
     description: string
     status: string;
+    category: number
+    category_name: stirng
+}
+
+export interface CATEGORY {
+    id: number;
+    item: string;
 }
 
 export interface SnackbarMessage {

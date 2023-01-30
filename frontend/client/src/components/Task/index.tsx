@@ -49,7 +49,10 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
                 description: "",
                 status: "1",
                 status_name: "",
+                category: 0,
+                category_name: "",
                 created_at: "",
+                updated_at: "",
               })
             }}>
               <BlurOnIcon />
