@@ -6,16 +6,18 @@ import { Box, Button, Container, Fab, FormControl, InputLabel, MenuItem, Modal, 
 import { CategoryContext } from "@/context/category";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
+import { CATEGORY } from "@/types";
 
 const cookie = new Cookie();
 
 type Type = {
+    categorys: CATEGORY[]
     mutate: KeyedMutator<any>
 }
 
-const TaskForm: React.FC<Type> = ({ mutate }) => {
+const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
   const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
-  const { categorys, setCategorys } = useContext(CategoryContext);
+  // const { categorys, setCategorys } = useContext(CategoryContext);
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState("");
 
@@ -44,17 +46,17 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
     setEditTask({ ...editTask, category: value })
   };
 
-  let catOptions = categorys.map((cat) => (
+  let catOptions = Object.values(categorys).map((cat) => (
     <MenuItem key={cat.id} value={cat.id}>
       {cat.item}
     </MenuItem>
   ));
 
-  const create = async (e) => {
+  const create = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/`, {
       method: "POST",
-      body: JSON.stringify({ title: editTask.title, description: editTask.description, status: editTask.status }),
+      body: JSON.stringify({ title: editTask.title, description: editTask.description, status: editTask.status, category: editTask.category }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${cookie.get("access_token")}`,
@@ -64,16 +66,16 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_name: "",});
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
     mutate();
   };
-  const update = async (e) => {
+  const update = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     await fetch(
       `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/${editTask.id}/`,
       {
         method: "PUT",
-        body: JSON.stringify({title: editTask.title, description: editTask.description, status: editTask.status }),
+        body: JSON.stringify({title: editTask.title, description: editTask.description, status: editTask.status, category: editTask.category }),
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${cookie.get("access_token")}`,
@@ -84,7 +86,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_name: "",});
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
     mutate();
   };
   return (
@@ -111,7 +113,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
           }
         />
         <Box>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
+        <FormControl variant="standard" sx={{ mt: 1, minWidth: 90 }}>
           <InputLabel>Status</InputLabel>
           <Select
             name="status"
@@ -123,13 +125,14 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
             <MenuItem value={3}>Done</MenuItem>
           </Select>
         </FormControl>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 90 }}>
           <InputLabel>Category</InputLabel>
           <Select
             name="category"
             value={editTask.category}
             onChange={handleSelectCatChange}
           >
+             {/* <MenuItem value={1}>Not started</MenuItem> */}
             {catOptions}
           </Select>
         </FormControl>
@@ -156,7 +159,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         </Box>
       </Box>
       <Modal open={open} onClose={handleClose}>
-          <div>
+          <Box>
             <TextField
               InputLabelProps={{
                 shrink: true,
@@ -172,14 +175,14 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
               size="small"
               startIcon={<SaveIcon />}
               disabled={isCatDisabled}
-              // onClick={() => {
-              //   dispatch(fetchAsyncCreateCategory(inputText));
-              //   handleClose();
-              // }}
+              onClick={() => {
+                // dispatch(fetchAsyncCreateCategory(inputText));
+                handleClose();
+              }}
             >
               SAVE
             </Button>
-          </div>
+          </Box>
         </Modal>
     </Container>
   );

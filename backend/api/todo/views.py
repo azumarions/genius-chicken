@@ -41,6 +41,7 @@ class MyProfileListView(generics.ListAPIView):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
+    permission_classes = (AllowAny,)
 
     def destroy(self, request, *args, **kwargs):
         response = {'message': 'DELETE method is not allowed'}

@@ -36,7 +36,7 @@ export interface TASK {
     status: string
     status_name: string
     category: number
-    category_name: string
+    category_item: string
     created_at: string
     updated_at: string
 }
@@ -48,7 +48,7 @@ export interface EDIT_TASK {
     description: string
     status: string;
     category: number
-    category_name: stirng
+    category_item: stirng
 }
 
 export interface CATEGORY {
