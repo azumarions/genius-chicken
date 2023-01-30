@@ -22,10 +22,10 @@ const TaskDetail: React.FC = () => {
       <TableBody>
         {rows.map((row) => (
           <TableRow key={row.item}>
-            <TableCell align="center">
+            <TableCell align="center" sx={{p: 1}}>
               <strong>{row.item}</strong>
             </TableCell>
-            <TableCell align="center">{row.data}</TableCell>
+            <TableCell align="center" sx={{p: 1}}>{row.data}</TableCell>
           </TableRow>
         ))}
       </TableBody>

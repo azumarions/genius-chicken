@@ -5,7 +5,7 @@ import axios from 'axios'
 import { TASK } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
-import { Box, Button, Card, Grid, IconButton, List, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Button, Card, Grid, IconButton, List, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material'
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { TaskContext } from '@/context/task'
 import TaskForm from '@/components/TaskForm'
@@ -14,6 +14,30 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 interface STATICPROPS {
   staticTasks: TASK[]
+}
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+type Order = "asc" | "desc";
+
+function getComparator<Key extends keyof any>(
+  order: Order,
+  orderBy: Key
+): (
+  a: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
+) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
@@ -25,6 +49,13 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
     fallbackData: staticTasks,
     revalidateOnMount: true,
   })
+
+  const [order, setOrder] = useState<Order>("asc");
+  const createSortHandler = (property: keyof TASK) => (
+    event: React.MouseEvent<unknown>
+  ) => {
+    setOrder(order === "asc" ? "desc" : "asc");
+  };
 
   useEffect(() => {
     mutate();
@@ -62,8 +93,15 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: 280,}}>
             <List sx={{ height: '100%', overflow: 'auto',}}>
+            <TableSortLabel
+                active
+                direction={order}
+                onClick={createSortHandler("created_at")}
+              >
+                作成日
+              </TableSortLabel>
                   {tasks &&
-                    tasks.map((task: TASK) => (
+                    tasks.sort(getComparator(order, "created_at")).map((task: TASK) => (
                       // <ListItem key={task.id} >
                           <Task key={task.id} task={task} mutate={mutate} />
                       // </ListItem>
