@@ -6,6 +6,7 @@ app_name = 'user'
 
 router = DefaultRouter()
 router.register('profile', views.ProfileviewSet, basename='profile')
+router.register('category', views.CategoryViewSet, basename='category')
 router.register('task', views.TaskViewSet, basename='task')
 
 
