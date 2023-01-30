@@ -37,6 +37,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    category_item = serializers.ReadOnlyField(
+        source='category.item', read_only=True)
     created_at = serializers.DateTimeField(
         format="%Y-%m-%d %H:%M:%S", read_only=True)
     updated_at = serializers.DateTimeField(
@@ -46,6 +48,6 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ('id', 'userTask', 'title', 'description', 'status', 'status_name',
+        fields = ('id', 'userTask', 'title', 'description', 'status', 'status_name', 'category', 'category_item',
                   'created_at', 'updated_at')
         extra_kwargs = {'userTask': {'read_only': True}}

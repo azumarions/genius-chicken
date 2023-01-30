@@ -1,8 +1,9 @@
 import { GetStaticProps, NextPage } from 'next'
 import { getTasks } from '../api/task'
+import { getCategorys } from '../api/category'
 import useSWR from 'swr'
 import axios from 'axios'
-import { TASK } from '../types'
+import { CATEGORY, TASK } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
 import { Box, Button, Card, Grid, IconButton, List, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material'
@@ -14,6 +15,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 interface STATICPROPS {
   staticTasks: TASK[]
+  staticCategorys: CATEGORY[]
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -43,7 +45,7 @@ function getComparator<Key extends keyof any>(
 const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task-list/`;
 
-const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
+const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   const { selectedTask, setSelectedTask, editTask , setEditTask} = useContext(TaskContext);
   const { data: tasks, error, mutate } = useSWR(apiUrl, fetcher, {
     fallbackData: staticTasks,
@@ -62,12 +64,13 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
   }, []);
 
   if (error) return <span>Error!</span>
+  
   return (
     <div title="Todos">
       <Box sx={{ width: '100%', height: '100%' }}>
         <Grid container textAlign="center" justifyItems="center">
         
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: 265,}}>
+          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 265, md: 400}}}>
         <Button size="small" variant="contained" color="primary" onClick={() => {
           setEditTask({
             id: 0,
@@ -76,7 +79,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
             description: "",
             status: "1",
             category: 0,
-            category_name: "",
+            category_item: "",
           });
           setSelectedTask({
             id: 0,
@@ -86,14 +89,14 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
             status: "1",
             status_name: "",
             category: 0,
-            category_name: "",
+            category_item: "",
             created_at: "",
             updated_at: "",
           })}}>
           タスク作成
         </Button>
             {selectedTask.id ? <TaskDetail /> :
-            <TaskForm mutate={mutate} />
+            <TaskForm categorys={staticCategorys} mutate={mutate} />
             }
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: 280,}}>
@@ -122,7 +125,8 @@ export default TaskPage
 
 export const getStaticProps: GetStaticProps = async () => {
   const staticTasks = await getTasks()
+  const staticCategorys = await getCategorys()
   return {
-    props: { staticTasks },
+    props: { staticTasks, staticCategorys },
   }
 }

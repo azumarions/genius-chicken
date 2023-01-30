@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { TaskContext } from "../../context/task";
 import { TASK } from "@/types";
 import { KeyedMutator } from "swr";
-import { Box, Button, ButtonGroup, Card, IconButton, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
+import { Badge, Box, Button, ButtonGroup, Card, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
@@ -33,6 +33,31 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
     });
     mutate();
   };
+
+  const renderSwitch = (statusName: string) => {
+    switch (statusName) {
+      case "Not started":
+        return (
+          <Badge variant="dot" color="error">
+            {/* {statusName} */}
+          </Badge>
+        );
+      case "On going":
+        return (
+          <Badge variant="dot" color="primary">
+            {/* {statusName} */}
+          </Badge>
+        );
+      case "Done":
+        return (
+          <Badge variant="dot" color="secondary">
+            {/* {statusName} */}
+          </Badge>
+        );
+      default:
+        return null;
+    }
+  };
   
   return (
     <React.Fragment>
@@ -50,7 +75,7 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
                 status: "1",
                 status_name: "",
                 category: 0,
-                category_name: "",
+                category_item: "",
                 created_at: "",
                 updated_at: "",
               })
@@ -63,7 +88,8 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
           </ButtonGroup>
         }
       >
-        <ListItemText sx={{ textAlign: "left"}} onClick={() => setSelectedTask(task)}>{task.title}</ListItemText>
+        <ListItemText sx={{ fontSize: { xs: 12, sm: 14, md: 18, lg: 20 },}} disableTypography onClick={() => {setSelectedTask(task);}}>{task.title}</ListItemText>
+        <ListItemIcon>{renderSwitch(task.status_name)}</ListItemIcon>
       </ListItem>
     </React.Fragment>
   );
