@@ -22,8 +22,8 @@ type TaskContextType = {
   );
 
 export default function TaskContextProvider({ children }: TaskContextProviderProps) {
-  const [selectedTask, setSelectedTask] = useState({ id: 0, userTask: 0, title: "", description: "", status: "", status_name: "", created_at: "" });
-  const [editTask, setEditTask] = useState({ id: 0, userTask: 0, title: "", description: "", status: "" });
+  const [selectedTask, setSelectedTask] = useState({ id: 0, userTask: 0, title: "", description: "", status: "", status_name: "", category: 0, category_name: "", created_at: "", updated_at: "", });
+  const [editTask, setEditTask] = useState({ id: 0, userTask: 0, title: "", description: "", status: "", category: 0, category_name: "", });
   return (
     <TaskContext.Provider
       value={{

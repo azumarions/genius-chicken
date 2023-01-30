@@ -1,8 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
 import { KeyedMutator } from "swr";
-import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, Container, Fab, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { CategoryContext } from "@/context/category";
+import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
 
 const cookie = new Cookie();
 
@@ -12,6 +15,20 @@ type Type = {
 
 const TaskForm: React.FC<Type> = ({ mutate }) => {
   const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
+  const { categorys, setCategorys } = useContext(CategoryContext);
+  const [open, setOpen] = useState(false);
+  const [inputText, setInputText] = useState("");
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleInputTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
 
   const handleSelectStatusChange = (
     e: React.ChangeEvent<{ value: unknown }>
@@ -19,6 +36,19 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
     const value = e.target.value as string;
     setEditTask({ ...editTask, status: value })
   };
+
+  const isCatDisabled = inputText.length === 0;
+
+  const handleSelectCatChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const value = e.target.value as number;
+    setEditTask({ ...editTask, category: value })
+  };
+
+  let catOptions = categorys.map((cat) => (
+    <MenuItem key={cat.id} value={cat.id}>
+      {cat.item}
+    </MenuItem>
+  ));
 
   const create = async (e) => {
     e.preventDefault();
@@ -34,7 +64,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", });
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_name: "",});
     mutate();
   };
   const update = async (e) => {
@@ -54,7 +84,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", });
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_name: "",});
     mutate();
   };
   return (
@@ -81,7 +111,7 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
           }
         />
         <Box>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
           <InputLabel>Status</InputLabel>
           <Select
             name="status"
@@ -93,8 +123,27 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
             <MenuItem value={3}>Done</MenuItem>
           </Select>
         </FormControl>
-        {/* </Box>
-        <Box> */}
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
+          <InputLabel>Category</InputLabel>
+          <Select
+            name="category"
+            value={editTask.category}
+            onChange={handleSelectCatChange}
+          >
+            {catOptions}
+          </Select>
+        </FormControl>
+
+        <Fab
+          size="small"
+          color="primary"
+          sx={{ mt: 2 }}
+          onClick={handleOpen}
+        >
+          <AddIcon />
+        </Fab>
+        </Box>
+        <Box>
         <Button
         type="submit"
         fullWidth
@@ -106,6 +155,32 @@ const TaskForm: React.FC<Type> = ({ mutate }) => {
         </Button>
         </Box>
       </Box>
+      <Modal open={open} onClose={handleClose}>
+          <div>
+            <TextField
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="New category"
+              type="text"
+              value={inputText}
+              onChange={handleInputTextChange}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<SaveIcon />}
+              disabled={isCatDisabled}
+              // onClick={() => {
+              //   dispatch(fetchAsyncCreateCategory(inputText));
+              //   handleClose();
+              // }}
+            >
+              SAVE
+            </Button>
+          </div>
+        </Modal>
     </Container>
   );
 }

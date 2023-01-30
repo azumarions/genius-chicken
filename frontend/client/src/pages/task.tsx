@@ -75,6 +75,8 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
             title: "",
             description: "",
             status: "1",
+            category: 0,
+            category_name: "",
           });
           setSelectedTask({
             id: 0,
@@ -83,7 +85,10 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks }) => {
             description: "",
             status: "1",
             status_name: "",
+            category: 0,
+            category_name: "",
             created_at: "",
+            updated_at: "",
           })}}>
           タスク作成
         </Button>

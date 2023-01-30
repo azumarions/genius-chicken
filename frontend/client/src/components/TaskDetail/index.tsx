@@ -9,7 +9,10 @@ const TaskDetail: React.FC = () => {
     { item: "タイトル", data: selectedTask.title },
     { item: "詳細", data: selectedTask.description },
     { item: "状態", data: selectedTask.status_name },
+    { item: "カテゴリー", data: selectedTask.category_name },
     { item: "作成日", data: selectedTask.created_at },
+    { item: "更新日", data: selectedTask.updated_at },
+
   ];
 
   if (!selectedTask.title) {
