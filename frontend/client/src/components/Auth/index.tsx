@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import Cookie from "universal-cookie"
 import { createProf, getProf, getMyProf } from "../../api/account";
 import { AUTH, SnackbarMessage } from "@/types";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, } from "@mui/material";
@@ -16,11 +16,16 @@ const Auth = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false); //global stateにする
-  const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
   const [open, setOpen] = React.useState(false);
+  const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
   const [messageInfo, setMessageInfo] = React.useState<SnackbarMessage | undefined>(undefined,);
   const theme = createTheme({});
-  const {register, handleSubmit, formState: { errors },} = useForm<AUTH>();
+  const {register, handleSubmit, formState: { errors, isValid },} = useForm<AUTH>({mode: "onChange"});
+
+  // const isLoginDisabled = 
+  //   r .title.length === 0 ||
+  //   editTask.description.length === 0 ||
+  //   editTask.category === 0;
 
   React.useEffect(() => {
     if (snackPack.length && !messageInfo) {
@@ -151,6 +156,7 @@ const Auth = () => {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={!isValid}
             sx={{ mt: 2, mb: 1, backgroundColor: "black" }}
           >
             {isLogin ? 'ログイン' : '新規登録'}

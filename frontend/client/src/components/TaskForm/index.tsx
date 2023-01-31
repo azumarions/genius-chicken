@@ -34,7 +34,12 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
     setEditTask({ ...editTask, status: value })
   };
 
-  const isCatDisabled = inputText.length === 0;
+  const isCatDisabled = inputText.length === 0
+
+  const isDisabled = 
+    editTask.title.length === 0 ||
+    editTask.description.length === 0 ||
+    editTask.category === 0;
 
   const handleSelectCatChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const value = e.target.value as number;
@@ -167,6 +172,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
         fullWidth
         variant="contained"
         color="primary"
+        disabled={isDisabled}
         sx={{ mt: 2, }}
         >
           {editTask.id !== 0 ? "Update" : "Create"}
