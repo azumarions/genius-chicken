@@ -30,14 +30,14 @@ const Task: NextPage<STATICPROPS> = ({ staticTask, id }) => {
   }
   return (
     <div title={task.title}>
-      <span className="mb-4">
+      <span>
         {"ID : "}
         {task.id}
       </span>
-      <p className="mb-4 text-xl font-bold">{task.title}</p>
+      <p>{task.title}</p>
       <p>{task.description}</p>
       <p>{task.status}</p>
-      <p className="mb-12">{task.created_at}</p>
+      <p>{task.created_at}</p>
       <Link href="/task">
         back to page
       </Link>

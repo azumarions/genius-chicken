@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
-import { Drawer, IconButton } from '@mui/material';
+import { Drawer, IconButton, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -26,6 +26,8 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { ColorModeContext } from '../../context/layout'
+import { ColorContext } from '@/context/theme';
+import { useContext } from 'react'
 
 
 const cookie = new Cookie();
@@ -101,7 +103,7 @@ export default function Header() {
 
     const logout = () => {
       cookie.remove("access_token");
-      router.push("/auth");
+      router.push("/home");
     };
 
     const theme = useTheme();
@@ -193,7 +195,7 @@ export default function Header() {
           </Typography>   
           <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>     
+          </IconButton>
         </Toolbar>
       </AppBar>
       </Box>

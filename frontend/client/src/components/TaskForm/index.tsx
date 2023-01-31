@@ -10,6 +10,8 @@ import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import { CATEGORY, NEW_CATEGORY } from "@/types";
 import { getCategorys } from "@/api/category";
+import { ColorContext } from "@/context/theme";
+
 
 const cookie = new Cookie();
 
@@ -23,6 +25,7 @@ const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`;
 
 const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
   const { editTask, setEditTask } = useContext(TaskContext);
+  const { selectedColor } = useContext(ColorContext);
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState<string>("")
   const handleOpen = () => setOpen(true);
@@ -103,7 +106,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 1, category_item: "",});
     taskMutate();
   };
 
@@ -124,7 +127,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         alert("JWT Token not valid");
       }
     });
-    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
+    setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 1, category_item: "",});
     taskMutate();
   };
 
@@ -178,15 +181,14 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
             value={editTask.category}
             onChange={handleSelectCatChange}
           >
-             {/* <MenuItem value={1}>Not started</MenuItem> */}
             {catOptions}
           </Select>
         </FormControl>
 
         <Fab
           size="small"
-          color="primary"
-          sx={{ mt: 2 }}
+          // color="primary"
+          sx={{ mt: 2, bgcolor: selectedColor, color: "white"}}
           onClick={handleOpen}
         >
           <AddIcon />
@@ -197,9 +199,9 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         type="submit"
         fullWidth
         variant="contained"
-        color="primary"
+        // color="primary"
         disabled={isDisabled}
-        sx={{ mt: 2, }}
+        sx={{ mt: 2, bgcolor: selectedColor, color: "white"}}
         >
           {editTask.id !== 0 ? "Update" : "Create"}
         </Button>
@@ -220,8 +222,9 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
             <Button
               variant="contained"
               color="primary"
+              fullWidth
               size="small"
-              sx={{ mt: 2, ml: 2, }}
+              sx={{ mt: 2, }}
               startIcon={<SaveIcon />}
               disabled={isCatDisabled}
               onClick={() => {
