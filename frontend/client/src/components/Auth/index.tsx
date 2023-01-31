@@ -22,11 +22,6 @@ const Auth = () => {
   const theme = createTheme({});
   const {register, handleSubmit, formState: { errors, isValid },} = useForm<AUTH>({mode: "onChange"});
 
-  // const isLoginDisabled = 
-  //   r .title.length === 0 ||
-  //   editTask.description.length === 0 ||
-  //   editTask.category === 0;
-
   React.useEffect(() => {
     if (snackPack.length && !messageInfo) {
       setMessageInfo({ ...snackPack[0] });
@@ -47,7 +42,6 @@ const Auth = () => {
   const handleExited = () => {
     setMessageInfo(undefined);
   };
-
 
   const login = async (data: AUTH) => {
     const { email, password } = data
@@ -118,7 +112,6 @@ const Auth = () => {
         {isLogin ? <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon1.jpeg" alt="icon">
         </Avatar> : <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon2.jpeg" alt="icon">
         </Avatar> }
-        
         <Typography component="h1" variant="h5" fontFamily="serif">
           {isLogin? 'Log in' : 'Sign up'}
         </Typography>

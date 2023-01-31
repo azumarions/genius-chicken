@@ -4,8 +4,8 @@ import { CATEGORY } from "../../types"
 type CategoryContextType = {
     category: CATEGORY
     setCategory: Dispatch<React.SetStateAction<CATEGORY>>
-    categorys: CATEGORY[]
-    setCategorys: Dispatch<React.SetStateAction<CATEGORY[]>>
+    newCategorys: CATEGORY[]
+    setNewCategorys: Dispatch<React.SetStateAction<CATEGORY[]>>
   }
   
   interface CategoryContextProviderProps {
@@ -16,21 +16,21 @@ type CategoryContextType = {
     {} as {
         category: CATEGORY
         setCategory: Dispatch<React.SetStateAction<CATEGORY>>
-        categorys: CATEGORY[]
-        setCategorys: Dispatch<React.SetStateAction<CATEGORY[]>>
+        newCategorys: CATEGORY[]
+        setNewCategorys: Dispatch<React.SetStateAction<CATEGORY[]>>
     }
   );
 
 export default function CategoryContextProvider({ children }: CategoryContextProviderProps) {
   const [category, setCategory] = useState({id: 0, item: "",});
-  const [categorys, setCategorys] = useState([{ id: 0, item: "", }]);
+  const [newCategorys, setNewCategorys] = useState([{ id: 0, item: "", }]);
   return (
     <CategoryContext.Provider
       value={{
         category,
         setCategory,
-        categorys,
-        setCategorys
+        newCategorys,
+        setNewCategorys
       }}
     >
       {children}

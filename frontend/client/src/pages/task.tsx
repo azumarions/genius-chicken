@@ -98,7 +98,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
               New Task
             </Button>
             {selectedTask.id ? <TaskDetail /> :
-            <TaskForm categorys={staticCategorys} mutate={mutate} />
+            <TaskForm staticCategorys={staticCategorys} taskMutate={mutate} />
             }
             <ListSubheader sx={{ borderBlockColor: "black", height: "10"}}>
               {columns.map(
@@ -111,6 +111,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                       ) && (
                       // <TableCell align="center" key={colIndex}>
                         <TableSortLabel
+                        key={colIndex}
                         active={state.activeKey === column}
                         direction={state.order}
                           onClick={() => handleClickSortColumn(column)}
@@ -124,27 +125,6 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 270, sm: 320, md: 600, lg:600}}}>
             <List sx={{ height: '100%', overflow: 'auto', pt: 0}}>
-              {/* <ListSubheader sx={{ borderBlockColor: "black", height: "10"}}>
-              {columns.map(
-                  (column: keyof TASK, colIndex: number) =>
-                    (
-                      column === "id" ||
-                      column === "category" ||
-                      column === "status" ||
-                      column === "created_at"
-                      ) && (
-                      // <TableCell align="center" key={colIndex}>
-                        <TableSortLabel
-                        active={state.activeKey === column}
-                        direction={state.order}
-                          onClick={() => handleClickSortColumn(column)}
-                        >
-                          <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 },}}>{column}</Box>
-                        </TableSortLabel>
-                      // </TableCell>
-                    )
-                )}
-                </ListSubheader> */}
                   {state.rows &&
                       state.rows.map((row, rowIndex) => (
                           <Task key={rowIndex} task={row} mutate={mutate} />
