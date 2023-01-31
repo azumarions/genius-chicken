@@ -1,35 +1,43 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
-import { KeyedMutator } from "swr";
-import { Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { KeyedMutator, useSWRConfig } from "swr";
+import useSWRMutation from "swr/mutation";
+import useSWR from "swr";
+import { Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { CategoryContext } from "@/context/category";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
-import { CATEGORY } from "@/types";
+import { CATEGORY, NEW_CATEGORY } from "@/types";
+import { getCategorys } from "@/api/category";
 
 const cookie = new Cookie();
 
 type Type = {
-    categorys: CATEGORY[]
-    mutate: KeyedMutator<any>
+  staticCategorys: CATEGORY[]
+  taskMutate: KeyedMutator<any>
 }
 
-const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
-  const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
-  const [open, setOpen] = useState(false);
-  const [inputText, setInputText] = useState("")
+const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
+const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`;
 
+const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
+  const { editTask, setEditTask } = useContext(TaskContext);
+  const [open, setOpen] = useState(false);
+  const [inputText, setInputText] = useState<string>("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { data: categorys, error, mutate } = useSWR(apiUrl, fetcher, {
+    fallbackData: staticCategorys,
+    revalidateOnMount: true,
+  })
 
   const handleInputTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
 
-  const handleSelectStatusChange = (
-    e: React.ChangeEvent<{ value: unknown }>
-  ) => {
+  const handleSelectStatusChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value as string;
     setEditTask({ ...editTask, status: value })
   };
@@ -41,13 +49,13 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
     editTask.description.length === 0 ||
     editTask.category === 0;
 
-  const handleSelectCatChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSelectCatChange = (e: SelectChangeEvent<number>) => {
     const value = e.target.value as number;
     setEditTask({ ...editTask, category: value })
   };
 
-  let catOptions = Object.values(categorys).map((cat) => (
-    <MenuItem key={cat.id} defaultValue={1} value={cat.id} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
+  let catOptions = categorys.map((cat: CATEGORY) => (
+    <MenuItem key={cat.id} value={cat.id} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
       {cat.item}
     </MenuItem>
   ));
@@ -64,6 +72,22 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
     p: 4,
   };
 
+  const newCategory = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`, {
+      method: "POST",
+      body: JSON.stringify({ item: inputText }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${cookie.get("access_token")}`,
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        alert("JWT Token not valid");
+      }
+    });
+    setInputText("");
+    mutate();
+  };
 
   const create = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -80,8 +104,9 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
       }
     });
     setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
-    mutate();
+    taskMutate();
   };
+
   const update = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     await fetch(
@@ -100,8 +125,9 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
       }
     });
     setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 0, category_item: "",});
-    mutate();
+    taskMutate();
   };
+
   return (
     <Container component="main">
       <Box component="form" onSubmit={editTask.id !== 0 ? update : create} sx={{ width: "100%", flexDirection: 'column', alignItems: 'center',}}>
@@ -199,7 +225,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
               startIcon={<SaveIcon />}
               disabled={isCatDisabled}
               onClick={() => {
-                // dispatch(fetchAsyncCreateCategory(inputText));
+                newCategory();
                 handleClose();
               }}
             >

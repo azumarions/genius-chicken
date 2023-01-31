@@ -71,4 +71,9 @@ export interface SORT_STATE {
     rows: TASK[];
     order: "desc" | "asc";
     activeKey: string;
-  }
+}
+
+export interface NEW_CATEGORY {
+    newCategory: CATEGORY[]
+}
+
