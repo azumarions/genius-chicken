@@ -88,8 +88,8 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
           </ButtonGroup>
         }
       >
-        <ListItemText sx={{ fontSize: { xs: 12, sm: 14, md: 18, lg: 20 },}} disableTypography onClick={() => {setSelectedTask(task);}}>{task.title}</ListItemText>
-        <ListItemIcon>{renderSwitch(task.status_name)}</ListItemIcon>
+        <ListItemText sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 },}} disableTypography onClick={() => {setSelectedTask(task);}}>{task.title}</ListItemText>
+        <ListItemIcon sx={{ zIndex: 0}}>{renderSwitch(task.status_name)}</ListItemIcon>
       </ListItem>
     </React.Fragment>
   );

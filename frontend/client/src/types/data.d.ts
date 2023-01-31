@@ -66,3 +66,9 @@ export interface State {
   snackPack: readonly SnackbarMessage[];
   messageInfo?: SnackbarMessage;
 }
+
+export interface SORT_STATE {
+    rows: TASK[];
+    order: "desc" | "asc";
+    activeKey: string;
+  }

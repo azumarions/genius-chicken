@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
 import { KeyedMutator } from "swr";
-import { Box, Button, Container, Fab, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
 import { CategoryContext } from "@/context/category";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
@@ -19,14 +19,10 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
   const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
   // const { categorys, setCategorys } = useContext(CategoryContext);
   const [open, setOpen] = useState(false);
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState("")
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleInputTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -47,10 +43,23 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
   };
 
   let catOptions = Object.values(categorys).map((cat) => (
-    <MenuItem key={cat.id} value={cat.id}>
+    <MenuItem key={cat.id} defaultValue={1} value={cat.id}>
       {cat.item}
     </MenuItem>
   ));
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: 250,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 
   const create = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -129,6 +138,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
           <InputLabel>Category</InputLabel>
           <Select
             name="category"
+            defaultValue={1}
             value={editTask.category}
             onChange={handleSelectCatChange}
           >
@@ -159,11 +169,12 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
         </Box>
       </Box>
       <Modal open={open} onClose={handleClose}>
-          <Box>
+          <Box sx={style}>
             <TextField
               InputLabelProps={{
                 shrink: true,
               }}
+              variant="standard"
               label="New category"
               type="text"
               value={inputText}
@@ -173,6 +184,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
               variant="contained"
               color="primary"
               size="small"
+              sx={{ mt: 2, ml: 2}}
               startIcon={<SaveIcon />}
               disabled={isCatDisabled}
               onClick={() => {
