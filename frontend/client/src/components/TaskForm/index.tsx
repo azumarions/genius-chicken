@@ -17,7 +17,6 @@ type Type = {
 
 const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
   const { selectedTask, setSelectedTask, editTask, setEditTask } = useContext(TaskContext);
-  // const { categorys, setCategorys } = useContext(CategoryContext);
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState("")
 
@@ -43,7 +42,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
   };
 
   let catOptions = Object.values(categorys).map((cat) => (
-    <MenuItem key={cat.id} defaultValue={1} value={cat.id}>
+    <MenuItem key={cat.id} defaultValue={1} value={cat.id} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
       {cat.item}
     </MenuItem>
   ));
@@ -103,9 +102,11 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
       <Box component="form" onSubmit={editTask.id !== 0 ? update : create} sx={{ width: "100%", flexDirection: 'column', alignItems: 'center',}}>
         <TextField
           id="standard-helperText"
-          label="タイトル"
+          label="Title"
           fullWidth
           variant="standard"
+          sx={{ fontSize: { xs: 10, sm: 14, md: 16, lg: 18 }, mt: 1}}
+          inputProps={{style: { fontSize: 14}}}
           value={editTask.title}
           onChange={(e) =>
             setEditTask({ ...editTask, title: e.target.value })
@@ -113,9 +114,11 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
         />
         <TextField
           id="standard-helperText"
-          label="詳細"
+          label="Description"
           fullWidth
           variant="standard"
+          sx={{ fontSize: { xs: 10, sm: 14, md: 16, lg: 18 }, mt: 1}}
+          inputProps={{style: { fontSize: 14}}}
           value={editTask.description}
           onChange={(e) =>
             setEditTask({ ...editTask, description: e.target.value })
@@ -126,18 +129,20 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
           <InputLabel>Status</InputLabel>
           <Select
             name="status"
+            sx={{ fontSize: { xs: 14, sm: 16, md: 18, lg: 20 },}}
             value={editTask.status}
             onChange={handleSelectStatusChange}
           >
-            <MenuItem value={1}>Not started</MenuItem>
-            <MenuItem value={2}>On going</MenuItem>
-            <MenuItem value={3}>Done</MenuItem>
+            <MenuItem value={1} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>Not started</MenuItem>
+            <MenuItem value={2} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>On going</MenuItem>
+            <MenuItem value={3} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>Done</MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 90 }}>
           <InputLabel>Category</InputLabel>
           <Select
             name="category"
+            sx={{ fontSize: { xs: 14, sm: 16, md: 18, lg: 20 },}}
             defaultValue={1}
             value={editTask.category}
             onChange={handleSelectCatChange}
@@ -162,9 +167,9 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
         fullWidth
         variant="contained"
         color="primary"
-        sx={{ mt: 3, mb: 2 }}
+        sx={{ mt: 2, }}
         >
-          {editTask.id !== 0 ? "更新" : "作成"}
+          {editTask.id !== 0 ? "Update" : "Create"}
         </Button>
         </Box>
       </Box>
@@ -184,7 +189,7 @@ const TaskForm: React.FC<Type> = ({ categorys, mutate }) => {
               variant="contained"
               color="primary"
               size="small"
-              sx={{ mt: 2, ml: 2}}
+              sx={{ mt: 2, ml: 2, }}
               startIcon={<SaveIcon />}
               disabled={isCatDisabled}
               onClick={() => {
