@@ -6,7 +6,7 @@ import { TaskContext } from "../../context/task"
 const TaskDetail: React.FC = () => {
   const { selectedTask } = useContext(TaskContext);
   const rows = [
-    { item: "Id", data: selectedTask.id},
+    // { item: "Id", data: selectedTask.id},
     { item: "Title", data: selectedTask.title },
     { item: "Description", data: selectedTask.description },
     { item: "Status", data: selectedTask.status_name },

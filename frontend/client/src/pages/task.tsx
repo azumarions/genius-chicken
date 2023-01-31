@@ -104,7 +104,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
               {columns.map(
                   (column: keyof TASK, colIndex: number) =>
                     (
-                      column === "id" ||
+                      column === "title" ||
                       column === "category" ||
                       column === "status" ||
                       column === "created_at"
