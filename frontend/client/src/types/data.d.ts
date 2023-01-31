@@ -77,3 +77,6 @@ export interface NEW_CATEGORY {
     newCategory: CATEGORY[]
 }
 
+export interface COLOR {
+    color: string
+}

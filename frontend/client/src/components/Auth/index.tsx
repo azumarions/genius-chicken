@@ -5,7 +5,6 @@ import { createProf, getProf, getMyProf } from "../../api/account";
 import { AUTH, SnackbarMessage } from "@/types";
 import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,7 +18,6 @@ const Auth = () => {
   const [open, setOpen] = React.useState(false);
   const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
   const [messageInfo, setMessageInfo] = React.useState<SnackbarMessage | undefined>(undefined,);
-  const theme = createTheme({});
   const {register, handleSubmit, formState: { errors, isValid },} = useForm<AUTH>({mode: "onChange"});
 
   React.useEffect(() => {
@@ -68,7 +66,7 @@ const Auth = () => {
         setIsLogin(true)
         // getProf();
       });
-      router.push('/home');
+      router.push('/task');
     } catch (err) {
       // alert(err);
     }
@@ -99,8 +97,7 @@ const Auth = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <Box>
       <Box
         sx={{
           marginTop: 2,
@@ -187,7 +184,7 @@ const Auth = () => {
           </Button>
         </Box>
       </Box>
-    </ThemeProvider>
+    </Box>
   )
 }
 
