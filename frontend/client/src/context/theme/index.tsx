@@ -17,7 +17,7 @@ export const ColorContext = createContext<ColorContextType>(
 );
 
 export default function ColorContextProvider({ children }: ColorContextProviderProps) {
-  const [selectedColor, setSelectedColor] = useState<string>("primary");
+  const [selectedColor, setSelectedColor] = useState<string>("green");
   return (
     <ColorContext.Provider
       value={{
