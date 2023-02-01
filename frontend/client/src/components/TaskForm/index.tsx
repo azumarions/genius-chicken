@@ -3,7 +3,7 @@ import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
 import { KeyedMutator } from "swr";
 import useSWR from "swr";
-import { Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Badge, Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import { CATEGORY } from "@/types";
@@ -162,9 +162,21 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
             value={editTask.status}
             onChange={handleSelectStatusChange}
           >
-            <MenuItem value={1} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>Not started</MenuItem>
-            <MenuItem value={2} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>On going</MenuItem>
-            <MenuItem value={3} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>Done</MenuItem>
+            <MenuItem value={1} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
+              <Badge variant="dot" color="error">
+                Not started
+              </Badge>
+            </MenuItem>
+            <MenuItem value={2} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
+              <Badge variant="dot" color="primary">
+                On going
+              </Badge>
+            </MenuItem>
+            <MenuItem value={3} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
+              <Badge variant="dot" color="success">
+                Done
+              </Badge>
+            </MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 90 }}>
@@ -182,7 +194,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
 
         <Fab
           size="small"
-          color="info"
+          color="success"
           sx={{ mt: 2, }}
           onClick={handleOpen}
         >
@@ -194,7 +206,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         type="submit"
         fullWidth
         variant="contained"
-        color="info"
+        color="success"
         disabled={isDisabled}
         sx={{ mt: 2, }}
         >
@@ -216,7 +228,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
             />
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               fullWidth
               size="small"
               sx={{ mt: 2, }}

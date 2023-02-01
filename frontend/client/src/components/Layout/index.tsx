@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import Header from '../Header'
 import Footer from '../Footer'
 import { Box } from '@mui/system'
+import { ColorModeContextProvider } from '@/context/layout'
 
 type LayoutProps = Required<{
   readonly children: ReactElement
@@ -9,13 +10,13 @@ type LayoutProps = Required<{
 
 const Layout = ({ children }: LayoutProps) => (
   <>
-  <Box sx={{ bgcolor: "white"}}>
+  <ColorModeContextProvider>
     <Header />
     <Box component="main">
       {children}
     </Box>
     <Footer />
-    </Box>
+    </ColorModeContextProvider>
   </>
 )
 

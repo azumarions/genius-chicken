@@ -2,6 +2,8 @@ import * as React from 'react';
 import { createContext } from 'react';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Header from '../../components/Header';
+import App from 'next/app';
+import { CssBaseline } from '@mui/material';
 
 
 interface ColorModeContextProviderProps {
@@ -11,7 +13,7 @@ interface ColorModeContextProviderProps {
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export const ColorModeContextProvider = ({ children }: ColorModeContextProviderProps ) => {
-  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -26,6 +28,17 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
       createTheme({
         palette: {
           mode,
+          secondary: {
+            main: '#424242'
+          },
+          success: {
+            // 千歳緑
+            main: '#316745',
+          },
+          error: {
+            // 真紅
+            main: '#ad002d',
+          }
         },
       }),
     [mode],
@@ -34,6 +47,7 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         {children}
       </ThemeProvider>
     </ColorModeContext.Provider>

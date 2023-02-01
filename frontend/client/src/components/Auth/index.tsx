@@ -147,7 +147,8 @@ const Auth = () => {
             fullWidth
             variant="contained"
             disabled={!isValid}
-            sx={{ mt: 2, mb: 1, backgroundColor: "black" }}
+            color="secondary"
+            sx={{ mt: 2, mb: 1, }}
           >
             {isLogin ? 'ログイン' : '新規登録'}
           </Button>  

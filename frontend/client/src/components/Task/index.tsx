@@ -39,19 +39,16 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
       case "Not started":
         return (
           <Badge variant="dot" color="error">
-            {/* {statusName} */}
           </Badge>
         );
       case "On going":
         return (
           <Badge variant="dot" color="primary">
-            {/* {statusName} */}
           </Badge>
         );
       case "Done":
         return (
-          <Badge variant="dot" color="secondary">
-            {/* {statusName} */}
+          <Badge variant="dot" color="success">
           </Badge>
         );
       default:
