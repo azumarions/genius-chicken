@@ -23,9 +23,6 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { ColorModeContext } from '../../context/layout'
-import { ColorContext } from '@/context/theme';
-import { useContext } from 'react'
-
 
 const cookie = new Cookie();
 

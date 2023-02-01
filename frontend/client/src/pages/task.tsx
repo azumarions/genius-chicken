@@ -5,10 +5,11 @@ import useSWR from 'swr'
 import { CATEGORY, SORT_STATE, TASK } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
-import { Box, Button, Card, Grid, IconButton, List, ListItem, ListSubheader, Stack, TableSortLabel } from '@mui/material'
+import { Autocomplete, Box, Button, Card, Grid, IconButton, List, ListItem, ListSubheader, Stack, TableSortLabel, TextField } from '@mui/material'
 import { TaskContext } from '@/context/task'
 import TaskForm from '@/components/TaskForm'
 import TaskDetail from '@/components/TaskDetail'
+import { Controller, useForm } from 'react-hook-form';
 
 interface STATICPROPS {
   staticTasks: TASK[]
@@ -24,6 +25,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
     fallbackData: staticTasks,
     revalidateOnMount: true,
   })
+
   const columns = tasks[0] && Object.keys(tasks[0]);
 
   const [state, setState] = useState<SORT_STATE>({
@@ -70,7 +72,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
       <Box sx={{ width: '100%', height: '100%' }}>
         <Grid container textAlign="center" justifyItems="center">
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 290, sm: 300, md: 600, lg: 600}}}>
-            <Button size="small" variant="contained" color="info" onClick={() => {
+            <Button size="small" variant="contained" color="success" onClick={() => {
               setEditTask({
                 id: 0,
                 userTask: 0,
@@ -94,6 +96,8 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
               })}}>
               New Task
             </Button>
+            <Box>
+            </Box>
             {selectedTask.id ? <TaskDetail /> :
             <TaskForm staticCategorys={staticCategorys} taskMutate={mutate} />
             }
