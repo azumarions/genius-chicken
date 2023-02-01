@@ -1,16 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
-import { KeyedMutator, useSWRConfig } from "swr";
-import useSWRMutation from "swr/mutation";
+import { KeyedMutator } from "swr";
 import useSWR from "swr";
 import { Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { CategoryContext } from "@/context/category";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
-import { CATEGORY, NEW_CATEGORY } from "@/types";
-import { getCategorys } from "@/api/category";
-import { ColorContext } from "@/context/theme";
+import { CATEGORY } from "@/types";
 
 
 const cookie = new Cookie();
@@ -25,7 +21,6 @@ const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`;
 
 const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
   const { editTask, setEditTask } = useContext(TaskContext);
-  const { selectedColor } = useContext(ColorContext);
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState<string>("")
   const handleOpen = () => setOpen(true);
@@ -187,8 +182,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
 
         <Fab
           size="small"
-          // color="primary"
-          sx={{ mt: 2, bgcolor: selectedColor, color: "white"}}
+          color="info"
+          sx={{ mt: 2, }}
           onClick={handleOpen}
         >
           <AddIcon />
@@ -199,9 +194,9 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         type="submit"
         fullWidth
         variant="contained"
-        // color="primary"
+        color="info"
         disabled={isDisabled}
-        sx={{ mt: 2, bgcolor: selectedColor, color: "white"}}
+        sx={{ mt: 2, }}
         >
           {editTask.id !== 0 ? "Update" : "Create"}
         </Button>

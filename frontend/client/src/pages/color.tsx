@@ -10,12 +10,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const color: NextPage = () => {
   const { selectedColor, setSelectedColor } = useContext(ColorContext);
-  const theme = createTheme({
-    palette: {
-        mode: 'light',
-         
-        }  
-  })
   
   return (
     // <ThemeProvider theme={theme}>
