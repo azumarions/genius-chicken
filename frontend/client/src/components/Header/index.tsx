@@ -1,12 +1,10 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
-import Fade from '@mui/material/Fade';
-import { Drawer, IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import { Drawer, FormControlLabel, IconButton, Menu, MenuItem, Stack, styled, Switch } from '@mui/material';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -15,66 +13,26 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Cookie from "universal-cookie";
 import router from "next/router";
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { ColorModeContext } from '../../context/layout'
+import { AuthContext } from '@/context/auth';
+import HomeIcon from '@mui/icons-material/Home';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const cookie = new Cookie();
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-  children: React.ReactElement;
-}
-
-function ScrollTop(props: Props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-    disableHysteresis: true,
-    threshold: 100,
-  });
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const anchor = (
-      (event.target as HTMLDivElement).ownerDocument || document
-    ).querySelector('#back-to-top-anchor');
-
-    if (anchor) {
-      anchor.scrollIntoView({
-        block: 'center',
-      });
-    }
-  };
-
-  return (
-    <Fade in={trigger}>
-      <Box
-        onClick={handleClick}
-        role="presentation"
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
-      >
-        {children}
-      </Box>
-    </Fade>
-  );
-}
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function Header() {
-  type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
-  const [state, setState] = React.useState({
+  const colorMode = useContext(ColorModeContext);
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const label = { inputProps: { 'aria-label': 'Switch theme' } };
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -91,17 +49,14 @@ export default function Header() {
       ) {
         return;
       }
+    setState({ ...state, [anchor]: open });
+  };
 
-      setState({ ...state, [anchor]: open });
-    };
-
-    const logout = () => {
-      cookie.remove("access_token");
-      router.push("/home");
-    };
-
-    const theme = useTheme();
-    const colorMode = React.useContext(ColorModeContext);
+  const logout = () => {
+    cookie.remove("access_token");
+    setIsAuth(false)
+    router.push("/home");
+  };
 
   const list = (anchor: Anchor) => (
     <Box
@@ -110,11 +65,31 @@ export default function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      {!isAuth ?
       <List>
         <ListItem>
-          <ListItemButton href='/task'>
+          <ListItemButton href='#'>
             <ListItemIcon>
-              <InboxIcon />
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="HOME" />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemButton href='/auth'>
+            <ListItemIcon>
+              <LockOpenIcon />
+            </ListItemIcon>
+            <ListItemText primary="LOGIN" />
+          </ListItemButton>
+        </ListItem>
+      </List> :
+      <List>
+        <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="HOME" />
           </ListItemButton>
@@ -122,7 +97,7 @@ export default function Header() {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
+              <ManageAccountsIcon />
             </ListItemIcon>
             <ListItemText primary="ACCOUNT" />
           </ListItemButton>
@@ -130,51 +105,34 @@ export default function Header() {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="USER" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <InboxIcon />
+              <SettingsIcon />
             </ListItemIcon>
             <ListItemText primary="SETTING" />
           </ListItemButton>
         </ListItem>
-      </List>
-      <Divider />
-      <List>
-      <ListItem>
-          <ListItemButton href='/auth'>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="LOGIN" />
-          </ListItemButton>
-        </ListItem>
+        <Divider />
         <ListItem>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
-              <InboxIcon />
+              <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="LOGOUT" />
           </ListItemButton>
         </ListItem>
-      </List>
+    </List>
+    }
     </Box>
   );
   
   return (
     <React.Fragment>
       <CssBaseline />
-      <Box sx={{ mb: 10 }}>
+      <Box sx={{ mb: {xs: 8, sm: 10, md: 11, lg: 12 }, }}>
       <AppBar sx={{ backgroundColor: 'Black' }}>
         <Toolbar>
           {(['bottom'] as const).map((anchor) => (
             <React.Fragment key={anchor}>
-              <Button onClick={toggleDrawer(anchor, true)} sx={{ mr: 1.5, color: "white" }} ><MenuIcon /></Button>
+              <Button onClick={toggleDrawer(anchor, true)} sx={{ color: "white" }} ><MenuIcon /></Button>
               <Drawer
                 anchor={anchor}
                 open={state[anchor]}
@@ -185,20 +143,12 @@ export default function Header() {
             </React.Fragment>
           ))}
           <Typography variant="h6" component="div">
-            Todo App
-          </Typography>   
-          <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
+            Genius Chicken
+          </Typography>
+          <Switch {...label} onClick={colorMode.toggleColorMode} color="success" defaultChecked />
         </Toolbar>
       </AppBar>
       </Box>
-      {/* <Toolbar id="back-to-top-anchor" />
-      <ScrollTop {...props}>
-        <Fab size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop> */}
     </React.Fragment>
   );
 }

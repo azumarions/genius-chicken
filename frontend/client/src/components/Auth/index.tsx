@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useRouter } from "next/router"
 import Cookie from "universal-cookie"
 import { createProf, getProf, getMyProf } from "../../api/account";
@@ -8,13 +8,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
+import { AuthContext } from "@/context/auth";
 
 const cookie = new Cookie();
 
 const Auth = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(false); //global stateにする
+  const { isAuth, setIsAuth } = useContext(AuthContext); //global stateにする
   const [open, setOpen] = React.useState(false);
   const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
   const [messageInfo, setMessageInfo] = React.useState<SnackbarMessage | undefined>(undefined,);
@@ -64,6 +65,7 @@ const Auth = () => {
         const options = { path: '/' };
         cookie.set('access_token', data.access, options);
         setIsLogin(true)
+        setIsAuth(true)
         // getProf();
       });
       router.push('/task');

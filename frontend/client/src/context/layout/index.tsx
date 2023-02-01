@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { createContext } from 'react';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Header from '../../components/Header';
-import App from 'next/app';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 
@@ -38,7 +36,10 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
           error: {
             // 真紅
             main: '#ad002d',
-          }
+          },
+          primary: {
+            main: '#303f9f',
+          },
         },
       }),
     [mode],

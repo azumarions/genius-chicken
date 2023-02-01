@@ -5,7 +5,7 @@ import useSWR from 'swr'
 import { CATEGORY, SORT_STATE, TASK } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
-import { Autocomplete, Box, Button, Card, Grid, IconButton, List, ListItem, ListSubheader, Stack, TableSortLabel, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, Card, Grid, IconButton, List, ListItem, ListSubheader, Pagination, Stack, TableSortLabel, TextField } from '@mui/material'
 import { TaskContext } from '@/context/task'
 import TaskForm from '@/components/TaskForm'
 import TaskDetail from '@/components/TaskDetail'
@@ -71,7 +71,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
     <div title="Todos">
       <Box sx={{ width: '100%', height: '100%' }}>
         <Grid container textAlign="center" justifyItems="center">
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 290, sm: 300, md: 600, lg: 600}}}>
+          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 255, sm: 280, md: 600, lg: 600}}}>
             <Button size="small" variant="contained" color="success" onClick={() => {
               setEditTask({
                 id: 0,
@@ -122,12 +122,13 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                 )}
                 </ListSubheader>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 270, sm: 320, md: 600, lg:600}}}>
+          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 280, sm: 310, md: 600, lg:600}}}>
             <List sx={{ height: '100%', overflow: 'auto', pt: 0}}>
-                  {state.rows &&
-                      state.rows.map((row, rowIndex) => (
-                          <Task key={rowIndex} task={row} mutate={mutate} />
-                    ))}
+              {state.rows &&
+                  state.rows.map((row, rowIndex) => (
+                      <Task key={rowIndex} task={row} mutate={mutate} />
+                ))}
+              <Pagination count={4} color="secondary" />
             </List>
           </Grid>
         </Grid> 
