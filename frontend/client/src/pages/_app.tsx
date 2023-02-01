@@ -1,19 +1,21 @@
 import Layout from '@/components/Layout'
+import AuthContextProvider from '@/context/auth'
 import CategoryContextProvider from '@/context/category'
-import { ColorModeContextProvider } from '@/context/layout'
 import TaskContextProvider from '@/context/task'
 import type { AppProps } from 'next/app'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <AuthContextProvider>
       <TaskContextProvider>
         <CategoryContextProvider>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </CategoryContextProvider>
       </TaskContextProvider>
-    </Layout>
+    </AuthContextProvider>
   )
 }
 
