@@ -149,7 +149,7 @@ const Auth = () => {
             fullWidth
             variant="contained"
             disabled={!isValid}
-            color="secondary"
+            color="success"
             sx={{ mt: 2, mb: 1, }}
           >
             {isLogin ? 'ログイン' : '新規登録'}
@@ -182,7 +182,7 @@ const Auth = () => {
           }
         />
         <Box>
-          <Button sx={{ mt: 1, mb: 3, textAlign: "right" }} onClick={() => setIsLogin(!isLogin)}>
+          <Button sx={{ mt: 1, mb: 3, textAlign: "right" }} color="success" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? '新規登録へ' : 'ログインへ'}<LoginIcon />
           </Button>
         </Box>
