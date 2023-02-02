@@ -26,6 +26,9 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
       createTheme({
         palette: {
           mode,
+          primary: {
+            main: '#303f9f',
+          },
           secondary: {
             main: '#424242'
           },
@@ -37,8 +40,8 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
             // 真紅
             main: '#ad002d',
           },
-          primary: {
-            main: '#303f9f',
+          warning: {
+            main: '#316745',
           },
         },
       }),

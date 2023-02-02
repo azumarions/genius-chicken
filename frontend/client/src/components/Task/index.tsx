@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Cookie from "universal-cookie";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../context/task";
-import { TASK } from "@/types";
+import { SnackbarMessage, TASK } from "@/types";
 import { KeyedMutator } from "swr";
-import { Badge, Box, Button, ButtonGroup, Card, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Badge, Box, Button, ButtonGroup, Card, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Snackbar, Typography } from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
@@ -18,6 +18,9 @@ type Type = {
 
 const Task: React.FC<Type> = ({ task, mutate }) => {
   const { setEditTask, setSelectedTask } = useContext(TaskContext);
+  const [open, setOpen] = useState(false)
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(undefined,);
 
   const deleteTask = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/${task.id}`, {
@@ -29,6 +32,8 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
     }).then((res) => {
       if (res.status === 401) {
         alert("JWT Token not valid");
+      } else {
+        setSnackPack((prev) => [...prev, { message: "タスクを削除しました！", key: new Date().getTime() }]);
       }
     });
     mutate();
@@ -54,6 +59,27 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
       default:
         return null;
     }
+  };
+
+  useEffect(() => {
+    if (snackPack.length && !messageInfo) {
+      setMessageInfo({ ...snackPack[0] });
+      setSnackPack((prev) => prev.slice(1));
+      setOpen(true);
+    } else if (snackPack.length && messageInfo && open) {
+      setOpen(false);
+    }
+  }, [snackPack, messageInfo, open]);
+
+  const handleBarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleExited = () => {
+    setMessageInfo(undefined);
   };
   
   return (
@@ -88,6 +114,23 @@ const Task: React.FC<Type> = ({ task, mutate }) => {
         <ListItemText sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 },}} disableTypography onClick={() => {setSelectedTask(task);}}>{task.title}</ListItemText>
         <ListItemIcon sx={{ zIndex: 0}}>{renderSwitch(task.status_name)}</ListItemIcon>
       </ListItem>
+      <Snackbar
+          key={messageInfo ? messageInfo.key : undefined}
+          open={open}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={5000}
+          onClose={handleBarClose}
+          TransitionProps={{ onExited: handleExited }}
+        >
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth
+            onClick={handleBarClose}
+            >
+              {messageInfo?.message}
+          </Button>
+        </Snackbar>
     </React.Fragment>
   );
 }
