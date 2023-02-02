@@ -30,7 +30,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   const [page, setPage] = useState<number>(1); //ページ番号
   const [pageCount, setPageCount] = useState<number>(); //ページ数
   const [allItems, setAllItems] = useState<TASK[]>([]); //全データ
-  const displayNum = 10; //1ページあたりの項目数
+  const displayNum = 20; //1ページあたりの項目数
 
   const [state, setState] = useState<SORT_STATE>({
     rows: tasks,
@@ -129,7 +129,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                         direction={state.order}
                           onClick={() => handleClickSortColumn(column)}
                         >
-                          <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 },}}>{column}</Box>
+                          <Box sx={{ fontSize: { xs: 11, sm: 14, md: 16, lg: 18 },}}>{column}</Box>
                         </TableSortLabel>
                     )
                 )}

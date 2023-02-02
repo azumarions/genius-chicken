@@ -3,7 +3,7 @@ import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
 import { KeyedMutator } from "swr";
 import useSWR from "swr";
-import { Badge, Box, Button, Container, Fab, FormControl, Grid, IconButton, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Snackbar, TextField } from "@mui/material";
+import { Alert, Badge, Box, Button, Card, Container, Fab, FormControl, Grid, IconButton, InputLabel, MenuItem, Modal, Paper, Select, SelectChangeEvent, Snackbar, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import { CATEGORY, SnackbarMessage } from "@/types";
@@ -22,12 +22,24 @@ const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`;
 
 const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
   const { editTask, setEditTask } = useContext(TaskContext);
-  const [open, setOpen] = useState(false);
+  const [openModal, setModalOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const [inputText, setInputText] = useState<string>("")
   const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
   const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(undefined,);
-  const handleOpen = () => setOpen(true);
-  const handleModalClose = () => setOpen(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: 250,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   const { data: categorys, error, mutate } = useSWR(apiUrl, fetcher, {
     fallbackData: staticCategorys,
@@ -61,18 +73,6 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     </MenuItem>
   ));
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    minWidth: 250,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
       setMessageInfo({ ...snackPack[0] });
@@ -83,7 +83,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     }
   }, [snackPack, messageInfo, open]);
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleBarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -105,6 +105,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     }).then((res) => {
       if (res.status === 401) {
         alert("JWT Token not valid");
+      } else {
+        setSnackPack((prev) => [...prev, { message: "カテゴリーを作成しました！", key: new Date().getTime() }]);
       }
     });
     setInputText("");
@@ -123,6 +125,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     }).then((res) => {
       if (res.status === 401) {
         alert("JWT Token not valid");
+      } else {
+        setSnackPack((prev) => [...prev, { message: "タスクを作成しました！", key: new Date().getTime() }]);
       }
     });
     setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 1, category_item: "",});
@@ -144,6 +148,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     ).then((res) => {
       if (res.status === 401) {
         alert("JWT Token not valid");
+      } else {
+        setSnackPack((prev) => [...prev, { message: "タスクを更新しました！", key: new Date().getTime() }]);
       }
     });
     setEditTask({ id: 0, title: "", userTask: 0, description: "", status: "", category: 1, category_item: "",});
@@ -220,7 +226,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
           size="small"
           color="success"
           sx={{ mt: 2, }}
-          onClick={handleOpen}
+          onClick={handleModalOpen}
         >
           <AddIcon />
         </Fab>
@@ -238,7 +244,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         </Button>
         </Box>
       </Box>
-      <Modal open={open} onClose={handleModalClose}>
+      <Modal open={openModal} onClose={handleModalClose}>
           <Box sx={style}>
             <TextField
               InputLabelProps={{
@@ -268,31 +274,22 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
           </Box>
         </Modal>
         <Snackbar
-          ContentProps={{sx: {
-            background: "orange"
-          }}}
           key={messageInfo ? messageInfo.key : undefined}
           open={open}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          autoHideDuration={10000}
-          onClose={handleClose}
+          autoHideDuration={5000}
+          onClose={handleBarClose}
           TransitionProps={{ onExited: handleExited }}
-          action={
-            <React.Fragment>
-              <Button color="success" size="small" onClick={handleClose}>
-                {messageInfo?.message}
-              </Button>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                sx={{ p: 0.1 }}
-                onClick={handleClose}
-              >
-                <CloseIcon />
-              </IconButton>
-            </React.Fragment>
-          }
-        />
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleBarClose}
+            >
+              {messageInfo?.message}
+          </Button>
+        </Snackbar>
     </Container>
   );
 }

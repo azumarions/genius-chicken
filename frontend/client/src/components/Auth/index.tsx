@@ -31,7 +31,7 @@ const Auth = () => {
     }
   }, [snackPack, messageInfo, open]);
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleBarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -64,6 +64,7 @@ const Auth = () => {
       ).then((data) => {
         const options = { path: '/' };
         cookie.set('access_token', data.access, options);
+        setSnackPack((prev) => [...prev, { message: "ログインしました！", key: new Date().getTime() }]);
         setIsLogin(true)
         setIsAuth(true)
         // getProf();
@@ -156,31 +157,22 @@ const Auth = () => {
           </Button>  
         </Box>
         <Snackbar
-          ContentProps={{sx: {
-            background: "orange"
-          }}}
           key={messageInfo ? messageInfo.key : undefined}
           open={open}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          autoHideDuration={10000}
-          onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={5000}
+          onClose={handleBarClose}
           TransitionProps={{ onExited: handleExited }}
-          action={
-            <React.Fragment>
-              <Button color="inherit" size="small" onClick={handleClose}>
-                {messageInfo?.message}
-              </Button>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                sx={{ p: 0.1 }}
-                onClick={handleClose}
-              >
-                <CloseIcon />
-              </IconButton>
-            </React.Fragment>
-          }
-        />
+        >
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth
+            onClick={handleBarClose}
+            >
+              {messageInfo?.message}
+          </Button>
+        </Snackbar>
         <Box>
           <Button sx={{ mt: 1, mb: 3, textAlign: "right" }} color="success" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? '新規登録へ' : 'ログインへ'}<LoginIcon />

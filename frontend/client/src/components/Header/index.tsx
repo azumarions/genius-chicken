@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import { Drawer, FormControlLabel, IconButton, Menu, MenuItem, Stack, styled, Switch } from '@mui/material';
+import { Drawer, FormControlLabel, IconButton, Menu, MenuItem, Snackbar, Stack, styled, Switch } from '@mui/material';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -23,6 +23,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { SnackbarMessage } from '@/types';
 
 const cookie = new Cookie();
 
@@ -31,6 +32,9 @@ type Anchor = 'top' | 'left' | 'bottom' | 'right';
 export default function Header() {
   const colorMode = useContext(ColorModeContext);
   const { isAuth, setIsAuth } = useContext(AuthContext);
+  const [open, setOpen] = useState(false)
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(undefined,);
   const label = { inputProps: { 'aria-label': 'Switch theme' } };
   const [state, setState] = useState({
     top: false,
@@ -52,9 +56,31 @@ export default function Header() {
     setState({ ...state, [anchor]: open });
   };
 
+  useEffect(() => {
+    if (snackPack.length && !messageInfo) {
+      setMessageInfo({ ...snackPack[0] });
+      setSnackPack((prev) => prev.slice(1));
+      setOpen(true);
+    } else if (snackPack.length && messageInfo && open) {
+      setOpen(false);
+    }
+  }, [snackPack, messageInfo, open]);
+
+  const handleBarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleExited = () => {
+    setMessageInfo(undefined);
+  };
+
   const logout = () => {
     cookie.remove("access_token");
     setIsAuth(false)
+    setSnackPack((prev) => [...prev, { message: "ログアウトしました！", key: new Date().getTime() }]);
     router.push("/home");
   };
 
@@ -141,6 +167,23 @@ export default function Header() {
         </Toolbar>
       </AppBar>
       </Box>
+      <Snackbar
+          key={messageInfo ? messageInfo.key : undefined}
+          open={open}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={5000}
+          onClose={handleBarClose}
+          TransitionProps={{ onExited: handleExited }}
+        >
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth
+            onClick={handleBarClose}
+            >
+              {messageInfo?.message}
+          </Button>
+        </Snackbar>
     </React.Fragment>
   );
 }
