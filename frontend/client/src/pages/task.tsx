@@ -9,7 +9,6 @@ import { Autocomplete, Box, Button, Card, Grid, IconButton, List, ListItem, List
 import { TaskContext } from '@/context/task'
 import TaskForm from '@/components/TaskForm'
 import TaskDetail from '@/components/TaskDetail'
-import { Controller, useForm } from 'react-hook-form';
 
 interface STATICPROPS {
   staticTasks: TASK[]
@@ -27,6 +26,11 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   })
 
   const columns = tasks[0] && Object.keys(tasks[0]);
+
+  const [page, setPage] = useState<number>(1); //ページ番号
+  const [pageCount, setPageCount] = useState<number>(); //ページ数
+  const [allItems, setAllItems] = useState<TASK[]>([]); //全データ
+  const displayNum = 10; //1ページあたりの項目数
 
   const [state, setState] = useState<SORT_STATE>({
     rows: tasks,
@@ -57,13 +61,22 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   useEffect(() => {
     setState((state) => ({
       ...state,
-      rows: tasks,
+      rows: tasks.slice(((page - 1) * displayNum), page * displayNum),
     }));
   }, [tasks]);
 
   useEffect(() => {
+    setAllItems(state.rows);
+    setPageCount(Math.ceil(state.rows.length/displayNum));
     mutate();
   }, []);
+
+  const handleChange = (event: React.ChangeEvent<unknown>, index: number) => {
+    setPage(index);
+    setState((state) => ({
+      ...state,
+      rows: allItems.slice(((index - 1) * displayNum), index * displayNum)}))
+  }
 
   if (error) return <span>Error!</span>
   
@@ -120,7 +133,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                         </TableSortLabel>
                     )
                 )}
-                </ListSubheader>
+            </ListSubheader>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 280, sm: 310, md: 600, lg:600}}}>
             <List sx={{ height: '100%', overflow: 'auto', pt: 0}}>
@@ -128,7 +141,9 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                   state.rows.map((row, rowIndex) => (
                       <Task key={rowIndex} task={row} mutate={mutate} />
                 ))}
-              <Pagination count={4} color="secondary" />
+              <Box sx={{ textAlign: "center", justifyItems: "center"}}>
+              <Pagination count={pageCount} page={page} variant="text" color="secondary" size="small" onChange={handleChange} />
+              </Box>
             </List>
           </Grid>
         </Grid> 

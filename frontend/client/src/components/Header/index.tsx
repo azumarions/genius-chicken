@@ -87,14 +87,6 @@ export default function Header() {
       </List> :
       <List>
         <ListItem>
-          <ListItemButton href='#'>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="HOME" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
           <ListItemButton>
             <ListItemIcon>
               <ManageAccountsIcon />
@@ -127,7 +119,7 @@ export default function Header() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Box sx={{ mb: {xs: 8, sm: 10, md: 11, lg: 12 }, }}>
+      <Box sx={{ mb: {xs: 8, sm: 11, md: 12, lg: 14 }, }}>
       <AppBar sx={{ backgroundColor: 'Black' }}>
         <Toolbar>
           {(['bottom'] as const).map((anchor) => (

@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../context/task"
 import Cookie from "universal-cookie";
 import { KeyedMutator } from "swr";
 import useSWR from "swr";
-import { Badge, Box, Button, Container, Fab, FormControl, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Badge, Box, Button, Container, Fab, FormControl, Grid, IconButton, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Snackbar, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
-import { CATEGORY } from "@/types";
+import { CATEGORY, SnackbarMessage } from "@/types";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const cookie = new Cookie();
@@ -23,8 +24,10 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
   const { editTask, setEditTask } = useContext(TaskContext);
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState<string>("")
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(undefined,);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleModalClose = () => setOpen(false);
 
   const { data: categorys, error, mutate } = useSWR(apiUrl, fetcher, {
     fallbackData: staticCategorys,
@@ -68,6 +71,27 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+  };
+
+  useEffect(() => {
+    if (snackPack.length && !messageInfo) {
+      setMessageInfo({ ...snackPack[0] });
+      setSnackPack((prev) => prev.slice(1));
+      setOpen(true);
+    } else if (snackPack.length && messageInfo && open) {
+      setOpen(false);
+    }
+  }, [snackPack, messageInfo, open]);
+
+  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleExited = () => {
+    setMessageInfo(undefined);
   };
 
   const newCategory = async () => {
@@ -134,7 +158,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
           label="Title"
           fullWidth
           variant="standard"
-          sx={{ fontSize: { xs: 10, sm: 14, md: 16, lg: 18 }, mt: 1}}
+          sx={{ fontSize: { xs: 10, sm: 14, md: 16, lg: 18 },}}
           inputProps={{style: { fontSize: 14}}}
           value={editTask.title}
           onChange={(e) =>
@@ -214,7 +238,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
         </Button>
         </Box>
       </Box>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleModalClose}>
           <Box sx={style}>
             <TextField
               InputLabelProps={{
@@ -236,13 +260,39 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
               disabled={isCatDisabled}
               onClick={() => {
                 newCategory();
-                handleClose();
+                handleModalClose();
               }}
             >
               SAVE
             </Button>
           </Box>
         </Modal>
+        <Snackbar
+          ContentProps={{sx: {
+            background: "orange"
+          }}}
+          key={messageInfo ? messageInfo.key : undefined}
+          open={open}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={10000}
+          onClose={handleClose}
+          TransitionProps={{ onExited: handleExited }}
+          action={
+            <React.Fragment>
+              <Button color="success" size="small" onClick={handleClose}>
+                {messageInfo?.message}
+              </Button>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                sx={{ p: 0.1 }}
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </IconButton>
+            </React.Fragment>
+          }
+        />
     </Container>
   );
 }
