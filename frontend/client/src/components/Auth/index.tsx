@@ -5,7 +5,7 @@ import { createProf, getProf, getMyProf } from "../../api/account";
 import { AUTH, SnackbarMessage } from "@/types";
 import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import CssBaseline from '@mui/material/CssBaseline';
-import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, } from "@mui/material";
+import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, CircularProgress, } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
 import { AuthContext } from "@/context/auth";
@@ -15,6 +15,7 @@ const cookie = new Cookie();
 const Auth = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isAuth, setIsAuth } = useContext(AuthContext); //global stateにする
   const [open, setOpen] = React.useState(false);
   const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
@@ -43,6 +44,7 @@ const Auth = () => {
   };
 
   const login = async (data: AUTH) => {
+    setIsLoading(true);
     const { email, password } = data
     try {
       await fetch(
@@ -57,6 +59,7 @@ const Auth = () => {
       ).then((res) => {
           if (res.status === 401) {
             setSnackPack((prev) => [...prev, { message: "メールかパスワードが違います。", key: new Date().getTime() }]);
+            setIsLoading(false);
           } else if (res.ok) {
             return res.json();
           }
@@ -67,6 +70,7 @@ const Auth = () => {
         setSnackPack((prev) => [...prev, { message: "ログインしました！", key: new Date().getTime() }]);
         setIsLogin(true)
         setIsAuth(true)
+        setIsLoading(false);
         // getProf();
       });
       router.push('/task');
@@ -154,7 +158,8 @@ const Auth = () => {
             sx={{ mt: 2, mb: 1, }}
           >
             {isLogin ? 'ログイン' : '新規登録'}
-          </Button>  
+            {isLoading ? <CircularProgress size={20} sx={{ color: "white", ml: 1, top: "50%", left: "50%"}} /> : null}
+          </Button>
         </Box>
         <Snackbar
           key={messageInfo ? messageInfo.key : undefined}
