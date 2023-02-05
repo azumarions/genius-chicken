@@ -24,6 +24,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SnackbarMessage } from '@/types';
+import DialpadIcon from '@mui/icons-material/Dialpad';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import PersonIcon from '@mui/icons-material/Person';
 
 const cookie = new Cookie();
 
@@ -94,11 +97,35 @@ export default function Header() {
       {!isAuth ?
       <List>
         <ListItem>
-          <ListItemButton href='#'>
+          <ListItemButton href='/home'>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="HOME" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <QuestionMarkIcon />
+            </ListItemIcon>
+            <ListItemText primary="ABOUT" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="PROFILE" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <DialpadIcon />
+            </ListItemIcon>
+            <ListItemText primary="CONTACT" />
           </ListItemButton>
         </ListItem>
         <Divider />
@@ -113,23 +140,6 @@ export default function Header() {
       </List> :
       <List>
         <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <ManageAccountsIcon />
-            </ListItemIcon>
-            <ListItemText primary="ACCOUNT" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="SETTING" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
               <LogoutIcon />
@@ -137,7 +147,7 @@ export default function Header() {
             <ListItemText primary="LOGOUT" />
           </ListItemButton>
         </ListItem>
-    </List>
+      </List>
     }
     </Box>
   );

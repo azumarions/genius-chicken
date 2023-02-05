@@ -142,7 +142,7 @@ const HomePage: NextPage = () => {
           行動はそれからです。
         </Box>
         <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1}}>
-          時間に変えはありません。
+          時間に替えはありません。
         </Box>
       </Grid>
     </Grid>
