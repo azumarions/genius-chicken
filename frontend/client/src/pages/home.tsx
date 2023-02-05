@@ -152,16 +152,16 @@ const HomePage: NextPage = () => {
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <Box className={styles.heading} ref={ref4}>
             <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>ABOUT</Box>
-            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: 1}}>
-              Genius Chickenはタスク管理のためのWebアプリです。
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
+              Genius Chickenはタスクを管理するためのWebアプリです。
             </Box>
-            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: 1}}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
               SPA（シングルページアプリケーション）の特色を最大限に生かしたユーザー体験を提供します。
             </Box>
-            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: 1}}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
               Webアプリへの常識を覆してみませんか？
             </Box>
-            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: 1}}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
               詳細はこちらから↓
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
@@ -173,7 +173,7 @@ const HomePage: NextPage = () => {
           <Box className={styles.heading} ref={ref5}>
             <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>PROFILE</Box>
             <Box sx={{ textAlign: "center", display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
-              <Avatar sx={{ textAlign: "center", m: 1, width: 150, height: 150 }} src="/home7.jpeg" alt="gest_login"></Avatar>
+              <Avatar sx={{ textAlign: "center", m: 1, width: 130, height: 130 }} src="/home7.jpeg" alt="gest_login"></Avatar>
             </Box>
             <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1}}>
               技術スタックや趣味、ライセンスなど
@@ -187,10 +187,10 @@ const HomePage: NextPage = () => {
           <Box className={styles.heading} ref={ref6}>
             <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>CONTACT</Box>
             <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non 
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              ご意見やご要望、フィードバックなどはこちらからお願いします。
+            </Box>
+            <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
+              <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>CONTACT</Button>
             </Box>
           </Box>
         </Grid>
@@ -205,7 +205,7 @@ const HomePage: NextPage = () => {
               優れたユーザー体験をお試しください
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
-              <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>LOGIN</Button>
+              <Button href='/auth' variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>LOGIN</Button>
             </Box>
           </Box>
         </Grid>

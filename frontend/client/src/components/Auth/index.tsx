@@ -9,6 +9,8 @@ import { IconButton, Snackbar, Avatar, Button, TextField, Box, Typography, Circu
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
 import { AuthContext } from "@/context/auth";
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import { Email } from "@mui/icons-material";
 
 const cookie = new Cookie();
 
@@ -43,8 +45,41 @@ const Auth = () => {
     setMessageInfo(undefined);
   };
 
-  const login = async (data: AUTH) => {
+  const gestLogin = async () => {
     setIsLoading(true);
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_RESTAPI_URL}/authen/jwt/create/`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ email: 'gestUser@gmail.com', password: 'gestUserPassword'}),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      ).then((res) => {
+        if (res.status === 401) {
+          setSnackPack((prev) => [...prev, { message: "メールかパスワードが違います。", key: new Date().getTime() }]);
+          setIsLoading(false);
+        } else if (res.ok) {
+          return res.json();
+        }
+      }).then((data) => {
+        const options = { path: '/' };
+        cookie.set('access_token', data.access, options);
+        setIsLogin(true)
+        setIsAuth(true)
+        setIsLoading(false);
+        // getProf();
+      });
+      router.push('/task');
+      setSnackPack((prev) => [...prev, { message: "ゲストログインしました！", key: new Date().getTime() }]);
+    } catch (err) {
+      // alert(err);
+    }
+  };
+
+  const login = async (data: AUTH) => {
     const { email, password } = data
     try {
       await fetch(
@@ -59,7 +94,6 @@ const Auth = () => {
       ).then((res) => {
           if (res.status === 401) {
             setSnackPack((prev) => [...prev, { message: "メールかパスワードが違います。", key: new Date().getTime() }]);
-            setIsLoading(false);
           } else if (res.ok) {
             return res.json();
           }
@@ -196,6 +230,15 @@ const Auth = () => {
             {isLogin ? '新規登録へ' : 'ログインへ'}<LoginIcon />
           </Button>
         </Box>
+        <Button
+          onClick={gestLogin}
+          variant="contained"
+          color="success"
+          sx={{ mt: 2, mb: 1, fontFamily: "serif" }}
+          >
+            <PermIdentityIcon />ゲストログイン
+            {isLoading ? <CircularProgress size={20} sx={{ color: "white", ml: 1, top: "50%", left: "50%"}} /> : null}
+          </Button>
       </Box>
     </Box>
   )
