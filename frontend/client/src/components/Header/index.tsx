@@ -140,6 +140,23 @@ export default function Header() {
       </List> :
       <List>
         <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <QuestionMarkIcon />
+            </ListItemIcon>
+            <ListItemText primary="ABOUT" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton href='#'>
+            <ListItemIcon>
+              <DialpadIcon />
+            </ListItemIcon>
+            <ListItemText primary="CONTACT" />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
               <LogoutIcon />
