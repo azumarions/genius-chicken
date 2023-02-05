@@ -34,7 +34,7 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
           },
           success: {
             // 千歳緑
-            main: '#316745',
+            main: 'rgba(176,151,097,0.8)',
           },
           error: {
             // 真紅

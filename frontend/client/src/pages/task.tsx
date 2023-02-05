@@ -82,7 +82,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   
   return (
     <div title="Todos">
-      <Box sx={{ width: '100%', height: '100%' }}>
+      <Box sx={{ width: '100%', height: '100%', mt: {xs: 8, sm: 11, md: 12, lg: 14 }, }}>
         <Grid container textAlign="center" justifyItems="center">
           <Grid item xs={12} sm={12} md={6} lg={6} sx={{ width: '100%', height: {xs: 255, sm: 280, md: 600, lg: 600}}}>
             <Button size="small" variant="contained" color="success" onClick={() => {
