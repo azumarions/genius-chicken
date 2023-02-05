@@ -145,12 +145,12 @@ export default function Header() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Box sx={{ mb: {xs: 8, sm: 11, md: 12, lg: 14 }, }}>
-      <AppBar sx={{ backgroundColor: 'Black' }}>
+      <Box>
+      <AppBar color='inherit'>
         <Toolbar>
           {(['bottom'] as const).map((anchor) => (
             <React.Fragment key={anchor}>
-              <Button onClick={toggleDrawer(anchor, true)} sx={{ color: "white" }} ><MenuIcon /></Button>
+              <Button onClick={toggleDrawer(anchor, true)} color="inherit"><MenuIcon /></Button>
               <Drawer
                 anchor={anchor}
                 open={state[anchor]}

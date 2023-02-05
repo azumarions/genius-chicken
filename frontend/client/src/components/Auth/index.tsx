@@ -67,13 +67,13 @@ const Auth = () => {
       ).then((data) => {
         const options = { path: '/' };
         cookie.set('access_token', data.access, options);
-        setSnackPack((prev) => [...prev, { message: "ログインしました！", key: new Date().getTime() }]);
         setIsLogin(true)
         setIsAuth(true)
         setIsLoading(false);
         // getProf();
       });
       router.push('/task');
+      setSnackPack((prev) => [...prev, { message: "ログインしました！", key: new Date().getTime() }]);
     } catch (err) {
       // alert(err);
     }
@@ -107,7 +107,7 @@ const Auth = () => {
     <Box>
       <Box
         sx={{
-          marginTop: 2,
+          mt: {xs: 8, sm: 11, md: 12, lg: 14 },
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

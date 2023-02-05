@@ -1,0 +1,16 @@
+.heading {
+  margin: 10px 0;
+  opacity: 0;
+  transform: translateX(-150px);
+  text-align: center;
+}
+
+.active {
+  opacity: 1;
+  transition: 1s;
+  transform: translateX(0);
+}
+
+.body{
+  transition: 3s;
+}
