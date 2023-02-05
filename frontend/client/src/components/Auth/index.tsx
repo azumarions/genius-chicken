@@ -107,18 +107,31 @@ const Auth = () => {
     <Box>
       <Box
         sx={{
-          mt: {xs: 8, sm: 11, md: 12, lg: 14 },
+          mt: {xs: 9, sm: 11, md: 12, lg: 14 },
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        {isLogin ? <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon1.jpeg" alt="icon">
-        </Avatar> : <Avatar sx={{ m: 1, width: 150, height: 150 }} src="/auth_icon2.jpeg" alt="icon">
-        </Avatar> }
-        <Typography component="h1" variant="h5" fontFamily="serif">
-          {isLogin? 'Log in' : 'Sign up'}
-        </Typography>
+        {isLogin ? 
+          <Avatar
+            sx={{ 
+              width: { xs: 140, sm: 160, md: 180, lg: 200 },
+              height: { xs: 140, sm: 160, md: 180, lg: 200 },
+              margin: 1,
+            }}
+            src="/home3.jpeg" alt="icon" /> :
+          <Avatar
+            sx={{ 
+              width: { xs: 140, sm: 160, md: 180, lg: 200 },
+              height: { xs: 140, sm: 160, md: 180, lg: 200 },
+              margin: 1,
+            }}
+            src="/home4.jpeg" alt="icon" />
+        }
+        <Box sx={{ fontFamily: "serif", fontSize: { xs: 22, sm: 24, md: 26, lg: 30}, m: 1}}>
+          {isLogin? 'LOGIN' : 'SIGN UP'}
+        </Box>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} method="POST" sx={{ width: "80%"}}>
           <Box sx={{ mt: 1 }}>
             <TextField
@@ -155,7 +168,7 @@ const Auth = () => {
             variant="contained"
             disabled={!isValid}
             color="success"
-            sx={{ mt: 2, mb: 1, }}
+            sx={{ mt: 2, mb: 1, fontFamily: "serif" }}
           >
             {isLogin ? 'ログイン' : '新規登録'}
             {isLoading ? <CircularProgress size={20} sx={{ color: "white", ml: 1, top: "50%", left: "50%"}} /> : null}
@@ -179,7 +192,7 @@ const Auth = () => {
           </Button>
         </Snackbar>
         <Box>
-          <Button sx={{ mt: 1, mb: 3, textAlign: "right" }} color="success" onClick={() => setIsLogin(!isLogin)}>
+          <Button sx={{ mt: 1, mb: 3, fontFamily: "serif" }} color="success" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? '新規登録へ' : 'ログインへ'}<LoginIcon />
           </Button>
         </Box>
