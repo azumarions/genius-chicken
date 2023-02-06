@@ -176,7 +176,7 @@ const HomePage: NextPage = () => {
               <Avatar sx={{ textAlign: "center", m: 1, width: 130, height: 130 }} src="/home7.jpeg" alt="gest_login"></Avatar>
             </Box>
             <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1}}>
-              技術スタックや趣味、ライセンスなど
+              技術スタックやSNS、趣味、ライセンスなど
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
               <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>PROFILE</Button>
