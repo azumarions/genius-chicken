@@ -105,7 +105,7 @@ export default function Header() {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton href='#'>
+          <ListItemButton href='/about'>
             <ListItemIcon>
               <QuestionMarkIcon />
             </ListItemIcon>
@@ -187,9 +187,9 @@ export default function Header() {
               </Drawer>
             </React.Fragment>
           ))}
-          <Typography variant="h6" component="div">
+          <Box sx={{ fontFamily: "serif" }}>
             Genius Chicken
-          </Typography>
+          </Box>
           <Switch {...label} onClick={colorMode.toggleColorMode} color="success" defaultChecked />
         </Toolbar>
       </AppBar>
