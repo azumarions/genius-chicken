@@ -5,8 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useRef } from 'react'
 import { useIntersectionObserver } from '@/components/FadeIn'
-import Typical from 'react-typical'
+// import Typical from 'react-typical'
 import styles from '../styles/home.module.scss'
+import router from "next/router";
 
 const showElements = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
@@ -30,30 +31,42 @@ const HomePage: NextPage = () => {
   // カスタムフックを呼ぶ
   useIntersectionObserver([ref1, ref2, ref3, ref4, ref5, ref6, ref7], showElements)
 
+  const about = () => {
+    router.push("/about");
+  };
+
+  const profile = () => {
+    router.push("/profile");
+  };
+
+  const login = () => {
+    router.push("/auth")
+  }
+
   return (
     <>
     <Box>
     <Grid container sx={{ mt: {xs: 6, sm: 8, md: 8, lg: 8 }, bgcolor: "rgba(176,151,097,0.5)",}}>
       <Grid item xs={12} sm={12} md={4} sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block"}}}>
         <Box component="div" sx={{}}>
-          <Image src="/home5.png" width={300} height={500} layout="responsive" alt="home_image" />
+          <Image src="/home5.png" width={300} height={500} alt="home_image" sizes="100vw" style={{ width: '100%', height: 'auto',}} />
         </Box>
       </Grid>
       <Grid item xs={12} sm={6} md={4} sx={{ position: "relative" }}>
         <Box>
-          <Image src="/home2.png" width={500} height={700} layout="responsive" alt="home_image" />
+          <Image src="/home2.png" priority={true} width={500} height={700} alt="home_image" sizes="100vw" style={{ width: '100%', height: 'auto',}} />
         </Box>
-        <Box sx={{ ml: 2, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22} }}>
+        {/* <Box sx={{ ml: 2, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22} }}>
           <Typical
             steps={['Wellcome to My Portfolio!', 3000, 'Please enjoy the Genius Chicken.', 3000, 'Thank you for coming!', 3000]}
             loop={2}
             wrapper="p"
           />
-        </Box>
+        </Box> */}
       </Grid>
       <Grid item xs={12} sm={6} md={4} sx={{ display: { xs: "none", sm: "block", md: "block", lg: "block"}}}>
         <Box component="div" sx={{}}>
-          <Image src="/home6.png" width={300} height={500} layout="responsive" alt="home_image" />
+          <Image src="/home6.png" width={300} height={500} alt="home_image" sizes="100vw" style={{ width: '100%', height: 'auto',}} />
         </Box>
       </Grid>
     </Grid>
@@ -98,7 +111,7 @@ const HomePage: NextPage = () => {
       <Grid item xs={12} sm={2} md={3} lg={3}></Grid>
       <Grid item xs={12} sm={8} md={6} lg={6}>
         <Box>
-          <Image src="/home11.png" width={100} height={100} layout="responsive" alt="home_image" />
+          <Image src="/home11.png" width={100} height={100} alt="home_image" sizes="100vw" style={{ width: '100%', height: 'auto',}} />
         </Box>
       </Grid>
     </Grid>
@@ -153,7 +166,7 @@ const HomePage: NextPage = () => {
           <Box className={styles.heading} ref={ref4}>
             <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>ABOUT</Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
-              Genius Chickenはタスクを管理するためのWebアプリです。
+              Genius Chickenはタスク管理のWebアプリです。
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: 0}}>
               SPA（シングルページアプリケーション）の特色を最大限に生かしたユーザー体験を提供します。
@@ -165,13 +178,13 @@ const HomePage: NextPage = () => {
               詳細はこちらから↓
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
-              <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>ABOUT</Button>
+              <Button onClick={about} variant='outlined' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>ABOUT</Button>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <Box className={styles.heading} ref={ref5}>
-            <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>PROFILE</Box>
+            <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}, mt: 2}}>PROFILE</Box>
             <Box sx={{ textAlign: "center", display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
               <Avatar sx={{ textAlign: "center", m: 1, width: 130, height: 130 }} src="/home7.jpeg" alt="gest_login"></Avatar>
             </Box>
@@ -179,24 +192,27 @@ const HomePage: NextPage = () => {
               技術スタックやSNS、趣味、ライセンスなど
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
-              <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>PROFILE</Button>
+              <Button onClick={profile} variant='outlined' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>PROFILE</Button>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <Box className={styles.heading} ref={ref6}>
-            <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}}}>CONTACT</Box>
-            <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1}}>
-              ご意見やご要望、フィードバックなどはこちらからお願いします。
+            <Box sx={{ textAlign: "center", fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 22}, mt: 2}}>CONTACT</Box>
+            <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mt: { xs: 2, sm: 2, md: 3, lg: 5}}}>
+              ご意見やご要望、フィードバックなど
+            </Box>
+            <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, m: 1, mb: { xs: 2, sm: 2, md: 3, lg: 5}}}>
+              こちらからお願いします。
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
-              <Button variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>CONTACT</Button>
+              <Button variant='outlined' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>CONTACT</Button>
             </Box>
           </Box>
         </Grid>
       </Grid>
       <Grid container sx={{ textAlign: "center", zIndex: 100, mt: 30}}>
-        <Grid item xs={12} sm={12} md={12} lg={12} sx={{ textAlign: "center", position: "relative", mb: { xs: 28, sm: 32, md: 36, lg: 40}}}>
+        <Grid item xs={12} sm={12} md={12} lg={12} sx={{ textAlign: "center", position: "relative", mb: { xs: 28, sm: 35, md: 40, lg: 45}}}>
           <Box className={styles.heading} ref={ref7}>
             <Box sx={{ textAlign: "center", mt: 3, fontFamily: "serif", fontSize: { xs: 18, sm: 20, md: 24, lg: 30}, m: 1}}>
               ゲストログイン
@@ -205,7 +221,7 @@ const HomePage: NextPage = () => {
               優れたユーザー体験をお試しください
             </Box>
             <Box sx={{ textAlign: "center", mt: 1, fontFamily: "serif", fontSize: { xs: 16, sm: 18, md: 20, lg: 26}, m: 1,}}>
-              <Button href='/auth' variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>LOGIN</Button>
+              <Button onClick={login} variant='contained' color='success' sx={{ pl: 10, pr: 10, fontFamily: "serif"}}>LOGIN</Button>
             </Box>
           </Box>
         </Grid>

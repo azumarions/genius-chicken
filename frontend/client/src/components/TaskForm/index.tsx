@@ -68,7 +68,7 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
   };
 
   let catOptions = categorys.map((cat: CATEGORY) => (
-    <MenuItem key={cat.id} value={cat.id} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
+    <MenuItem key={cat.id} value={cat.id} defaultValue={1} sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 },}}>
       {cat.item}
     </MenuItem>
   ));
