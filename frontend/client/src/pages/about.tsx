@@ -38,7 +38,7 @@ const AboutPage: NextPage = () => {
           <Grid container sx={{ position: "fixed", zIndex: -1}}>
             <Grid item xs={12} sm={6} md={5} lg={4}>
                 <Box component="div" sx={{}}>
-                <Image src="/home5.png" width={300} height={500} layout="responsive" alt="home_image" />
+                <Image src="/home5.png" width={500} height={700} alt="home_image" sizes="100vw" style={{ width: '100%', height: 'auto',}} />
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={7} lg={8}>

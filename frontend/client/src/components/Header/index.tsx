@@ -27,6 +27,7 @@ import { SnackbarMessage } from '@/types';
 import DialpadIcon from '@mui/icons-material/Dialpad';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import PersonIcon from '@mui/icons-material/Person';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 const cookie = new Cookie();
 
@@ -80,6 +81,26 @@ export default function Header() {
     setMessageInfo(undefined);
   };
 
+  const task = () => {
+    router.push("/task");
+  };
+
+  const login = () => {
+    router.push("/auth");
+  };
+
+  const home = () => {
+    router.push("/home");
+  };
+
+  const about = () => {
+    router.push("/about");
+  };
+
+  const profile = () => {
+    router.push("/profile");
+  };
+
   const logout = () => {
     cookie.remove("access_token");
     setIsAuth(false)
@@ -97,7 +118,7 @@ export default function Header() {
       {!isAuth ?
       <List>
         <ListItem>
-          <ListItemButton href='/home'>
+          <ListItemButton onClick={home}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -105,32 +126,24 @@ export default function Header() {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton href='/about'>
+          <ListItemButton onClick={about}>
             <ListItemIcon>
-              <QuestionMarkIcon />
+              <DialpadIcon />
             </ListItemIcon>
             <ListItemText primary="ABOUT" />
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton href='#'>
+          <ListItemButton onClick={profile}>
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
             <ListItemText primary="PROFILE" />
           </ListItemButton>
         </ListItem>
-        <ListItem>
-          <ListItemButton href='#'>
-            <ListItemIcon>
-              <DialpadIcon />
-            </ListItemIcon>
-            <ListItemText primary="CONTACT" />
-          </ListItemButton>
-        </ListItem>
         <Divider />
         <ListItem>
-          <ListItemButton href='/auth'>
+          <ListItemButton onClick={login}>
             <ListItemIcon>
               <LockOpenIcon />
             </ListItemIcon>
@@ -140,19 +153,27 @@ export default function Header() {
       </List> :
       <List>
         <ListItem>
-          <ListItemButton href='#'>
+          <ListItemButton onClick={task}>
             <ListItemIcon>
-              <QuestionMarkIcon />
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary="TASK" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton onClick={about}>
+            <ListItemIcon>
+              <DialpadIcon />
             </ListItemIcon>
             <ListItemText primary="ABOUT" />
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton href='#'>
+          <ListItemButton onClick={profile}>
             <ListItemIcon>
-              <DialpadIcon />
+              <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="CONTACT" />
+            <ListItemText primary="PROFILE" />
           </ListItemButton>
         </ListItem>
         <Divider />
