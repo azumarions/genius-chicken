@@ -75,13 +75,20 @@ const AboutPage: NextPage = () => {
               なぜタスク管理アプリを開発しようと思ったのか？
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
-              シンプルであるからです。
+              今までに作ったことがなかったのと自分自身の基本的な技術力の確認のためです。
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
-              以前、大規模なアプリを開発していました。しかし、その工数の多さゆえに途中で頓挫してしまいました。
-              その時に1つの機能を追加するだけでも物凄い労力が必要なことを知りました。機能数の多さはアプリをより使いやすく、そして魅力的にしますが
-              複雑さを増大させます。私はその複雑さを理解するために日々勉強しています。シンプルさをより洗練させることが理解の一歩だと考えています。
-              なんといっても、目的と手段を履き違えてしまうと、行動の軸がぶれてしまいます。
+              以前、大規模なアプリを開発していましたが、その時に1つの機能を追加するだけでも物凄い労力が必要なことを知りました。
+              機能数の多さはアプリをより使いやすく、そして魅力的にしますが複雑さを増大させます。
+              なので、まずはシンプルなアプリを真剣に作り、1つ1つの要素を深く理解することで、機能間の相互作用や複雑性を紐解いていけたらなと思いました。
+            </Box>
+            </Box>
+            <Box className={styles.heading} ref={ref18}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 2, sm: 2, md: 4, lg: 4}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              このアプリの用途は？
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              基本的にはタスク管理ですが、メモや日記としても使えると思います。
             </Box>
             </Box>
             <Box className={styles.heading} ref={ref11}>
@@ -104,7 +111,7 @@ const AboutPage: NextPage = () => {
               アプリ開発における技術選定とその動機は？
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
-              主にフロントエンドにはreact,nextjs,typescript,バックエンドにはpython,djangoのSPA構成にしました。コンテナにDocker、インフラはAWS（Vercel）を選択しました。
+              主にフロントエンドにはreact,nextjs,typescript,バックエンドにはpython,djangoのSPA構成にしました。コンテナにDocker、インフラはAWSを選択しました。
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
               動機はいくつかあります。
@@ -122,13 +129,16 @@ const AboutPage: NextPage = () => {
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
               4:Dockerを使うならデプロイ方法が自然と限られてくるので、その中でコスト的にも難易度的にも最適だと思ったECSのfargateタイプを選択した。
             </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              5:また、デプロイ時の人為的ミスをなくすためterraformを使用、今後の継続的な開発&デプロイのためgithub actionsによるCI/CDパイプラインを導入した。
+            </Box>
             </Box>
             <Box className={styles.heading} ref={ref14}>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 2, sm: 2, md: 4, lg: 4}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
               それぞれの1番工夫したところは？
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
-              フロントエンドでは、Reactの魅力を最大限に活用しようとしたところです。タスク画面を1ページで完結させたり、動的な要素加えたり、データを状態管理しながらこねくり回したりなど。
+              フロントエンドでは、Reactの魅力を最大限に活用しようとしたところです。タスク画面を1ページで完結させたり、UIに動的な要素加えたり、データを状態管理しながらこねくり回したりなど。
             </Box>
             <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
               バックエンドでは、完成したアプリには直接関係ないのですが、ユーザー情報のモデルをプロフィールとアカウントのモデルに分けたことです。将来アプリを拡大させる上で役に立つと思います。

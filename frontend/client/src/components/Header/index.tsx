@@ -90,7 +90,7 @@ export default function Header() {
   };
 
   const home = () => {
-    router.push("/home");
+    router.push("/");
   };
 
   const about = () => {
@@ -105,7 +105,7 @@ export default function Header() {
     cookie.remove("access_token");
     setIsAuth(false)
     setSnackPack((prev) => [...prev, { message: "ログアウトしました！", key: new Date().getTime() }]);
-    router.push("/home");
+    router.push("/");
   };
 
   const list = (anchor: Anchor) => (
