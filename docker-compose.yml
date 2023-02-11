@@ -10,7 +10,7 @@ services:
       - static_volume:/code/staticfiles # <-- bind the static volume
     stdin_open: true
     tty: true
-    command: gunicorn --bind :8000 config.wsgi:application
+    # command: gunicorn --bind :8000 config.wsgi:application
     networks:
       - backend_network
     environment:
@@ -22,7 +22,7 @@ services:
     container_name: nginx_backend
     build:
       context: ./backend/nginx/.
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - static_volume:/code/staticfiles # <-- bind the static volume
     ports:

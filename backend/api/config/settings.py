@@ -30,7 +30,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -94,6 +94,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'todoList',
+        'USER': 'admin',
+        'PASSWORD': 'adminpassword',
+        'HOST': 'todo-1.cccftuqgvuib.us-east-1.rds.amazonaws.com',
+    }
+}
 
 
 # Password validation
@@ -162,3 +172,5 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost',
     'http://localhost:3000',
 )
+
+AUTH_USER_MODEL = 'todo.User'
