@@ -7,9 +7,7 @@
 ##### インフラ構成
 ##### 実装機能
 
-{.info} Information
-:   ゲストログインができます。
-
+<p class="info">ゲストログインができます。</p>
 
 :::note warn
 NOTE WARNING!!!
