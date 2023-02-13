@@ -28,8 +28,11 @@ const AboutPage: NextPage = () => {
     const ref18 = useRef<HTMLHeadingElement>(null)
     const ref19 = useRef<HTMLHeadingElement>(null)
     const ref20 = useRef<HTMLHeadingElement>(null)
+    const ref21 = useRef<HTMLHeadingElement>(null)
+    const ref22 = useRef<HTMLHeadingElement>(null)
+    const ref23 = useRef<HTMLHeadingElement>(null)
 
-    useIntersectionObserver([ref8, ref9, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19], showElements)
+    useIntersectionObserver([ref8, ref9, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref20, ref21, ref22, ref23], showElements)
 
   return (
     <>
@@ -163,9 +166,38 @@ const AboutPage: NextPage = () => {
               次に、複数人でタスクを管理できるようにしてみたら面白いし、実用性が上がるのではないかと考えているので、やってみたいです。
             </Box>
             </Box>
+            <Box className={styles.heading} ref={ref20}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 2, sm: 2, md: 4, lg: 4}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              アプリ開発を通して後悔したことは？
             </Box>
-          </Grid>
-          <Grid item xs={12} sm={6} md={5} lg={4}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              開発期間の設定が少し甘かったことです。
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              特に今回は決めた時間内にアプリを作り切るということ重視していたので、間に合わなかったコードのリファクタリングやテスト、機能実装などがありました。
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              もう一つ、アプリ完成させてからデプロイというより、雛形が作れたらまず先にインフラ構築してデプロイをするべきだなと思いました。
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              流れとしては、環境構築→簡単なapi作成→フロントエンドで軽く処理→軽くテスト→インフラ構築→デプロイ→機能を追加していく、みたいな感じです。
+            </Box>
+            </Box>
+            <Box className={styles.heading} ref={ref21}>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 2, sm: 2, md: 4, lg: 4}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              どんなエンジニアになりたいか？
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              毎回アプリを作成する時の設計から開発、テスト、そしてデプロイするまでの一連のフローを進めていく上で感じられる達成感やスピード感がとても好きなので、
+              フルスタッフ？というのは難しいかもしれないですが、そのような頼りがいのあるエンジニアになりたいです。
+            </Box>
+            <Box sx={{ fontFamily: "serif", fontSize: { xs: 12, sm: 14, md: 16, lg: 18}, mt: {xs: 1, sm: 1, md: 2, lg: 2}, ml: {xs: 2, sm: 3, md: 4, lg: 5}, mr:{ xs: 2, sm: 3, md: 4, lg: 5}}}>
+              また、以前どうしても自分で解決できない問題があり、追い詰められていた時にエンジニアの方にお手をお借りしました。
+              私事のように問題解決を手伝ってくださり、その熱意に胸を打たれました。この経験をしてから、相手に寄り添って考えられる、
+              相手の立場に立ってコミュニケーションをとれるエンジニアになりたいと思うようになりました。人としてもこのように成長して行けたらと強く思っています。
+            </Box>
+            </Box>
+            </Box>
           </Grid>
           </Grid>
         </Grid>
