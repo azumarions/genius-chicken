@@ -1,5 +1,5 @@
 # Genius Chicken
-[https://genius-chicken.com]Genius Chicken
+[https://genius-chicken.com] Genius Chicken
 ## overviews
 ##### アプリ概要
 ##### 技術選定
