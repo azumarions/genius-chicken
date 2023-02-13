@@ -1,5 +1,5 @@
 # Genius Chicken
-<img width="350" src="frontend/client/public/home10.png" alt="Genius Chicken">
+[![Genius Chicken] (../frontend/client/public/home10.png] (https://genius-chicken.com)
 
 ## overviews
 ##### アプリ概要
