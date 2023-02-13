@@ -35,4 +35,5 @@ Others
 * Application Server: Gunicorn
 
 ## インフラ構成
+![Genius Chicken](chicken.drawio)
 ## 機能要件・非機能要件
