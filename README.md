@@ -9,7 +9,9 @@
 
 
 ## アプリ概要
-
+Genius Chickenはタスク管理のためのWebアプリケーションです。
+名前の由来は、覚えることのできるニワトリは天才だという思想からです。
+アプリの用途は、基本的にはタスク管理ですがメモや日記としても使えると思います。
 
 ## 技術選定
 Backend
@@ -25,7 +27,7 @@ Frontend
 
 Infrastructure
 * Cloud: AWS
-* Service: VPC, RDS, ECR, ECS, ALB, Route53, ACM
+* Service: VPC, RDS, ECR, ECS, ALB, Route53, ACM, Cloud Watch
 * IaaS: terraform
 * PipeLine: Github Actions
 
