@@ -1,5 +1,5 @@
 # Genius Chicken
-[![Genius Chicken] (../frontend/client/public/home10.png] (https://genius-chicken.com)
+[![Genius Chicken](../frontend/client/public/home10.png)](https://genius-chicken.com)
 
 ## overviews
 ##### アプリ概要
