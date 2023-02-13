@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from .views import health_check
 from rest_framework.routers import DefaultRouter
 
 app_name = 'user'
@@ -19,5 +20,6 @@ urlpatterns = [
     path('task-list/', views.TaskListView.as_view(), name='task-list'),
     path('task-detail/<slug:pk>/',
          views.TaskRetrieveView.as_view(), name='task-detail'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path("health/", health_check, name="health"),
 ]

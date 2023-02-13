@@ -1,6 +1,8 @@
 from rest_framework import generics, viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from django.http import JsonResponse
 from . import serializers
 from .models import Profile, Task, Category
 
@@ -74,3 +76,9 @@ class TaskListView(generics.ListAPIView):
     queryset = Task.objects.all()
     serializer_class = serializers.TaskSerializer
     permission_classes = (AllowAny,)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def health_check(request):
+    return JsonResponse(data={"msg": "pass"}, status=200)
