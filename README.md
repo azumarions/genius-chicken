@@ -6,7 +6,10 @@
 ##### インフラ構成
 ##### 機能要件・非機能要件
 
+
 ## アプリ概要
+
+
 ## 技術選定
 Backend
 * Language: Python
@@ -24,9 +27,10 @@ Infrastructure
 * Service: VPS, RDS, ECR, ECS, ALB, Route53, ACM
 
 Others
-* container: docker
-* CaaS: terraform
+* Container: Docker, Docker-compose
+* IaaS: Terraform
 * Web Server: Nginx
+
 
 ## インフラ構成
 ## 機能要件・非機能要件
