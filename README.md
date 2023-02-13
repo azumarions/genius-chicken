@@ -1,18 +1,17 @@
 # Genius Chicken
 [![Genius Chicken](frontend/client/public/home10.png)](https://genius-chicken.com)
 
-> [!IMPORTANT]
-> Essential information required for user success.
 
 ## overviews
 ##### アプリ概要
-##### 技術選定
 ##### インフラ構成
+##### 技術選定
 ##### 実装機能
 
-<p class="info">ゲストログインができます。</p>
+### *ゲストログインができます
 
 ## アプリ概要
+
 Genius Chickenはタスク管理のためのWebアプリケーションです。
 
 名前の由来は、覚えることのできるニワトリは天才だという思想からです。
@@ -22,6 +21,11 @@ Genius Chickenはタスク管理のためのWebアプリケーションです。
 本来は大学の授業グループワークやゼミで使えそうな、複数人でタスクを管理できるアプリを作成する予定だったのですが、時間の関係上キリのいいとこでひとまず完成としました。
 
 機能数はまだ少ないですが、これからも継続的に開発を進めていきます！
+
+
+## インフラ構成
+![Genius Chicken](chicken.drawio.png)
+
 
 ## 技術選定
 Backend
@@ -46,8 +50,6 @@ Others
 * Web Server: Nginx
 * Application Server: Gunicorn
 
-## インフラ構成
-![Genius Chicken](chicken.drawio.png)
 
 ## 実装機能
 #### 機能要件
