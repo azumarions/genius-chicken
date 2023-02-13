@@ -1,6 +1,9 @@
 # Genius Chicken
 [![Genius Chicken](frontend/client/public/home10.png)](https://genius-chicken.com)
 
+> [!IMPORTANT]
+> Essential information required for user success.
+
 ## overviews
 ##### アプリ概要
 ##### 技術選定
@@ -8,10 +11,6 @@
 ##### 実装機能
 
 <p class="info">ゲストログインができます。</p>
-
-:::note warn
-NOTE WARNING!!!
-:::
 
 ## アプリ概要
 Genius Chickenはタスク管理のためのWebアプリケーションです。
