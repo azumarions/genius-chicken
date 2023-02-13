@@ -102,6 +102,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'adminpassword',
         'HOST': 'todo-1.cccftuqgvuib.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -145,10 +146,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # 開発環境下で静的ファイルを参照する先
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # 本番環境で静的ファイルを参照する先
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # メディアファイルpath
 MEDIA_URL = '/media/'
@@ -168,9 +169,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost',
-    'http://localhost:3000',
-)
+CORS_ORIGIN_WHITELIST = ('https://genius-chicken.com')
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = 'todo.User'
