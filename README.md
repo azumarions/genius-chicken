@@ -10,9 +10,10 @@
 {.info} Information
 :   ゲストログインができます。
 
->[!NOTE]
->
->This is a standard NOTE block.
+
+:::note warn
+NOTE WARNING!!!
+:::
 
 ## アプリ概要
 Genius Chickenはタスク管理のためのWebアプリケーションです。
