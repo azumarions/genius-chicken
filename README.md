@@ -5,9 +5,9 @@
 ##### アプリ概要
 ##### 技術選定
 ##### インフラ構成
-##### 機能要件・非機能要件
+##### 実装機能
 
-:::note info
+::: note info
 ゲストログインができます。
 :::
 
@@ -48,7 +48,7 @@ Others
 ## インフラ構成
 ![Genius Chicken](chicken.drawio.png)
 
-## 機能要件・非機能要件
+## 実装機能
 #### 機能要件
 User Function
 * Login
@@ -70,4 +70,14 @@ Pagination Function
 Sorting Function
 * Task, Status, Kategory, Create_at
 
+Others
+* Full Responsive Design
+* Dark Mode
+* Drawer Menu
+* Snack Bar
+* Loading
+* Disable Button
+
 #### 非機能要件
+* Fetch: useSWR
+* Rendering: SSG, ISR
