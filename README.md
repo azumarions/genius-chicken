@@ -1,5 +1,5 @@
-# Genius-chicken
-ここにリンクと画像
+# Genius Chicken
+[https://genius-chicken.com]Genius Chicken
 ## overviews
 ##### アプリ概要
 ##### 技術選定
@@ -24,13 +24,14 @@ Frontend
 
 Infrastructure
 * Cloud: AWS
-* Service: VPS, RDS, ECR, ECS, ALB, Route53, ACM
+* Service: VPC, RDS, ECR, ECS, ALB, Route53, ACM
+* IaaS: terraform
+* PipeLine: Github Actions
 
 Others
 * Container: Docker, Docker-compose
-* IaaS: Terraform
 * Web Server: Nginx
-
+* Application Server: Gunicorn
 
 ## インフラ構成
 ## 機能要件・非機能要件
