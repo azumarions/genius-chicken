@@ -1,5 +1,6 @@
 # Genius Chicken
-[https://genius-chicken.com] Genius Chicken
+<img width="100" src="../frontend/client/public/home10.png" alt="Genius Chicken">
+
 ## overviews
 ##### アプリ概要
 ##### 技術選定
