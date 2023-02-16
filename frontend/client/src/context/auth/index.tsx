@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useState } from "react";
+import React, { createContext, Dispatch, useState } from 'react'
 
 type AuthContextType = {
   isAuth: boolean
@@ -14,18 +14,20 @@ export const AuthContext = createContext<AuthContextType>(
     isAuth: boolean
     setIsAuth: Dispatch<React.SetStateAction<boolean>>
   }
-);
+)
 
-export default function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+export default function AuthContextProvider({
+  children,
+}: AuthContextProviderProps) {
+  const [isAuth, setIsAuth] = useState<boolean>(false)
   return (
     <AuthContext.Provider
       value={{
         isAuth,
-        setIsAuth
+        setIsAuth,
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 }
