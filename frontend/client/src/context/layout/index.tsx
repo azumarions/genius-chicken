@@ -1,25 +1,26 @@
-import * as React from 'react';
-import { createContext } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-
+import * as React from 'react'
+import { createContext } from 'react'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
 
 interface ColorModeContextProviderProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
-export const ColorModeContext = createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = createContext({ toggleColorMode: () => {} })
 
-export const ColorModeContextProvider = ({ children }: ColorModeContextProviderProps ) => {
-  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
+export const ColorModeContextProvider = ({
+  children,
+}: ColorModeContextProviderProps) => {
+  const [mode, setMode] = React.useState<'light' | 'dark'>('dark')
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
       },
     }),
-    [],
-  );
+    []
+  )
 
   const theme = React.useMemo(
     () =>
@@ -30,7 +31,7 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
             main: '#303f9f',
           },
           secondary: {
-            main: '#424242'
+            main: '#424242',
           },
           success: {
             // 千歳緑
@@ -45,8 +46,8 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
           },
         },
       }),
-    [mode],
-  );
+    [mode]
+  )
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -55,5 +56,5 @@ export const ColorModeContextProvider = ({ children }: ColorModeContextProviderP
         {children}
       </ThemeProvider>
     </ColorModeContext.Provider>
-  );
+  )
 }
