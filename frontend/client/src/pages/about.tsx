@@ -449,7 +449,7 @@ const AboutPage: NextPage = () => {
                       mr: { xs: 2, sm: 3, md: 4, lg: 5 },
                     }}
                   >
-                    開発期間の設定が少し甘かったことです。
+                    開発期間の設定が少し甘かったことです.
                   </Box>
                   <Box
                     sx={{
