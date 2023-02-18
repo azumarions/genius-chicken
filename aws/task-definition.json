@@ -1,0 +1,134 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:492725752366:task-definition/todo1-task:1",
+  "containerDefinitions": [
+    {
+      "name": "python-backend",
+      "image": "492725752366.dkr.ecr.us-east-1.amazonaws.com/python-backend",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "python-backend-8000-tcp",
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "DB_USERNAME",
+          "value": "admin"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_EMAIL",
+          "value": "api@gmail.com"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_USERNAME",
+          "value": "api"
+        },
+        {
+          "name": "DB_HOST",
+          "value": "todo-1.cccftuqgvuib.us-east-1.rds.amazonaws.com"
+        },
+        {
+          "name": "DJANGO_SUPERUSER_PASSWORD",
+          "value": "password"
+        },
+        {
+          "name": "DB_DATABASE",
+          "value": "todoList"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "adminpassword"
+        }
+      ],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/todo1-task",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    },
+    {
+      "name": "nginx_backend",
+      "image": "492725752366.dkr.ecr.us-east-1.amazonaws.com/nginx_backend",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "nginx_backend-80-tcp",
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/todo1-task",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "family": "todo1-task",
+  "executionRoleArn": "arn:aws:iam::492725752366:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": ["EC2", "FARGATE"],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "1024",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2023-02-12T09:29:39.849Z",
+  "registeredBy": "arn:aws:iam::492725752366:root",
+  "tags": []
+}
