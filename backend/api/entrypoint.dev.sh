@@ -1,7 +1,12 @@
 #!/bin/sh
 
-# python manage.py makemigrations --noinput
-# python manage.py migrate --noinput
+# python manage.py makemigrations
+# python manage.py migrate --fake admin zero
+# python manage.py migrate --fake auth zero
+# python manage.py migrate --fake contenttypes zero
+# python manage.py migrate --fake sessions zero
+# python manage.py migrate
+
 # python manage.py collectstatic --noinput
 # python ./usr/src/app/manage.py createsuperuser --noinput
 

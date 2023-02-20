@@ -9,17 +9,26 @@ router = DefaultRouter()
 router.register('profile', views.ProfileviewSet, basename='profile')
 router.register('category', views.CategoryViewSet, basename='category')
 router.register('task', views.TaskViewSet, basename='task')
+router.register('subtask', views.SubTaskViewSet, basename='subtask')
+router.register('group', views.GroupViewSet, basename='group')
 
 
 urlpatterns = [
-    path('register/', views.CreateUserView.as_view(), name='register'),
-    path('myprofile/', views.MyProfileListView.as_view(), name='myprofile'),
-    path('profile-list/', views.ProfileListView.as_view(), name='profile-list'),
-    path('profile-detail/<slug:pk>/',
-         views.ProfileRetrieveView.as_view(), name='profile-detail'),
-    path('task-list/', views.TaskListView.as_view(), name='task-list'),
-    path('task-detail/<slug:pk>/',
-         views.TaskRetrieveView.as_view(), name='task-detail'),
-    path('', include(router.urls)),
-    path("health/", health_check, name="health"),
+     path('register/', views.CreateUserView.as_view(), name='register'),
+     path('myprofile/', views.MyProfileListView.as_view(), name='myprofile'),
+     path('profile-list/', views.ProfileListView.as_view(), name='profile-list'),
+     path('profile-detail/<slug:pk>/',
+          views.ProfileRetrieveView.as_view(), name='profile-detail'),
+     path('task-list/', views.TaskListView.as_view(), name='task-list'),
+     path('task-detail/<slug:pk>/',
+          views.TaskRetrieveView.as_view(), name='task-detail'),
+     path('subtask-list/', views.SubTaskListView.as_view(), name='subtask-list'),
+     path('subtask-detail/<slug:pk>/',
+          views.SubTaskRetrieveView.as_view(), name='subtask-detail'),
+     path('group-list/', views.SubTaskListView.as_view(), name='group-list'),
+     path('group-detail/<slug:pk>/',
+          views.GroupRetrieveView.as_view(), name='group-detail'),
+     path('', include(router.urls)),
+     #   AWS ALBヘルスチェック用のurl
+     path("health/", health_check, name="health"),
 ]
