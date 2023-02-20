@@ -10,17 +10,17 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/app
 
 # install dependencies
-COPY ./entrypoint.dev.sh ./usr/src/app/
+COPY ./entrypoint.sh ./usr/src/app/
 COPY ./requirements.txt ./usr/src/app/
 RUN python3 -m pip install --upgrade pip setuptools
 RUN pip install -r ./usr/src/app/requirements.txt
 
-RUN chmod +x ./usr/src/app/entrypoint.dev.sh
+RUN chmod +x ./usr/src/app/entrypoint.sh
 
 # Copy project
 COPY . ./usr/src/app/
 
-ENTRYPOINT ["sh", "./usr/src/app/entrypoint.dev.sh"]
+ENTRYPOINT ["sh", "./usr/src/app/entrypoint.sh"]
 
 # # backend/web-back/Dockerfile
 # # set base image

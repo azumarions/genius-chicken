@@ -26,6 +26,7 @@ export interface USER {
   name: string
   description: string
   img: string
+  created_at: string
 }
 
 export interface TASK {

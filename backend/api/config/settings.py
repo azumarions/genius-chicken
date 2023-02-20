@@ -143,15 +143,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
 
 # 開発環境下で静的ファイルを参照する先
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # 本番環境で静的ファイルを参照する先
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# メディアファイルpath
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 # 追加
@@ -169,8 +169,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = ('https://genius-chicken.com')
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000", "http://localhost", "https://genius-chicken.com"
+]
 
-CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'todo.User'
