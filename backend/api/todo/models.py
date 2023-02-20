@@ -58,7 +58,7 @@ class Profile(models.Model):
     description = models.TextField(
         verbose_name='概要', max_length=1000, blank=True, null=True)
     img = models.ImageField(verbose_name='画像', blank=True,
-                            null=True, upload_to=upload_avatar_path)
+                            null=True, upload_to=upload_avatar_path, default='media/avatars/default.png')
     created_at = models.DateTimeField(verbose_name='作成日', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='更新日', auto_now=True)
 

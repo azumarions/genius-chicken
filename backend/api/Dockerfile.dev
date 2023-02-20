@@ -20,7 +20,9 @@ RUN chmod +x ./usr/src/app/entrypoint.dev.sh
 # Copy project
 COPY . ./usr/src/app/
 
-ENTRYPOINT ["sh", "./usr/src/app/entrypoint.dev.sh"]
+ENTRYPOINT ["sh", "entrypoint.dev.sh"]
+
+EXPOSE 8000
 
 # # backend/web-back/Dockerfile
 # # set base image
