@@ -182,6 +182,6 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000", "http://localhost", "https://genius-chicken.com"
 ]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'todo.User'
