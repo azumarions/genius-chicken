@@ -1,8 +1,8 @@
 #!/bin/sh
 
-python ./usr/src/app/manage.py makemigrations --noinput
-python ./usr/src/app/manage.py migrate --noinput
-# python ./usr/src/app/manage.py collectstatic --noinput
+# python ./usr/src/app/manage.py makemigrations --noinput
+# python ./usr/src/app/manage.py migrate --noinput
+python ./usr/src/app/manage.py collectstatic --noinput
 # python ./usr/src/app/manage.py createsuperuser --noinput
 
 # if [ $DEBUG = "True" ]
