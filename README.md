@@ -6,6 +6,7 @@
 ##### アプリ概要
 ##### インフラ構成
 ##### 技術選定
+##### データベース設計
 ##### 実装機能
 
 ### *ゲストログインができます
@@ -25,6 +26,9 @@ Genius Chickenはタスク管理のためのWebアプリケーションです。
 
 ## インフラ構成
 ![Genius Chicken](chicken.drawio.png)
+
+## データベース設計
+![Genius Chicken](chicken.er.drawio.png)
 
 
 ## 技術選定
