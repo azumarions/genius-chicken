@@ -10,7 +10,7 @@ services:
     volumes:
       - ./backend/api:/usr/src/app/
       - static_volume:/usr/src/app/static # <-- bind the static volume
-      - media_volume:/usr/src/app/media
+      # - media_volume:/usr/src/app/media
     stdin_open: true
     tty: true
     # command: gunicorn --bind :8000 config.wsgi:application
@@ -28,7 +28,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - static_volume:/usr/src/app/static # <-- bind the static volume
-      - media_volume:/usr/src/app/media
+      # - media_volume:/usr/src/app/media
     ports:
       - "8080:80"
     depends_on:
@@ -83,5 +83,5 @@ networks:
     driver: bridge
 volumes:
   static_volume:
-  media_volume:
+  # media_volume:
   # node-modules:
