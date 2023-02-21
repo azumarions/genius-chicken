@@ -31,6 +31,9 @@ export default function TaskContextProvider({
     description: '',
     status: '',
     status_name: '',
+    access: '',
+    access_name: '',
+    estimate: 1,
     category: 0,
     category_item: '',
     created_at: '',
@@ -42,6 +45,8 @@ export default function TaskContextProvider({
     title: '',
     description: '',
     status: '',
+    access: '',
+    estimate: 0,
     category: 0,
     category_item: '',
   })

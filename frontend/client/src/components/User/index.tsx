@@ -33,8 +33,8 @@ const User: React.FC<UserType> = ({ user }) => {
                   height: { xs: 50, sm: 70, md: 80, lg: 90 },
                   mr: 2,
                 }}
-                src={'/default.png?w=248&fit=crop&auto=format'}
-                srcSet={'/default.png?w=248&fit=crop&auto=format&dpr=2 2x'}
+                src={'default.png?w=248&fit=crop&auto=format'}
+                srcSet={'default.png?w=248&fit=crop&auto=format&dpr=2 2x'}
                 alt={'default'}
               />
             </ListItemAvatar>

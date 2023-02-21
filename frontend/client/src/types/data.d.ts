@@ -36,8 +36,30 @@ export interface TASK {
   description: string
   status: string
   status_name: string
+  access: string
+  access_name: string
   category: number
   category_item: string
+  estimate: number
+  created_at: string
+  updated_at: string
+}
+
+export interface SUBTASK {
+  id: number
+  userSubTask: number
+  subTaskInTask: number
+  title: string
+  description: string
+  status: string
+  status_name: string
+  access: string
+  access_name: string
+  estimate: number
+  category: number
+  category_item: string
+  subTaskOwner: string
+  subTaskResponsible: string
   created_at: string
   updated_at: string
 }
@@ -48,6 +70,8 @@ export interface EDIT_TASK {
   title: string
   description: string
   status: string
+  access: string
+  estimate: number
   category: number
   category_item: stirng
 }

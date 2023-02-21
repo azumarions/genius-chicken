@@ -7,7 +7,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { TASK, USER } from '@/types'
 import { getTasks } from '@/api/task'
 import UserTask from '@/components/UserTask'
-import UserProfile from '@/components/UserTask/UserProfile'
+import UserProfile from '@/components/UserProfile'
 import { Grid } from '@mui/material'
 
 interface STATICPROPS {

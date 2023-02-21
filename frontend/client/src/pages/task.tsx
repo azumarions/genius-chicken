@@ -132,6 +132,8 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                   title: '',
                   description: '',
                   status: '1',
+                  access: '1',
+                  estimate: 1,
                   category: 1,
                   category_item: '',
                 })
@@ -142,6 +144,9 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
                   description: '',
                   status: '1',
                   status_name: '',
+                  access: '1',
+                  access_name: '',
+                  estimate: 1,
                   category: 1,
                   category_item: '',
                   created_at: '',
