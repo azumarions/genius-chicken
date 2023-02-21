@@ -3,14 +3,17 @@ import Cookie from 'universal-cookie'
 import React, { useContext, useEffect, useState } from 'react'
 import { TaskContext } from '../../context/task'
 import { SnackbarMessage, TASK } from '@/types'
+import WorkspacesIcon from '@mui/icons-material/Workspaces'
 import { KeyedMutator } from 'swr'
 import {
   Badge,
+  ButtonGroup,
   Dialog,
   DialogContent,
   DialogProps,
   DialogTitle,
   Grid,
+  IconButton,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -21,6 +24,7 @@ import {
 } from '@mui/material'
 import BlurOnIcon from '@mui/icons-material/BlurOn'
 import { Box } from '@mui/system'
+import { Group } from '@mui/icons-material'
 
 const cookie = new Cookie()
 
@@ -30,11 +34,14 @@ type Type = {
 
 const UserTask: React.FC<Type> = ({ task }) => {
   const { setEditTask, selectedTask, setSelectedTask } = useContext(TaskContext)
+  const [group, setGroup] = useState(false)
   const rows = [
-    // { item: 'Id', data: selectedTask.id },
+    // { item: "Id", data: selectedTask.id},
     { item: 'Title', data: selectedTask.title },
     { item: 'Description', data: selectedTask.description },
     { item: 'Status', data: selectedTask.status_name },
+    { item: 'Access', data: selectedTask.access_name },
+    { item: 'Estimate', data: selectedTask.estimate },
     { item: 'Category', data: selectedTask.category_item },
     { item: 'Create', data: selectedTask.created_at },
     { item: 'Update', data: selectedTask.updated_at },
@@ -66,24 +73,46 @@ const UserTask: React.FC<Type> = ({ task }) => {
   return (
     <React.Fragment>
       <ListItem
-        onClick={() => {
-          //   handleClickOpen('paper')
-          setOpen(true)
-          setSelectedTask(task)
-        }}
-        sx={{ border: 'black', zIndex: 0 }}
+      // onClick={() => {
+      //     handleClickOpen('paper')
+      //   setOpen(true)
+      //   setSelectedTask(task)
+      // }}
+      // sx={{ border: 'black', zIndex: 0 }}
+      // // secondaryAction={<Group />}
       >
         <ListItemText
           sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
           disableTypography
           onClick={() => {
             setSelectedTask(task)
+            handleClickOpen('paper')
+            setOpen(true)
           }}
         >
           {task.title}
         </ListItemText>
         <ListItemIcon sx={{ zIndex: 0 }}>
           {renderSwitch(task.status_name)}
+        </ListItemIcon>
+        <ListItemIcon onClick={() => setGroup(!group)}>
+          {group ? (
+            <IconButton sx={{ p: 0 }}>
+              <WorkspacesIcon
+                sx={{
+                  color: 'purple',
+                }}
+              />
+            </IconButton>
+          ) : (
+            <IconButton sx={{ p: 0 }}>
+              <WorkspacesIcon
+                sx={{
+                  color: 'pink',
+                }}
+              />
+            </IconButton>
+          )}
         </ListItemIcon>
       </ListItem>
       <Dialog

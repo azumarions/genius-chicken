@@ -178,6 +178,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
       userTask: 0,
       description: '',
       status: '',
+      access: '',
+      estimate: 1,
       category: 1,
       category_item: '',
     })
@@ -217,6 +219,8 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
       userTask: 0,
       description: '',
       status: '',
+      access: '',
+      estimate: 1,
       category: 1,
       category_item: '',
     })
