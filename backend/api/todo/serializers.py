@@ -75,6 +75,8 @@ class SubTaskSerializer(serializers.ModelSerializer):
         extra_kwargs = {'userTask': {'read_only': True}}
 
 class GroupSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(
+        format="%Y-%m-%d %H:%M:%S", read_only=True)
     class Meta:
         model = Group
         fields = ('id', 'userGroup', 'taskGroup', 'created_at')
