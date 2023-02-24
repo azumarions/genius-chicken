@@ -14,10 +14,7 @@ export interface PROFILE {
   id: number
   userProfile: number
   name: string
-  statusMessage: string
   description: string
-  img: string
-  editImage: File | null
 }
 
 export interface USER {
@@ -25,7 +22,6 @@ export interface USER {
   userProfile: number
   name: string
   description: string
-  img: string
   created_at: string
 }
 
@@ -100,4 +96,28 @@ export interface SORT_STATE {
 
 export interface NEW_CATEGORY {
   newCategory: CATEGORY[]
+}
+
+export interface GROUP {
+  id: number
+  userGroup: number
+  taskGroup: number
+  created_at: string
+}
+
+export interface CLUSTER {
+  id: number
+  userCluster: number
+  taskCluster: number
+  task_title: string
+  task_description: string
+  task_status: string
+  task_access: string
+  task_category: number
+  task_estimate: number
+  task_created_at: string
+  task_updated_at: string
+  user_name: string
+  user_description: string
+  created_at: string
 }

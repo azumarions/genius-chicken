@@ -16,3 +16,10 @@ RUN python3 -m pip install --upgrade pip setuptools
 RUN pip install -r ./usr/src/app/requirements.txt
 
 RUN chmod +x ./usr/src/app/entrypoint.sh
+
+# Copy project
+COPY . ./usr/src/app/
+
+ENTRYPOINT ["sh", "./usr/src/app/entrypoint.sh"]
+
+EXPOSE 8000
