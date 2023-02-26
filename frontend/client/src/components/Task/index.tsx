@@ -1,15 +1,12 @@
-import Link from 'next/link'
 import Cookie from 'universal-cookie'
 import React, { useContext, useEffect, useState } from 'react'
 import { TaskContext } from '../../context/task'
-import { CLUSTER, GROUP, SnackbarMessage, TASK, USER } from '@/types'
-import { KeyedMutator } from 'swr'
+import { GROUP, SnackbarMessage, TASK, USER } from '@/types'
 import {
   Badge,
   Box,
   Button,
   ButtonGroup,
-  Card,
   Dialog,
   DialogContent,
   DialogProps,
@@ -17,25 +14,17 @@ import {
   Grid,
   IconButton,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Snackbar,
-  Table,
-  TableBody,
-  Typography,
 } from '@mui/material'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
-import DeleteIcon from '@mui/icons-material/Delete'
 import BlurOnIcon from '@mui/icons-material/BlurOn'
 import WorkspacesIcon from '@mui/icons-material/Workspaces'
 import TaskDetail from '../TaskDetail'
-import { ClusterContext } from '@/context/cluster'
-import Cluster from '../Cluster'
 import useSWR from 'swr'
-import { ProfileContext } from '@/context/profile'
 import { GroupContext } from '@/context/group'
 import { UserContext } from '@/context/user'
+import Group from '../Group'
 
 const cookie = new Cookie()
 
@@ -43,18 +32,15 @@ type Type = {
   task: TASK
   staticGroups: GROUP[]
   staticUsers: USER[]
-  // taskMutate: KeyedMutator<any>
 }
 
 const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/group-list/`
 
 const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
-  const { setEditTask, selectedTask, setSelectedTask } = useContext(TaskContext)
-  const { selectedUser, setSelectedUser, setSelectedUsers } =
-    useContext(UserContext)
-  const { selectedGroup, setSelectedGroup, setSelectedGroups } =
-    useContext(GroupContext)
+  const { setSelectedTask } = useContext(TaskContext)
+  const { setSelectedUsers } = useContext(UserContext)
+  const { setSelectedGroups } = useContext(GroupContext)
   const [open, setOpen] = useState(false)
   const [inGroup, setInGroup] = useState(false)
   const [scroll, setScroll] = useState<DialogProps['scroll']>('paper')
@@ -88,7 +74,7 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
       staticUsers.map((user) => user.id === group.userGroup)
   )
 
-  const createCluster = async (e: { preventDefault: () => void }) => {
+  const GroupIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/group/`, {
       method: 'POST',
@@ -101,7 +87,6 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
       if (res.status === 401) {
         alert('JWT Token not valid')
       } else {
-        // setSelectedGroup()
         setSnackPack((prev) => [
           ...prev,
           { message: 'グループに入りました！', key: new Date().getTime() },
@@ -111,7 +96,7 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
     mutate()
   }
 
-  const deleteCluster = async () => {
+  const GroupOut = async () => {
     await fetch(
       `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/group/${group.id}`,
       {
@@ -179,7 +164,7 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
           <ButtonGroup>
             <Box sx={{ p: 0 }} onClick={() => setInGroup(!inGroup)}>
               {inGroup ? (
-                <IconButton onClick={deleteCluster}>
+                <IconButton onClick={GroupOut}>
                   <WorkspacesIcon
                     sx={{
                       color: 'purple',
@@ -187,7 +172,7 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
                   />
                 </IconButton>
               ) : (
-                <IconButton onClick={createCluster}>
+                <IconButton onClick={GroupIn}>
                   <WorkspacesIcon
                     sx={{
                       color: 'pink',
@@ -208,7 +193,6 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
             setSelectedUsers(staticUsers)
             handleClickOpen('paper')
             setOpenDialog(true)
-            console.log(group)
           }}
         >
           {task.title}
@@ -221,7 +205,7 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
         sx={{ width: '99.9%' }}
         open={openDialog}
         onClose={handleClose}
-        // scroll={scroll}
+        scroll={scroll}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
@@ -243,9 +227,8 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
             direction="column"
           >
             <TaskDetail />
-            <Cluster />
+            <Group />
           </Grid>
-          {/* <PostDialog key={post.id} postId={post.id} userPost={post.userPost} /> */}
         </DialogContent>
       </Dialog>
       <Snackbar

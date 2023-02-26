@@ -1,49 +1,34 @@
 import { GetStaticProps, NextPage } from 'next'
 import { getTasks } from '../api/task'
-import { getCategorys } from '../api/category'
-import useSWR from 'swr'
-import { CATEGORY, CLUSTER, GROUP, SORT_STATE, TASK, USER } from '../types'
+import { GROUP, SORT_STATE, TASK, USER } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
 import {
-  Autocomplete,
   Box,
-  Button,
-  Card,
+  Divider,
   Grid,
-  IconButton,
   List,
-  ListItem,
   ListSubheader,
   Pagination,
-  Stack,
   TableSortLabel,
-  TextField,
 } from '@mui/material'
-import { TaskContext } from '@/context/task'
-import TaskForm from '@/components/TaskForm'
-import TaskDetail from '@/components/TaskDetail'
-import { getClusters } from '@/api/cluster'
-import { ProfileContext } from '@/context/profile'
 import { getGroups } from '@/api/group'
 import { getUsers } from '@/api/users'
+import { ProfileContext } from '@/context/profile'
 
 interface STATICPROPS {
   staticTasks: any
-  staticCategorys: CATEGORY[]
   staticGroups: GROUP[]
   staticUsers: USER[]
 }
 
-const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
-const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task-list/`
-
 const TaskPage: NextPage<STATICPROPS> = ({
   staticTasks,
-  staticCategorys,
   staticGroups,
   staticUsers,
 }) => {
+  const { myProfile } = useContext(ProfileContext)
+
   const columns = staticTasks[0] && Object.keys(staticTasks[0])
 
   const [page, setPage] = useState<number>(1) //ページ番号
@@ -97,9 +82,6 @@ const TaskPage: NextPage<STATICPROPS> = ({
     }))
   }
 
-  const { myProfile, setMyProfile } = useContext(ProfileContext)
-  // if (error) return <span>Error!</span>
-
   return (
     <div title="Todos">
       <Box
@@ -117,7 +99,6 @@ const TaskPage: NextPage<STATICPROPS> = ({
           lg={12}
           sx={{
             width: '100%',
-            // height: { xs: 280, sm: 310, md: 600, lg: 600 },
           }}
         >
           <List sx={{ height: '100%', overflow: 'auto', pt: 0 }}>
@@ -135,7 +116,7 @@ const TaskPage: NextPage<STATICPROPS> = ({
                       onClick={() => handleClickSortColumn(column)}
                     >
                       <Box
-                        sx={{ fontSize: { xs: 11, sm: 14, md: 16, lg: 18 } }}
+                        sx={{ fontSize: { xs: 13, sm: 14, md: 16, lg: 18 } }}
                       >
                         {column}
                       </Box>
@@ -143,6 +124,8 @@ const TaskPage: NextPage<STATICPROPS> = ({
                   )
               )}
             </ListSubheader>
+            <Divider />
+
             {state.rows &&
               state.rows.map((row, rowIndex) => (
                 <Task
@@ -150,7 +133,6 @@ const TaskPage: NextPage<STATICPROPS> = ({
                   task={row}
                   staticGroups={staticGroups}
                   staticUsers={staticUsers}
-                  // taskMutate={mutate}
                 />
               ))}
             <Box sx={{ textAlign: 'center', justifyItems: 'center' }}>
@@ -165,7 +147,6 @@ const TaskPage: NextPage<STATICPROPS> = ({
             </Box>
           </List>
         </Grid>
-        {/* </Grid> */}
       </Box>
     </div>
   )
@@ -173,10 +154,13 @@ const TaskPage: NextPage<STATICPROPS> = ({
 export default TaskPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const [staticTasks, staticCategorys, staticGroups, staticUsers] =
-    await Promise.all([getTasks(), getCategorys(), getGroups(), getUsers()])
+  const [staticTasks, staticGroups, staticUsers] = await Promise.all([
+    getTasks(),
+    getGroups(),
+    getUsers(),
+  ])
   return {
-    props: { staticTasks, staticCategorys, staticGroups, staticUsers },
+    props: { staticTasks, staticGroups, staticUsers },
     revalidate: 10,
   }
 }

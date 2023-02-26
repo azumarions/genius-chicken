@@ -1,51 +1,63 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import { Drawer, FormControlLabel, IconButton, Menu, MenuItem, Snackbar, Stack, styled, Switch } from '@mui/material';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MenuIcon from '@mui/icons-material/Menu';
-import Cookie from "universal-cookie";
-import router from "next/router";
+import React, { useContext, useEffect, useState } from 'react'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import {
+  Drawer,
+  FormControlLabel,
+  IconButton,
+  Menu,
+  MenuItem,
+  Snackbar,
+  Stack,
+  styled,
+  Switch,
+} from '@mui/material'
+import Button from '@mui/material/Button'
+import List from '@mui/material/List'
+import Divider from '@mui/material/Divider'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import InboxIcon from '@mui/icons-material/MoveToInbox'
+import MenuIcon from '@mui/icons-material/Menu'
+import Cookie from 'universal-cookie'
+import router from 'next/router'
 import { ColorModeContext } from '../../context/layout'
-import { AuthContext } from '@/context/auth';
-import HomeIcon from '@mui/icons-material/Home';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { SnackbarMessage } from '@/types';
-import DialpadIcon from '@mui/icons-material/Dialpad';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import PersonIcon from '@mui/icons-material/Person';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { AuthContext } from '@/context/auth'
+import HomeIcon from '@mui/icons-material/Home'
+import LockOpenIcon from '@mui/icons-material/LockOpen'
+import LogoutIcon from '@mui/icons-material/Logout'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import SettingsIcon from '@mui/icons-material/Settings'
+import { SnackbarMessage } from '@/types'
+import DialpadIcon from '@mui/icons-material/Dialpad'
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import PersonIcon from '@mui/icons-material/Person'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 
-const cookie = new Cookie();
+const cookie = new Cookie()
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
 export default function Header() {
-  const colorMode = useContext(ColorModeContext);
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const colorMode = useContext(ColorModeContext)
+  const { isAuth, setIsAuth } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
-  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
-  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(undefined,);
-  const label = { inputProps: { 'aria-label': 'Switch theme' } };
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([])
+  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(
+    undefined
+  )
+  const label = { inputProps: { 'aria-label': 'Switch theme' } }
   const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
-  });
+  })
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -55,58 +67,72 @@ export default function Header() {
         ((event as React.KeyboardEvent).key === 'Tab' ||
           (event as React.KeyboardEvent).key === 'Shift')
       ) {
-        return;
+        return
       }
-    setState({ ...state, [anchor]: open });
-  };
+      setState({ ...state, [anchor]: open })
+    }
 
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
-      setMessageInfo({ ...snackPack[0] });
-      setSnackPack((prev) => prev.slice(1));
-      setOpen(true);
+      setMessageInfo({ ...snackPack[0] })
+      setSnackPack((prev) => prev.slice(1))
+      setOpen(true)
     } else if (snackPack.length && messageInfo && open) {
-      setOpen(false);
+      setOpen(false)
     }
-  }, [snackPack, messageInfo, open]);
+  }, [snackPack, messageInfo, open])
 
-  const handleBarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleBarClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleExited = () => {
-    setMessageInfo(undefined);
-  };
+    setMessageInfo(undefined)
+  }
 
-  const task = () => {
-    router.push("/task");
-  };
+  const top = () => {
+    router.push('/account')
+  }
+
+  const tasks = () => {
+    router.push('/top')
+  }
+
+  const users = () => {
+    router.push('/users')
+  }
 
   const login = () => {
-    router.push("/auth");
-  };
+    router.push('/auth')
+  }
 
   const home = () => {
-    router.push("/");
-  };
+    router.push('/')
+  }
 
   const about = () => {
-    router.push("/about");
-  };
+    router.push('/about')
+  }
 
   const profile = () => {
-    router.push("/profile");
-  };
+    router.push('/profile')
+  }
 
   const logout = () => {
-    cookie.remove("access_token");
+    cookie.remove('access_token')
     setIsAuth(false)
-    setSnackPack((prev) => [...prev, { message: "ログアウトしました！", key: new Date().getTime() }]);
-    router.push("/");
-  };
+    setSnackPack((prev) => [
+      ...prev,
+      { message: 'ログアウトしました！', key: new Date().getTime() },
+    ])
+    router.push('/')
+  }
 
   const list = (anchor: Anchor) => (
     <Box
@@ -115,123 +141,145 @@ export default function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {!isAuth ?
-      <List>
-        <ListItem>
-          <ListItemButton onClick={home}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="HOME" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={about}>
-            <ListItemIcon>
-              <DialpadIcon />
-            </ListItemIcon>
-            <ListItemText primary="ABOUT" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={profile}>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="PROFILE" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemButton onClick={login}>
-            <ListItemIcon>
-              <LockOpenIcon />
-            </ListItemIcon>
-            <ListItemText primary="LOGIN" />
-          </ListItemButton>
-        </ListItem>
-      </List> :
-      <List>
-        <ListItem>
-          <ListItemButton onClick={task}>
-            <ListItemIcon>
-              <FormatListBulletedIcon />
-            </ListItemIcon>
-            <ListItemText primary="TASK" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={about}>
-            <ListItemIcon>
-              <DialpadIcon />
-            </ListItemIcon>
-            <ListItemText primary="ABOUT" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={profile}>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="PROFILE" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemButton onClick={logout}>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="LOGOUT" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    }
+      {!isAuth ? (
+        <List>
+          <ListItem>
+            <ListItemButton onClick={home}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="HOME" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={about}>
+              <ListItemIcon>
+                <DialpadIcon />
+              </ListItemIcon>
+              <ListItemText primary="ABOUT" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={profile}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="PROFILE" />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemButton onClick={login}>
+              <ListItemIcon>
+                <LockOpenIcon />
+              </ListItemIcon>
+              <ListItemText primary="LOGIN" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      ) : (
+        <List>
+          <ListItem>
+            <ListItemButton onClick={top}>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="TOP" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={tasks}>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="TASKS" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={users}>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="USERS" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={about}>
+              <ListItemIcon>
+                <DialpadIcon />
+              </ListItemIcon>
+              <ListItemText primary="ABOUT" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={profile}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="PROFILE" />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemButton onClick={logout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="LOGOUT" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      )}
     </Box>
-  );
-  
+  )
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Box>
-      <AppBar color='inherit'>
-        <Toolbar>
-          {(['bottom'] as const).map((anchor) => (
-            <React.Fragment key={anchor}>
-              <Button onClick={toggleDrawer(anchor, true)} color="inherit"><MenuIcon /></Button>
-              <Drawer
-                anchor={anchor}
-                open={state[anchor]}
-                onClose={toggleDrawer(anchor, false)}
-              >
-                {list(anchor)}
-              </Drawer>
-            </React.Fragment>
-          ))}
-          <Box sx={{ fontFamily: "serif" }}>
-            Genius Chicken
-          </Box>
-          <Switch {...label} onClick={colorMode.toggleColorMode} color="success" defaultChecked />
-        </Toolbar>
-      </AppBar>
+        <AppBar color="inherit">
+          <Toolbar>
+            {(['bottom'] as const).map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)} color="inherit">
+                  <MenuIcon />
+                </Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+            <Box sx={{ fontFamily: 'serif' }}>Genius Chicken</Box>
+            <Switch
+              {...label}
+              onClick={colorMode.toggleColorMode}
+              color="success"
+              defaultChecked
+            />
+          </Toolbar>
+        </AppBar>
       </Box>
       <Snackbar
-          key={messageInfo ? messageInfo.key : undefined}
-          open={open}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          autoHideDuration={5000}
-          onClose={handleBarClose}
-          TransitionProps={{ onExited: handleExited }}
+        key={messageInfo ? messageInfo.key : undefined}
+        open={open}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={5000}
+        onClose={handleBarClose}
+        TransitionProps={{ onExited: handleExited }}
+      >
+        <Button
+          variant="contained"
+          color="error"
+          fullWidth
+          onClick={handleBarClose}
         >
-          <Button
-            variant="contained"
-            color="error"
-            fullWidth
-            onClick={handleBarClose}
-            >
-              {messageInfo?.message}
-          </Button>
-        </Snackbar>
+          {messageInfo?.message}
+        </Button>
+      </Snackbar>
     </React.Fragment>
-  );
+  )
 }

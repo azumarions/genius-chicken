@@ -1,129 +1,93 @@
-import React, { useContext, useState } from 'react'
-import Cookie from 'universal-cookie'
-// import { LikeContext } from '../../contexts/like'
-// import { UserContext } from '../../contexts/user'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import WorkspacesIcon from '@mui/icons-material/Workspaces'
 import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  ButtonGroup,
-  IconButton,
-  ListItem,
-  ListItemIcon,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
 } from '@mui/material'
+import { Box } from '@mui/system'
+import { useContext } from 'react'
+import { TaskContext } from '../../context/task'
+import router from 'next/router'
+import { GroupContext } from '@/context/group'
+import { UserContext } from '@/context/user'
 
-const cookie = new Cookie()
+const Group: React.FC = () => {
+  const { selectedTask } = useContext(TaskContext)
+  const { selectedGroups } = useContext(GroupContext)
+  const { selectedUsers } = useContext(UserContext)
 
-type LikeType = {
-  postId: number
-  userId: number
-}
+  const filterGroups = selectedGroups.filter(
+    (group) => group.taskGroup === selectedTask.id
+  )
+  const rows = [
+    {
+      item: 'Owner',
+      data: selectedUsers.find(
+        (user) => user.userProfile === selectedTask.userTask
+      )?.name,
+    },
+    {
+      item: 'Users',
+      data: filterGroups.map((group) => (
+        <Box
+          key={
+            selectedUsers.find((user) => user.userProfile === group.userGroup)
+              ?.id
+          }
+        >
+          <Button
+            color="inherit"
+            onClick={() => {
+              router.push(
+                `/user/${
+                  selectedUsers.find(
+                    (user) => user.userProfile === group.userGroup
+                  )?.id
+                }`
+              )
+            }}
+          >
+            <Typography variant="caption">
+              {
+                selectedUsers.find(
+                  (user) => user.userProfile === group.userGroup
+                )?.name
+              }
+            </Typography>
+          </Button>
+        </Box>
+      )),
+    },
+  ]
 
-const Group: React.FC<LikeType> = ({ postId, userId }) => {
-  //   const { likes, setLikes } = useContext(LikeContext)
-  //   const { users, setUsers } = useContext(UserContext)
-  const [group, setGroup] = useState(false)
-
-  //   const filterLikes = Object.values(likes).filter(
-  //     (like) => like.postLike === postId
-  //   )
-
-  //   const filterUser = Object.values(users).find((user) =>
-  //     likes.map((like) => {
-  //       return user.userProfile === like.userLike
-  //     })
-  //   )
-
-  //   const likedId = Object.values(likes).find(
-  //     (like) => like.postLike === postId && like.userLike === userId
-  //   )
-
-  //   const LIKED = async (e) => {
-  //     e.preventDefault()
-  //     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/like/`, {
-  //       method: 'POST',
-  //       body: JSON.stringify({ postLike: postId }),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `JWT ${cookie.get('access_token')}`,
-  //       },
-  //     })
-  //     setLikes([
-  //       ...likes,
-  //       { id: likedId?.id, userLike: userId, postLike: postId },
-  //     ])
-  //     setUsers([
-  //       ...users,
-  //       {
-  //         id: filterUser?.id,
-  //         name: filterUser?.name,
-  //         description: filterUser?.description,
-  //         img: filterUser?.img,
-  //       },
-  //     ])
-  //   }
-
-  //   const UNLIKED = async (e) => {
-  //     e.preventDefault()
-  //     await fetch(
-  //       `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/like/${likedId?.id}`,
-  //       {
-  //         method: 'DELETE',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `JWT ${cookie.get('access_token')}`,
-  //         },
-  //       }
-  //     )
-  //     setLikes([
-  //       ...likes,
-  //       { id: likedId?.id, userLike: userId, postLike: postId },
-  //     ])
-  //     setUsers([
-  //       ...users,
-  //       {
-  //         id: 0,
-  //         userProfile: 0,
-  //         name: '',
-  //         statusMessage: '',
-  //         description: '',
-  //         img: '',
-  //       },
-  //     ])
-  //   }
+  if (!selectedTask.title) {
+    return null
+  }
 
   return (
     <>
-      {/* <ButtonGroup>
-        <IconButton sx={{ float: 'right' }}>
-          <WorkspacesIcon />
-        </IconButton>
-      </ButtonGroup> */}
-      <ListItemIcon>
-        <Box onClick={() => setGroup(!group)}>
-          {group ? (
-            <IconButton>
-              <WorkspacesIcon
-                sx={{
-                  color: 'purple',
-                  fontSize: { xs: 30, sm: 40, md: 45, lg: 50 },
-                }}
-              />
-            </IconButton>
-          ) : (
-            <IconButton>
-              <WorkspacesIcon
-                sx={{
-                  color: 'pink',
-                  fontSize: { xs: 30, sm: 40, md: 45, lg: 50 },
-                }}
-              />
-            </IconButton>
-          )}
-        </Box>
-      </ListItemIcon>
+      <Table sx={{ mt: 1 }}>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.item}>
+              <TableCell
+                align="center"
+                sx={{ p: 1, fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
+              >
+                {row.item}
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{ p: 1, fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
+              >
+                {row.data}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </>
   )
 }

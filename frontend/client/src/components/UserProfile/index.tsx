@@ -29,12 +29,11 @@ const UserProfile: React.FC<UserType> = ({ user }) => {
             alt={'default'}
           />
           <Box
-            sx={{ fontSize: { xs: 18, sm: 24, md: 26, lg: 28 }, pt: 2, pb: 1 }}
+            sx={{ fontSize: { xs: 18, sm: 21, md: 23, lg: 25 }, pt: 2, pb: 1 }}
           >
             {user.name}
           </Box>
-          <Divider sx={{ display: 'block' }} />
-          <Box sx={{ fontSize: { xs: 12, sm: 16, md: 18, lg: 20 } }}>
+          <Box sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}>
             {user.description}
           </Box>
         </Grid>

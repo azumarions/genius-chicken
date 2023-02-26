@@ -25,10 +25,11 @@ const cookie = new Cookie()
 
 type Type = {
   task: TASK
-  //   staticCategorys: CATEGORY[]
+  staticCategorys: CATEGORY[]
+  taskMutate: KeyedMutator<any>
 }
 
-const UserTask: React.FC<Type> = ({ task }) => {
+const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
   const { editTask, setEditTask, selectedTask, setSelectedTask } =
     useContext(TaskContext)
   const [scroll, setScroll] = useState<DialogProps['scroll']>('paper')
@@ -68,12 +69,38 @@ const UserTask: React.FC<Type> = ({ task }) => {
     }
   }
 
+  const deleteTask = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task/${task.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${cookie.get('access_token')}`,
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        alert('JWT Token not valid')
+      } else {
+      }
+    })
+    taskMutate()
+  }
+
   return (
     <React.Fragment>
       <ListItem
         secondaryAction={
           <ButtonGroup>
-            <IconButton sx={{ float: 'right' }}>
+            <IconButton
+              sx={{ border: 'black' }}
+              onClick={() => {
+                setEditTask(task)
+                OpenTaskForm('paper')
+                setOpenTaskForm(true)
+              }}
+            >
+              <BlurOnIcon />
+            </IconButton>
+            <IconButton sx={{ float: 'right' }} onClick={deleteTask}>
               <DeleteIcon />
             </IconButton>
           </ButtonGroup>
@@ -146,7 +173,11 @@ const UserTask: React.FC<Type> = ({ task }) => {
             justifyContent="center"
             direction="column"
           >
-            task
+            <TaskForm
+              staticCategorys={staticCategorys}
+              taskMutate={taskMutate}
+              CloseTaskForm={CloseTaskForm}
+            />
           </Grid>
         </DialogContent>
       </Dialog>
@@ -154,4 +185,4 @@ const UserTask: React.FC<Type> = ({ task }) => {
   )
 }
 
-export default UserTask
+export default MyTask
