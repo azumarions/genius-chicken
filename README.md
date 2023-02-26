@@ -1,6 +1,6 @@
 # Genius Chicken
 [![Genius Chicken](frontend/client/public/home10.png)](https://genius-chicken.com)
-
+#### ゲストログインができます
 
 ## overviews
 ##### アプリ概要
@@ -9,7 +9,6 @@
 ##### データベース設計
 ##### 実装機能
 
-### *ゲストログインができます
 
 ## アプリ概要
 
@@ -42,7 +41,7 @@ Frontend
 * Library: React.js
 * Framework: Next.js
 * State Management: Context API
-* UI Library: MUI(material ui)
+* UI Library: MUI(Material UI)
 
 Infrastructure
 * Cloud: AWS
@@ -71,17 +70,19 @@ Task Function
 * Task Detail
 
 Group Function
-* CRUD
-* Group Show
+* Group In
+* Group Out
+* Show Group
 
-Kategory Function
+Category Function
 * Create (cant't Delete)
+* Select Category
 
 Pagination Function
 * 20/perpage
 
 Sorting Function
-* Task, Status, Kategory, Create_at
+* Task, Status, Category, Create_at
 
 Others
 * Full Responsive Design
