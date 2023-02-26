@@ -11,17 +11,19 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
-      <UserContextProvider>
-        <TaskContextProvider>
-          <GroupContextProvider>
-            <CategoryContextProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </CategoryContextProvider>
-          </GroupContextProvider>
-        </TaskContextProvider>
-      </UserContextProvider>
+      <ProfileContextProvider>
+        <UserContextProvider>
+          <TaskContextProvider>
+            <GroupContextProvider>
+              <CategoryContextProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </CategoryContextProvider>
+            </GroupContextProvider>
+          </TaskContextProvider>
+        </UserContextProvider>
+      </ProfileContextProvider>
     </AuthContextProvider>
   )
 }

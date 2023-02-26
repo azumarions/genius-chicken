@@ -33,12 +33,17 @@ const cookie = new Cookie()
 type Type = {
   staticCategorys: CATEGORY[]
   taskMutate: KeyedMutator<any>
+  CloseTaskForm: any
 }
 
 const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/category/`
 
-const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
+const TaskForm: React.FC<Type> = ({
+  staticCategorys,
+  taskMutate,
+  CloseTaskForm,
+}) => {
   const { editTask, setEditTask } = useContext(TaskContext)
   const [openModal, setModalOpen] = useState(false)
   const [open, setOpen] = useState(false)
@@ -321,6 +326,9 @@ const TaskForm: React.FC<Type> = ({ staticCategorys, taskMutate }) => {
             color="success"
             disabled={isDisabled}
             sx={{ mt: 2 }}
+            onClick={() => {
+              CloseTaskForm()
+            }}
           >
             {editTask.id !== 0 ? 'Update' : 'Create'}
           </Button>

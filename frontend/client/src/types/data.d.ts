@@ -1,9 +1,3 @@
-import { KeyedMutator } from 'swr'
-
-export interface MUTATE {
-  mutate: KeyedMutator<any>
-}
-
 export interface AUTH {
   email: string
   password: string
@@ -15,6 +9,7 @@ export interface PROFILE {
   userProfile: number
   name: string
   description: string
+  created_at: string
 }
 
 export interface USER {
