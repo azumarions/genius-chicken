@@ -38,6 +38,9 @@ import DialpadIcon from '@mui/icons-material/Dialpad'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import PersonIcon from '@mui/icons-material/Person'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import Groups3Icon from '@mui/icons-material/Groups3'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 
 const cookie = new Cookie()
 
@@ -96,12 +99,12 @@ export default function Header() {
     setMessageInfo(undefined)
   }
 
-  const top = () => {
+  const account = () => {
     router.push('/account')
   }
 
-  const tasks = () => {
-    router.push('/top')
+  const task = () => {
+    router.push('/task')
   }
 
   const users = () => {
@@ -180,17 +183,17 @@ export default function Header() {
       ) : (
         <List>
           <ListItem>
-            <ListItemButton onClick={top}>
+            <ListItemButton onClick={account}>
               <ListItemIcon>
-                <FormatListBulletedIcon />
+                <AccountBalanceIcon />
               </ListItemIcon>
-              <ListItemText primary="TOP" />
+              <ListItemText primary="ACCOUNT" />
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton onClick={tasks}>
+            <ListItemButton onClick={task}>
               <ListItemIcon>
-                <FormatListBulletedIcon />
+                <AssignmentIcon />
               </ListItemIcon>
               <ListItemText primary="TASKS" />
             </ListItemButton>
@@ -198,25 +201,9 @@ export default function Header() {
           <ListItem>
             <ListItemButton onClick={users}>
               <ListItemIcon>
-                <FormatListBulletedIcon />
+                <Groups3Icon />
               </ListItemIcon>
               <ListItemText primary="USERS" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={about}>
-              <ListItemIcon>
-                <DialpadIcon />
-              </ListItemIcon>
-              <ListItemText primary="ABOUT" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={profile}>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="PROFILE" />
             </ListItemButton>
           </ListItem>
           <Divider />

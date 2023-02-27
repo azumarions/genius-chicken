@@ -101,7 +101,7 @@ const UserTask: React.FC<Type> = ({ task }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        {/* <DialogTitle
+        <DialogTitle
           id="scroll-dialog-title"
           sx={{
             fontSize: { xs: 18, sm: 24, md: 26, lg: 28 },
@@ -110,7 +110,7 @@ const UserTask: React.FC<Type> = ({ task }) => {
           }}
         >
           {selectedTask.title}
-        </DialogTitle> */}
+        </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid
             container
@@ -129,7 +129,7 @@ const UserTask: React.FC<Type> = ({ task }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle
+        {/* <DialogTitle
           id="scroll-dialog-title"
           sx={{
             fontSize: { xs: 18, sm: 24, md: 26, lg: 28 },
@@ -138,7 +138,7 @@ const UserTask: React.FC<Type> = ({ task }) => {
           }}
         >
           {editTask.title}
-        </DialogTitle>
+        </DialogTitle> */}
         <DialogContent dividers={scroll === 'paper'}>
           <Grid
             container

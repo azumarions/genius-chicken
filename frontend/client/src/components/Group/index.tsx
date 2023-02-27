@@ -24,12 +24,31 @@ const Group: React.FC = () => {
   const rows = [
     {
       item: 'Owner',
-      data: selectedUsers.find(
-        (user) => user.userProfile === selectedTask.userTask
-      )?.name,
+      data: (
+        <Button
+          color="inherit"
+          onClick={() => {
+            router.push(
+              `/user/${
+                selectedUsers.find(
+                  (user) => user.userProfile === selectedTask.userTask
+                )?.id
+              }`
+            )
+          }}
+        >
+          <Typography variant="caption">
+            {
+              selectedUsers.find(
+                (user) => user.userProfile === selectedTask.userTask
+              )?.name
+            }
+          </Typography>
+        </Button>
+      ),
     },
     {
-      item: 'Users',
+      item: 'Group',
       data: filterGroups.map((group) => (
         <Box
           key={

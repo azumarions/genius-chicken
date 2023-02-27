@@ -141,10 +141,8 @@ const Auth = () => {
           setIsLogin(true)
           setIsAuth(true)
           setIsLoading(false)
-          // const account = getMyProf()
-          // account && setMyProfile(account)
         })
-      router.push('/top')
+      router.push('/account')
       setSnackPack((prev) => [
         ...prev,
         { message: 'ログインしました！', key: new Date().getTime() },

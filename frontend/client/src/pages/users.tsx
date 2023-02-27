@@ -50,5 +50,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const staticUsers = await getUsers()
   return {
     props: { staticUsers },
+    revalidate: 10,
   }
 }

@@ -28,7 +28,7 @@ export const ColorModeContextProvider = ({
         palette: {
           mode,
           primary: {
-            main: '#303f9f',
+            main: 'rgba(120,120,120,0.8)',
           },
           secondary: {
             main: '#424242',
@@ -39,10 +39,13 @@ export const ColorModeContextProvider = ({
           },
           error: {
             // 真紅
-            main: '#ad002d',
+            main: '#864152',
           },
           warning: {
             main: '#316745',
+          },
+          info: {
+            main: 'rgba(122,044,029)',
           },
         },
       }),

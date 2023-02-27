@@ -25,6 +25,9 @@ import useSWR from 'swr'
 import { GroupContext } from '@/context/group'
 import { UserContext } from '@/context/user'
 import Group from '../Group'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove'
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined'
 
 const cookie = new Cookie()
 
@@ -132,6 +135,17 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
     }
   }
 
+  const renderSwitchAccess = (statusName: string) => {
+    switch (statusName) {
+      case 'public':
+        return <Badge variant="dot" color="warning"></Badge>
+      case 'private':
+        return <Badge variant="dot" color="info"></Badge>
+      default:
+        return null
+    }
+  }
+
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
       setMessageInfo({ ...snackPack[0] })
@@ -162,25 +176,25 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
         sx={{ border: 'black', zIndex: 0 }}
         secondaryAction={
           <ButtonGroup>
+            {/* <IconButton sx={{ fontSize: 12 }}>{task.estimate}</IconButton> */}
             <Box sx={{ p: 0 }} onClick={() => setInGroup(!inGroup)}>
               {inGroup ? (
-                <IconButton onClick={GroupOut}>
-                  <WorkspacesIcon
-                    sx={{
-                      color: 'purple',
-                    }}
-                  />
+                <IconButton
+                  disabled={task.access_name === 'private'}
+                  onClick={GroupOut}
+                >
+                  <GroupRemoveIcon />
                 </IconButton>
               ) : (
-                <IconButton onClick={GroupIn}>
-                  <WorkspacesIcon
-                    sx={{
-                      color: 'pink',
-                    }}
-                  />
+                <IconButton
+                  disabled={task.access_name === 'private'}
+                  onClick={GroupIn}
+                >
+                  <GroupAddOutlinedIcon />
                 </IconButton>
               )}
             </Box>
+            {/* <IconButton>{renderSwitchAccess(task.access_name)}</IconButton> */}
           </ButtonGroup>
         }
       >
@@ -209,16 +223,6 @@ const Task: React.FC<Type> = ({ task, staticGroups, staticUsers }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle
-          id="scroll-dialog-title"
-          sx={{
-            fontSize: { xs: 18, sm: 24, md: 26, lg: 28 },
-            padding: 2,
-            textAlign: 'center',
-          }}
-        >
-          タイトル
-        </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid
             container
