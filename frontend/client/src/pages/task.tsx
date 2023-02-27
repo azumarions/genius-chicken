@@ -1,50 +1,33 @@
 import { GetStaticProps, NextPage } from 'next'
 import { getTasks } from '../api/task'
-import { getCategorys } from '../api/category'
-import useSWR from 'swr'
-import { CATEGORY, SORT_STATE, TASK } from '../types'
+import { GROUP, SORT_STATE, TASK, USER } from '../types'
 import { useContext, useEffect, useState } from 'react'
 import Task from '@/components/Task'
 import {
-  Autocomplete,
   Box,
-  Button,
-  Card,
+  Divider,
   Grid,
-  IconButton,
   List,
-  ListItem,
   ListSubheader,
   Pagination,
-  Stack,
   TableSortLabel,
-  TextField,
 } from '@mui/material'
-import { TaskContext } from '@/context/task'
-import TaskForm from '@/components/TaskForm'
-import TaskDetail from '@/components/TaskDetail'
+import { getGroups } from '@/api/group'
+import { getUsers } from '@/api/users'
+import { ProfileContext } from '@/context/profile'
 
 interface STATICPROPS {
-  staticTasks: TASK[]
-  staticCategorys: CATEGORY[]
+  staticTasks: any
+  staticGroups: GROUP[]
+  staticUsers: USER[]
 }
 
-const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
-const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task-list/`
-
-const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
-  const { selectedTask, setSelectedTask, editTask, setEditTask } =
-    useContext(TaskContext)
-  const {
-    data: tasks,
-    error,
-    mutate,
-  } = useSWR(apiUrl, fetcher, {
-    fallbackData: staticTasks,
-    revalidateOnMount: true,
-  })
-
-  const columns = tasks[0] && Object.keys(tasks[0])
+const TaskPage: NextPage<STATICPROPS> = ({
+  staticTasks,
+  staticGroups,
+  staticUsers,
+}) => {
+  const columns = staticTasks[0] && Object.keys(staticTasks[0])
 
   const [page, setPage] = useState<number>(1) //ページ番号
   const [pageCount, setPageCount] = useState<number>() //ページ数
@@ -52,7 +35,7 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   const displayNum = 20 //1ページあたりの項目数
 
   const [state, setState] = useState<SORT_STATE>({
-    rows: tasks,
+    rows: staticTasks,
     order: 'desc',
     activeKey: '',
   })
@@ -80,14 +63,13 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
   useEffect(() => {
     setState((state) => ({
       ...state,
-      rows: tasks.slice((page - 1) * displayNum, page * displayNum),
+      rows: staticTasks.slice((page - 1) * displayNum, page * displayNum),
     }))
-  }, [tasks])
+  }, [staticTasks])
 
   useEffect(() => {
     setAllItems(state.rows)
     setPageCount(Math.ceil(state.rows.length / displayNum))
-    mutate()
   }, [])
 
   const handleChange = (event: React.ChangeEvent<unknown>, index: number) => {
@@ -98,132 +80,121 @@ const TaskPage: NextPage<STATICPROPS> = ({ staticTasks, staticCategorys }) => {
     }))
   }
 
-  if (error) return <span>Error!</span>
-
   return (
-    <div title="Todos">
-      <Box
+    <Grid
+      container
+      sx={{
+        width: '100%',
+        height: '100%',
+        mt: { xs: 8, sm: 11, md: 12, lg: 14 },
+      }}
+    >
+      <Grid item xs={12} sm={12} md={2} lg={3}></Grid>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={8}
+        lg={6}
         sx={{
           width: '100%',
-          height: '100%',
-          mt: { xs: 8, sm: 11, md: 12, lg: 14 },
         }}
       >
-        <Grid container textAlign="center" justifyItems="center">
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            lg={6}
+        <List sx={{ height: '100%', overflow: 'auto', pt: 0 }}>
+          <Divider>SORTING</Divider>
+          <ListSubheader
             sx={{
-              width: '100%',
-              height: { xs: 290, sm: 280, md: 600, lg: 600 },
+              textAlign: 'center',
+              borderBlockColor: 'black',
+              height: '10',
+              display: { xs: 'block', sm: 'block', md: 'none' },
             }}
           >
-            <Button
-              size="small"
-              variant="contained"
-              color="success"
-              onClick={() => {
-                setEditTask({
-                  id: 0,
-                  userTask: 0,
-                  title: '',
-                  description: '',
-                  status: '1',
-                  access: '1',
-                  estimate: 1,
-                  category: 1,
-                  category_item: '',
-                })
-                setSelectedTask({
-                  id: 0,
-                  userTask: 0,
-                  title: '',
-                  description: '',
-                  status: '1',
-                  status_name: '',
-                  access: '1',
-                  access_name: '',
-                  estimate: 1,
-                  category: 1,
-                  category_item: '',
-                  created_at: '',
-                  updated_at: '',
-                })
-              }}
-            >
-              New Task
-            </Button>
-            <Box></Box>
-            {selectedTask.id ? (
-              <TaskDetail />
-            ) : (
-              <TaskForm staticCategorys={staticCategorys} taskMutate={mutate} />
+            {columns.map(
+              (column: keyof TASK, colIndex: number) =>
+                (column === 'title' ||
+                  column === 'status' ||
+                  column === 'estimate' ||
+                  column === 'access') && (
+                  <TableSortLabel
+                    key={colIndex}
+                    active={state.activeKey === column}
+                    direction={state.order}
+                    onClick={() => handleClickSortColumn(column)}
+                  >
+                    <Box sx={{ fontSize: { xs: 13, sm: 14, md: 16, lg: 18 } }}>
+                      {column}
+                    </Box>
+                  </TableSortLabel>
+                )
             )}
-            <ListSubheader sx={{ borderBlockColor: 'black', height: '10' }}>
-              {columns.map(
-                (column: keyof TASK, colIndex: number) =>
-                  (column === 'title' ||
-                    column === 'category' ||
-                    column === 'status' ||
-                    column === 'created_at') && (
-                    <TableSortLabel
-                      key={colIndex}
-                      active={state.activeKey === column}
-                      direction={state.order}
-                      onClick={() => handleClickSortColumn(column)}
-                    >
-                      <Box
-                        sx={{ fontSize: { xs: 11, sm: 14, md: 16, lg: 18 } }}
-                      >
-                        {column}
-                      </Box>
-                    </TableSortLabel>
-                  )
-              )}
-            </ListSubheader>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            lg={6}
+          </ListSubheader>
+          <ListSubheader
             sx={{
-              width: '100%',
-              height: { xs: 280, sm: 310, md: 600, lg: 600 },
+              textAlign: 'center',
+              borderBlockColor: 'black',
+              height: '10',
+              display: { xs: 'none', sm: 'none', md: 'block' },
             }}
           >
-            <List sx={{ height: '100%', overflow: 'auto', pt: 0 }}>
-              {state.rows &&
-                state.rows.map((row, rowIndex) => (
-                  <Task key={rowIndex} task={row} mutate={mutate} />
-                ))}
-              <Box sx={{ textAlign: 'center', justifyItems: 'center' }}>
-                <Pagination
-                  count={pageCount}
-                  page={page}
-                  variant="text"
-                  color="secondary"
-                  size="small"
-                  onChange={handleChange}
-                />
-              </Box>
-            </List>
-          </Grid>
-        </Grid>
-      </Box>
-    </div>
+            {columns.map(
+              (column: keyof TASK, colIndex: number) =>
+                (column === 'title' ||
+                  column === 'category' ||
+                  column === 'status' ||
+                  column === 'estimate' ||
+                  column === 'created_at' ||
+                  column === 'access') && (
+                  <TableSortLabel
+                    key={colIndex}
+                    active={state.activeKey === column}
+                    direction={state.order}
+                    onClick={() => handleClickSortColumn(column)}
+                  >
+                    <Box sx={{ fontSize: { xs: 13, sm: 14, md: 16, lg: 18 } }}>
+                      {column}
+                    </Box>
+                  </TableSortLabel>
+                )
+            )}
+          </ListSubheader>
+          <Divider>TASKS</Divider>
+
+          {state.rows &&
+            state.rows.map((row, rowIndex) => (
+              <Task
+                key={rowIndex}
+                task={row}
+                staticGroups={staticGroups}
+                staticUsers={staticUsers}
+              />
+            ))}
+          <Box sx={{ textAlign: 'center', justifyItems: 'center' }}>
+            <Pagination
+              sx={{ textAlign: 'center' }}
+              count={pageCount}
+              page={page}
+              variant="text"
+              color="secondary"
+              size="small"
+              onChange={handleChange}
+            />
+          </Box>
+        </List>
+      </Grid>
+    </Grid>
   )
 }
 export default TaskPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const staticTasks = await getTasks()
-  const staticCategorys = await getCategorys()
+  const [staticTasks, staticGroups, staticUsers] = await Promise.all([
+    getTasks(),
+    getGroups(),
+    getUsers(),
+  ])
   return {
-    props: { staticTasks, staticCategorys },
+    props: { staticTasks, staticGroups, staticUsers },
+    revalidate: 10,
   }
 }

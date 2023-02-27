@@ -1,21 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { getUser, getUserId, getUsers } from '@/api/users'
 import { Box } from '@mui/system'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { GROUP, TASK, USER } from '@/types'
+import { GROUP, SORT_STATE, TASK, USER } from '@/types'
 import { getTasks } from '@/api/task'
 import UserTask from '@/components/UserTask'
 import UserProfile from '@/components/UserProfile'
-import { Grid } from '@mui/material'
+import {
+  Divider,
+  Grid,
+  List,
+  ListSubheader,
+  Pagination,
+  TableSortLabel,
+} from '@mui/material'
 import { getGroups } from '@/api/group'
 import Task from '@/components/Task'
 
 interface STATICPROPS {
   id: number
   staticUser: USER
-  staticTasks: TASK[]
+  staticTasks: any
   staticGroups: GROUP[]
   staticUsers: USER[]
 }
@@ -37,28 +44,166 @@ const UserDetail: NextPage<STATICPROPS> = ({
       fallbackData: staticUser,
     }
   )
+  const columns = staticTasks[0] && Object.keys(staticTasks[0])
+
+  const [page, setPage] = useState<number>(1) //ページ番号
+  const [pageCount, setPageCount] = useState<number>() //ページ数
+  const [allItems, setAllItems] = useState<TASK[]>([]) //全データ
+  const displayNum = 20 //1ページあたりの項目数
+
+  const [state, setState] = useState<SORT_STATE>({
+    rows: staticTasks,
+    order: 'desc',
+    activeKey: '',
+  })
+
+  const handleClickSortColumn = (column: keyof TASK) => {
+    const isDesc = column === state.activeKey && state.order === 'desc'
+    const newOrder = isDesc ? 'asc' : 'desc'
+    const sortedRows = Array.from(state.rows).sort((a, b) => {
+      if (a[column] > b[column]) {
+        return newOrder === 'asc' ? 1 : -1
+      } else if (a[column] < b[column]) {
+        return newOrder === 'asc' ? -1 : 1
+      } else {
+        return 0
+      }
+    })
+
+    setState({
+      rows: sortedRows,
+      order: newOrder,
+      activeKey: column,
+    })
+  }
+
+  useEffect(() => {
+    setState((state) => ({
+      ...state,
+      rows: staticTasks.slice((page - 1) * displayNum, page * displayNum),
+    }))
+  }, [staticTasks])
+
+  useEffect(() => {
+    setAllItems(state.rows)
+    setPageCount(Math.ceil(state.rows.length / displayNum))
+  }, [])
+
+  const handleChange = (event: React.ChangeEvent<unknown>, index: number) => {
+    setPage(index)
+    setState((state) => ({
+      ...state,
+      rows: allItems.slice((index - 1) * displayNum, index * displayNum),
+    }))
+  }
+
   if (router.isFallback || !user) {
     return <div>Loading...</div>
   }
   return (
     <Grid container sx={{ pt: 8 }}>
-      <Grid item xs={12} sm={12} md={6} lg={6}>
+      <Grid item xs={12} sm={12} md={2} lg={3}></Grid>
+      <Grid item xs={12} sm={12} md={8} lg={6}>
         <UserProfile user={user} />
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={6}>
-        {staticTasks &&
-          staticTasks
-            .filter((task: TASK) => task.userTask === user.userProfile)
-            .map((task: TASK) => (
-              <Box key={task.id}>
-                <Task
-                  key={task.id}
-                  task={task}
-                  staticGroups={staticGroups}
-                  staticUsers={staticUsers}
-                />
-              </Box>
-            ))}
+      <Grid item xs={12} sm={12} md={2} lg={3}></Grid>
+      <Grid item xs={12} sm={12} md={2} lg={3}></Grid>
+      <Grid item xs={12} sm={12} md={8} lg={6}>
+        <Divider>TASK</Divider>
+        {state.rows ? (
+          <List>
+            <ListSubheader
+              sx={{
+                textAlign: 'center',
+                borderBlockColor: 'black',
+                height: '10',
+                display: { xs: 'block', sm: 'block', md: 'none' },
+              }}
+            >
+              {columns.map(
+                (column: keyof TASK, colIndex: number) =>
+                  (column === 'title' ||
+                    column === 'status' ||
+                    column === 'estimate' ||
+                    column === 'access') && (
+                    <TableSortLabel
+                      key={colIndex}
+                      active={state.activeKey === column}
+                      direction={state.order}
+                      onClick={() => handleClickSortColumn(column)}
+                    >
+                      <Box
+                        sx={{ fontSize: { xs: 13, sm: 14, md: 16, lg: 18 } }}
+                      >
+                        {column}
+                      </Box>
+                    </TableSortLabel>
+                  )
+              )}
+            </ListSubheader>
+            <ListSubheader
+              sx={{
+                textAlign: 'center',
+                borderBlockColor: 'black',
+                height: '10',
+                display: { xs: 'none', sm: 'none', md: 'block' },
+              }}
+            >
+              {columns.map(
+                (column: keyof TASK, colIndex: number) =>
+                  (column === 'title' ||
+                    column === 'category' ||
+                    column === 'status' ||
+                    column === 'estimate' ||
+                    column === 'created_at' ||
+                    column === 'access') && (
+                    <TableSortLabel
+                      key={colIndex}
+                      active={state.activeKey === column}
+                      direction={state.order}
+                      onClick={() => handleClickSortColumn(column)}
+                    >
+                      <Box
+                        sx={{ fontSize: { xs: 13, sm: 14, md: 16, lg: 18 } }}
+                      >
+                        {column}
+                      </Box>
+                    </TableSortLabel>
+                  )
+              )}
+            </ListSubheader>
+            {staticTasks &&
+              staticTasks
+                .filter((task: TASK) => task.userTask === user.userProfile)
+                .map((task: TASK) => (
+                  <Box key={task.id}>
+                    <Task
+                      key={task.id}
+                      task={task}
+                      staticGroups={staticGroups}
+                      staticUsers={staticUsers}
+                    />
+                  </Box>
+                ))}
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="center"
+              direction="column"
+            >
+              <Pagination
+                count={pageCount}
+                page={page}
+                variant="text"
+                color="secondary"
+                size="small"
+                onChange={handleChange}
+              />
+            </Grid>
+          </List>
+        ) : (
+          <Box>タスクがありません。</Box>
+        )}
       </Grid>
     </Grid>
   )

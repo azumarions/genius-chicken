@@ -29,8 +29,8 @@ const User: React.FC<UserType> = ({ user }) => {
             <ListItemAvatar>
               <Avatar
                 sx={{
-                  width: { xs: 50, sm: 70, md: 80, lg: 90 },
-                  height: { xs: 50, sm: 70, md: 80, lg: 90 },
+                  width: { xs: 50, sm: 60, md: 65, lg: 70 },
+                  height: { xs: 50, sm: 60, md: 65, lg: 70 },
                   mr: 2,
                 }}
                 src={'default.png?w=248&fit=crop&auto=format'}
@@ -42,7 +42,7 @@ const User: React.FC<UserType> = ({ user }) => {
               primary={
                 <Typography
                   sx={{
-                    fontSize: { xs: 15, sm: 20, md: 23, lg: 25 },
+                    fontSize: { xs: 14, sm: 16, md: 18, lg: 20 },
                     padding: 0,
                   }}
                 >

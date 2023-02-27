@@ -1,7 +1,7 @@
 import Cookie from 'universal-cookie'
 import React, { useContext, useEffect, useState } from 'react'
 import { TaskContext } from '../../context/task'
-import { CATEGORY, SnackbarMessage, TASK } from '@/types'
+import { CATEGORY, GROUP, SnackbarMessage, TASK, USER } from '@/types'
 import { KeyedMutator } from 'swr'
 import {
   Badge,
@@ -20,18 +20,36 @@ import BlurOnIcon from '@mui/icons-material/BlurOn'
 import DeleteIcon from '@mui/icons-material/Delete'
 import TaskForm from '../TaskForm'
 import TaskDetail from '../TaskDetail'
+import { GroupContext } from '@/context/group'
+import { UserContext } from '@/context/user'
+import Group from '../Group'
 
 const cookie = new Cookie()
 
 type Type = {
   task: TASK
   staticCategorys: CATEGORY[]
+  staticGroups: any
+  staticUsers: USER[]
   taskMutate: KeyedMutator<any>
 }
 
-const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
-  const { editTask, setEditTask, selectedTask, setSelectedTask } =
-    useContext(TaskContext)
+const MyTask: React.FC<Type> = ({
+  task,
+  staticCategorys,
+  staticGroups,
+  staticUsers,
+  taskMutate,
+}) => {
+  const { setEditTask, selectedTask, setSelectedTask } = useContext(TaskContext)
+  const { setSelectedGroups } = useContext(GroupContext)
+  const { setSelectedUsers } = useContext(UserContext)
+
+  const group: GROUP = staticGroups.find(
+    (group: GROUP) =>
+      group.taskGroup === task.id &&
+      staticUsers.map((user) => user.id === group.userGroup)
+  )
   const [scroll, setScroll] = useState<DialogProps['scroll']>('paper')
   const [open, setOpen] = useState(false)
 
@@ -111,6 +129,8 @@ const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
           disableTypography
           onClick={() => {
             setSelectedTask(task)
+            setSelectedGroups(staticGroups)
+            setSelectedUsers(staticUsers)
             handleClickOpen('paper')
             setOpen(true)
           }}
@@ -128,7 +148,7 @@ const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        {/* <DialogTitle
+        <DialogTitle
           id="scroll-dialog-title"
           sx={{
             fontSize: { xs: 18, sm: 24, md: 26, lg: 28 },
@@ -137,7 +157,7 @@ const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
           }}
         >
           {selectedTask.title}
-        </DialogTitle> */}
+        </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid
             container
@@ -146,6 +166,7 @@ const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
             direction="column"
           >
             <TaskDetail />
+            <Group />
           </Grid>
         </DialogContent>
       </Dialog>
@@ -156,16 +177,6 @@ const MyTask: React.FC<Type> = ({ task, staticCategorys, taskMutate }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle
-          id="scroll-dialog-title"
-          sx={{
-            fontSize: { xs: 18, sm: 24, md: 26, lg: 28 },
-            padding: 2,
-            textAlign: 'center',
-          }}
-        >
-          {editTask.title}
-        </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid
             container

@@ -79,9 +79,25 @@ const TaskForm: React.FC<Type> = ({
     setInputText(e.target.value)
   }
 
+  const handleInputEstimateChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let value: string | number = e.target.value
+    const name = e.target.name
+    if (name === 'estimate') {
+      value = Number(value)
+    }
+    setEditTask({ ...editTask, [name]: value })
+  }
+
   const handleSelectStatusChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value as string
     setEditTask({ ...editTask, status: value })
+  }
+
+  const handleSelectAccessChange = (e: SelectChangeEvent<string>) => {
+    const value = e.target.value as string
+    setEditTask({ ...editTask, access: value })
   }
 
   const isCatDisabled = inputText.length === 0
@@ -161,6 +177,8 @@ const TaskForm: React.FC<Type> = ({
         title: editTask.title,
         description: editTask.description,
         status: editTask.status,
+        access: editTask.access,
+        estimate: editTask.estimate,
         category: editTask.category,
       }),
       headers: {
@@ -184,7 +202,7 @@ const TaskForm: React.FC<Type> = ({
       description: '',
       status: '',
       access: '',
-      estimate: 1,
+      estimate: 0,
       category: 1,
       category_item: '',
     })
@@ -201,6 +219,8 @@ const TaskForm: React.FC<Type> = ({
           title: editTask.title,
           description: editTask.description,
           status: editTask.status,
+          access: editTask.access,
+          estimate: editTask.estimate,
           category: editTask.category,
         }),
         headers: {
@@ -225,7 +245,7 @@ const TaskForm: React.FC<Type> = ({
       description: '',
       status: '',
       access: '',
-      estimate: 1,
+      estimate: 0,
       category: 1,
       category_item: '',
     })
@@ -253,6 +273,7 @@ const TaskForm: React.FC<Type> = ({
           id="standard-helperText"
           label="Description"
           fullWidth
+          multiline
           variant="standard"
           sx={{ fontSize: { xs: 16, sm: 16, md: 16, lg: 18 }, mt: 1 }}
           inputProps={{ style: { fontSize: 16 } }}
@@ -262,17 +283,17 @@ const TaskForm: React.FC<Type> = ({
           }
         />
         <Box>
-          <FormControl variant="standard" sx={{ mt: 1, minWidth: 90 }}>
+          <FormControl variant="standard" sx={{ mt: 1, minWidth: 85 }}>
             <InputLabel>Status</InputLabel>
             <Select
               name="status"
-              sx={{ fontSize: { xs: 14, sm: 16, md: 18, lg: 20 } }}
+              sx={{ fontSize: { xs: 12, sm: 16, md: 18, lg: 20 } }}
               value={editTask.status}
               onChange={handleSelectStatusChange}
             >
               <MenuItem
                 value={1}
-                sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 } }}
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
               >
                 <Badge variant="dot" color="error">
                   Not started
@@ -280,7 +301,7 @@ const TaskForm: React.FC<Type> = ({
               </MenuItem>
               <MenuItem
                 value={2}
-                sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 } }}
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
               >
                 <Badge variant="dot" color="primary">
                   On going
@@ -288,7 +309,7 @@ const TaskForm: React.FC<Type> = ({
               </MenuItem>
               <MenuItem
                 value={3}
-                sx={{ fontSize: { xs: 14, sm: 14, md: 16, lg: 18 } }}
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
               >
                 <Badge variant="dot" color="success">
                   Done
@@ -296,7 +317,49 @@ const TaskForm: React.FC<Type> = ({
               </MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 90 }}>
+          <FormControl variant="standard" sx={{ ml: 1, mt: 1, minWidth: 85 }}>
+            <InputLabel>Access</InputLabel>
+            <Select
+              name="access"
+              sx={{ fontSize: { xs: 12, sm: 16, md: 18, lg: 20 } }}
+              value={editTask.access}
+              onChange={handleSelectAccessChange}
+            >
+              <MenuItem
+                value={1}
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
+              >
+                <Badge variant="dot" color="warning">
+                  public
+                </Badge>
+              </MenuItem>
+              <MenuItem
+                value={2}
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 18 } }}
+              >
+                <Badge variant="dot" color="info">
+                  private
+                </Badge>
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            label="Estimate"
+            name="estimate"
+            type="number"
+            variant="standard"
+            fullWidth
+            InputProps={{
+              inputProps: { min: 0, max: 1000 },
+              inputMode: 'numeric',
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={editTask.estimate}
+            onChange={handleInputEstimateChange}
+          />
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
             <InputLabel>Category</InputLabel>
             <Select
               name="category"

@@ -59,6 +59,7 @@ const AccountForm: React.FC<Type> = ({ staticAccount, CloseAccountForm }) => {
           id="standard-helperText"
           label="Description"
           fullWidth
+          multiline
           variant="standard"
           sx={{ fontSize: { xs: 16, sm: 16, md: 16, lg: 18 }, mt: 1 }}
           inputProps={{ style: { fontSize: 16 } }}
