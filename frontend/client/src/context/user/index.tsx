@@ -1,12 +1,5 @@
-import axios from 'axios'
-import React, { createContext, useState, useEffect, Dispatch } from 'react'
-import { getProf } from '../../api/account'
-import { PROFILE, USER } from '../../types'
-import Cookie from 'universal-cookie'
-
-const cookie = new Cookie()
-
-// { id: 0, userProfile: "", name: "", statusMessage: "", description: "", img: "", }
+import React, { createContext, useState, Dispatch } from 'react'
+import { USER } from '../../types'
 
 type UserContextType = {
   selectedUser: USER

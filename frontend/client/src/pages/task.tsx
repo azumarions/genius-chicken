@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from 'next'
 import { getTasks } from '../api/task'
 import { GROUP, SORT_STATE, TASK, USER } from '../types'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Task from '@/components/Task'
 import {
   Box,
@@ -14,7 +14,6 @@ import {
 } from '@mui/material'
 import { getGroups } from '@/api/group'
 import { getUsers } from '@/api/users'
-import { ProfileContext } from '@/context/profile'
 
 interface STATICPROPS {
   staticTasks: any

@@ -1,14 +1,11 @@
-import Layout from '../components/Layout'
 import { getUsers } from '../api/users'
 import { GetStaticProps } from 'next'
-import { TASK, USER } from '../types'
+import { USER } from '../types'
 import React from 'react'
 import { Box } from '@mui/system'
 import { Grid } from '@mui/material'
 import User from '@/components/User'
-import { getTasks } from '@/api/task'
 import useSWR from 'swr'
-import Link from 'next/link'
 
 interface STATICPROPS {
   staticUsers: USER[]
@@ -18,11 +15,7 @@ const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/profile-list/`
 
 const UserPage: React.FC<STATICPROPS> = ({ staticUsers }) => {
-  const {
-    data: users,
-    error,
-    mutate,
-  } = useSWR(apiUrl, fetcher, {
+  const { data: users } = useSWR(apiUrl, fetcher, {
     fallbackData: staticUsers,
     revalidateOnMount: true,
   })

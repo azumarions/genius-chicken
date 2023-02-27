@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Cookie from 'universal-cookie'
-
 import { Box, Button, Container, TextField } from '@mui/material'
-import { CATEGORY, SnackbarMessage, USER } from '@/types'
+import { USER } from '@/types'
 import { ProfileContext } from '@/context/profile'
 
 const cookie = new Cookie()

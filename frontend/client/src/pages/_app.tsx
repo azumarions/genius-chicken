@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout'
 import AuthContextProvider from '@/context/auth'
 import CategoryContextProvider from '@/context/category'
-import ClusterContextProvider from '@/context/cluster'
 import GroupContextProvider from '@/context/group'
 import { ProfileContextProvider } from '@/context/profile'
 import TaskContextProvider from '@/context/task'

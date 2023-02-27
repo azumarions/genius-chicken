@@ -1,8 +1,7 @@
 import Cookie from 'universal-cookie'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TaskContext } from '../../context/task'
-import { CATEGORY, SnackbarMessage, TASK } from '@/types'
-import { KeyedMutator } from 'swr'
+import { TASK } from '@/types'
 import {
   Badge,
   ButtonGroup,
@@ -16,9 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import BlurOnIcon from '@mui/icons-material/BlurOn'
 import DeleteIcon from '@mui/icons-material/Delete'
-import TaskForm from '../TaskForm'
 import TaskDetail from '../TaskDetail'
 
 const cookie = new Cookie()

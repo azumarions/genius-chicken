@@ -1,7 +1,7 @@
 import Cookie from 'universal-cookie'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TaskContext } from '../../context/task'
-import { CATEGORY, GROUP, SnackbarMessage, TASK, USER } from '@/types'
+import { CATEGORY, GROUP, TASK, USER } from '@/types'
 import { KeyedMutator } from 'swr'
 import {
   Badge,
