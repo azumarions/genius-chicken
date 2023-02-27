@@ -23,7 +23,6 @@ const Auth = () => {
   const router = useRouter()
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { myProfile, setMyProfile } = useContext(ProfileContext)
   const { isAuth, setIsAuth } = useContext(AuthContext) //global stateにする
   const [open, setOpen] = React.useState(false)
   const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>(
@@ -170,8 +169,8 @@ const Auth = () => {
             ])
           }
         })
-        await createProf()
         await login(data)
+        await createProf()
       } catch (err) {
         // alert(err);
       }

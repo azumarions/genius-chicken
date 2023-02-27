@@ -36,13 +36,14 @@ const UserDetail: NextPage<STATICPROPS> = ({
   staticUsers,
 }) => {
   const router = useRouter()
-  const { data: user } = useSWR(
-    `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/profile-detail/${id}`,
+  const { data: user, mutate } = useSWR(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/profile-detail/${id}`,
     fetcher,
     {
       fallbackData: staticUser,
     }
   )
+
   const columns = staticTasks[0] && Object.keys(staticTasks[0])
 
   const [page, setPage] = useState<number>(1) //ページ番号
@@ -86,6 +87,7 @@ const UserDetail: NextPage<STATICPROPS> = ({
   useEffect(() => {
     setAllItems(state.rows)
     setPageCount(Math.ceil(state.rows.length / displayNum))
+    mutate()
   }, [])
 
   const handleChange = (event: React.ChangeEvent<unknown>, index: number) => {
@@ -99,6 +101,7 @@ const UserDetail: NextPage<STATICPROPS> = ({
   if (router.isFallback || !user) {
     return <div>Loading...</div>
   }
+
   return (
     <Grid container sx={{ pt: 8 }}>
       <Grid item xs={12} sm={12} md={2} lg={3}></Grid>
@@ -214,7 +217,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = await getUserId()
   return {
     paths,
-    fallback: true,
+    fallback: 'blocking',
   }
 }
 
