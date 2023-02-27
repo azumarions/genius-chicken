@@ -99,20 +99,3 @@ export interface GROUP {
   taskGroup: number
   created_at: string
 }
-
-export interface CLUSTER {
-  id: number
-  userCluster: number
-  taskCluster: number
-  task_title: string
-  task_description: string
-  task_status: string
-  task_access: string
-  task_category: number
-  task_estimate: number
-  task_created_at: string
-  task_updated_at: string
-  user_name: string
-  user_description: string
-  created_at: string
-}

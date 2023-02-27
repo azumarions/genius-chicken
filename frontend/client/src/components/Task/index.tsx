@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogProps,
-  DialogTitle,
   Grid,
   IconButton,
   ListItem,
@@ -18,14 +17,11 @@ import {
   ListItemText,
   Snackbar,
 } from '@mui/material'
-import BlurOnIcon from '@mui/icons-material/BlurOn'
-import WorkspacesIcon from '@mui/icons-material/Workspaces'
 import TaskDetail from '../TaskDetail'
 import useSWR from 'swr'
 import { GroupContext } from '@/context/group'
 import { UserContext } from '@/context/user'
 import Group from '../Group'
-import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove'
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined'
 

@@ -6,7 +6,6 @@ import { Box } from '@mui/system'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { GROUP, SORT_STATE, TASK, USER } from '@/types'
 import { getTasks } from '@/api/task'
-import UserTask from '@/components/UserTask'
 import UserProfile from '@/components/UserProfile'
 import {
   Divider,

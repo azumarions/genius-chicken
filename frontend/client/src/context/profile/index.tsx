@@ -1,6 +1,4 @@
-import axios from 'axios'
-import React, { createContext, useState, useEffect, Dispatch } from 'react'
-import { getMyProf } from '../../api/account'
+import React, { createContext, useState, Dispatch } from 'react'
 import { PROFILE } from '../../types'
 import Cookie from 'universal-cookie'
 

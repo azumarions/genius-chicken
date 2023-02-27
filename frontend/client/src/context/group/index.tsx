@@ -1,5 +1,5 @@
 import React, { createContext, Dispatch, useState } from 'react'
-import { CLUSTER, GROUP } from '../../types'
+import { GROUP } from '../../types'
 
 type GroupContextType = {
   selectedGroup: GROUP

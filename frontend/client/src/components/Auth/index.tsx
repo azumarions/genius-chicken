@@ -1,25 +1,20 @@
 import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
-import { createProf, getProf, getMyProf } from '../../api/account'
+import { createProf } from '../../api/account'
 import { AUTH, SnackbarMessage } from '@/types'
-import { SubmitHandler, useForm, useFormState } from 'react-hook-form'
-import CssBaseline from '@mui/material/CssBaseline'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import {
-  IconButton,
   Snackbar,
   Avatar,
   Button,
   TextField,
   Box,
-  Typography,
   CircularProgress,
 } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
-import CloseIcon from '@mui/icons-material/Close'
 import { AuthContext } from '@/context/auth'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
-import { Email } from '@mui/icons-material'
 import { ProfileContext } from '@/context/profile'
 
 const cookie = new Cookie()

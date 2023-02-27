@@ -44,42 +44,6 @@ export const getProf = async () => {
   }
 }
 
-// export const getMyProf = async () => {
-//   try {
-//     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/myprofile/`, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `JWT ${cookie.get('access_token')}`,
-//       },
-//     }).then((res) => {
-//       if (res.status == 401) {
-//         throw 'JWT Token not valid'
-//       } else if (res.ok) {
-//         return res.json()
-//       }
-//     })
-//   } catch (err) {
-//     alert(err)
-//   }
-// }
-
-// export const getMyProf = async () => {
-//   const res = await fetch(
-//     new URL(`${process.env.NEXT_PUBLIC_DOCKER_URL}/api/myprofile`),
-//     {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `JWT ${cookie.get('access_token')}`,
-//       },
-//     }
-//   )
-//   const account = await res.json()
-//   console.log(account)
-//   return account
-// }
-
 export const getMyProf = async () => {
   try {
     const res = await fetch(

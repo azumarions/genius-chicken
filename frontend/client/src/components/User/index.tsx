@@ -10,7 +10,6 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-import Image from 'next/image'
 
 type UserType = {
   user: USER

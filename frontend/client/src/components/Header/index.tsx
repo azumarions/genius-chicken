@@ -1,20 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
-import {
-  Drawer,
-  FormControlLabel,
-  IconButton,
-  Menu,
-  MenuItem,
-  Snackbar,
-  Stack,
-  styled,
-  Switch,
-} from '@mui/material'
+import { Drawer, Snackbar, Switch } from '@mui/material'
 import Button from '@mui/material/Button'
 import List from '@mui/material/List'
 import Divider from '@mui/material/Divider'
@@ -22,7 +11,6 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MenuIcon from '@mui/icons-material/Menu'
 import Cookie from 'universal-cookie'
 import router from 'next/router'
@@ -31,13 +19,9 @@ import { AuthContext } from '@/context/auth'
 import HomeIcon from '@mui/icons-material/Home'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import LogoutIcon from '@mui/icons-material/Logout'
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
-import SettingsIcon from '@mui/icons-material/Settings'
 import { SnackbarMessage } from '@/types'
 import DialpadIcon from '@mui/icons-material/Dialpad'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import PersonIcon from '@mui/icons-material/Person'
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import Groups3Icon from '@mui/icons-material/Groups3'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'

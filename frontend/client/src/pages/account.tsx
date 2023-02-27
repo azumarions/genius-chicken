@@ -4,7 +4,6 @@ import {
   CssBaseline,
   Dialog,
   DialogContent,
-  DialogTitle,
   Divider,
   Grid,
   List,
@@ -18,10 +17,9 @@ import { GetStaticProps, NextPage } from 'next'
 import { getTasks } from '@/api/task'
 import { getGroups } from '@/api/group'
 import { getMyProf } from '@/api/account'
-import { CATEGORY, GROUP, PROFILE, SORT_STATE, TASK, USER } from '@/types'
+import { CATEGORY, GROUP, SORT_STATE, TASK, USER } from '@/types'
 import { ProfileContext } from '@/context/profile'
 import UserProfile from '@/components/UserProfile'
-import UserTask from '@/components/MyTask'
 import TaskForm from '@/components/TaskForm'
 import { getCategorys } from '@/api/category'
 import { TaskContext } from '@/context/task'
