@@ -62,7 +62,7 @@ services:
     ports:
       - 3000:3000
     working_dir: /home/app/frontend
-    command: [bash, -c, npm upgrade && npm run dev]
+    command: [bash, -c, npm upgrade && npm run build && npm start]
     networks:
       - frontend_network
   frontend-server:
