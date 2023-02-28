@@ -14,27 +14,35 @@ import {
 } from '@mui/material'
 import { getGroups } from '@/api/group'
 import { getUsers } from '@/api/users'
+import useSWR from 'swr'
 
 interface STATICPROPS {
-  staticTasks: any
+  staticTasks: TASK[]
   staticGroups: GROUP[]
   staticUsers: USER[]
 }
+
+const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json())
+const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task-list/`
 
 const TaskPage: NextPage<STATICPROPS> = ({
   staticTasks,
   staticGroups,
   staticUsers,
 }) => {
-  const columns = staticTasks[0] && Object.keys(staticTasks[0])
+  const { data: tasks } = useSWR(apiUrl, fetcher, {
+    fallbackData: staticTasks,
+    revalidateOnMount: true,
+  })
 
+  const columns = tasks[0] && Object.keys(tasks[0])
   const [page, setPage] = useState<number>(1) //ページ番号
   const [pageCount, setPageCount] = useState<number>() //ページ数
   const [allItems, setAllItems] = useState<TASK[]>([]) //全データ
   const displayNum = 20 //1ページあたりの項目数
 
   const [state, setState] = useState<SORT_STATE>({
-    rows: staticTasks,
+    rows: tasks,
     order: 'desc',
     activeKey: '',
   })
@@ -62,9 +70,9 @@ const TaskPage: NextPage<STATICPROPS> = ({
   useEffect(() => {
     setState((state) => ({
       ...state,
-      rows: staticTasks.slice((page - 1) * displayNum, page * displayNum),
+      rows: tasks.slice((page - 1) * displayNum, page * displayNum),
     }))
-  }, [staticTasks])
+  }, [tasks])
 
   useEffect(() => {
     setAllItems(state.rows)

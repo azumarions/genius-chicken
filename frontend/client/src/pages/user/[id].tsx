@@ -21,7 +21,7 @@ import Task from '@/components/Task'
 interface STATICPROPS {
   id: number
   staticUser: USER
-  staticTasks: any
+  staticTasks: TASK[]
   staticGroups: GROUP[]
   staticUsers: USER[]
 }
@@ -44,7 +44,15 @@ const UserDetail: NextPage<STATICPROPS> = ({
     }
   )
 
-  const columns = staticTasks[0] && Object.keys(staticTasks[0])
+  const { data: tasks } = useSWR(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/api/task-list/`,
+    fetcher,
+    {
+      fallbackData: staticTasks,
+    }
+  )
+
+  const columns = tasks[0] && Object.keys(tasks[0])
 
   const [page, setPage] = useState<number>(1) //ページ番号
   const [pageCount, setPageCount] = useState<number>() //ページ数
@@ -52,7 +60,7 @@ const UserDetail: NextPage<STATICPROPS> = ({
   const displayNum = 20 //1ページあたりの項目数
 
   const [state, setState] = useState<SORT_STATE>({
-    rows: staticTasks,
+    rows: tasks,
     order: 'desc',
     activeKey: '',
   })
@@ -80,9 +88,9 @@ const UserDetail: NextPage<STATICPROPS> = ({
   useEffect(() => {
     setState((state) => ({
       ...state,
-      rows: staticTasks.slice((page - 1) * displayNum, page * displayNum),
+      rows: tasks.slice((page - 1) * displayNum, page * displayNum),
     }))
-  }, [staticTasks])
+  }, [tasks])
 
   useEffect(() => {
     setAllItems(state.rows)
@@ -174,8 +182,8 @@ const UserDetail: NextPage<STATICPROPS> = ({
                   )
               )}
             </ListSubheader>
-            {staticTasks &&
-              staticTasks
+            {tasks &&
+              tasks
                 .filter((task: TASK) => task.userTask === user.userProfile)
                 .map((task: TASK) => (
                   <Box key={task.id}>
@@ -193,14 +201,14 @@ const UserDetail: NextPage<STATICPROPS> = ({
               justifyContent="center"
               direction="column"
             >
-              <Pagination
+              {/* <Pagination
                 count={pageCount}
                 page={page}
                 variant="text"
                 color="secondary"
                 size="small"
                 onChange={handleChange}
-              />
+              /> */}
             </Grid>
           </List>
         ) : (

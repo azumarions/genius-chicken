@@ -28,7 +28,7 @@ import MyTask from '@/components/MyTask'
 import { getUsers } from '@/api/users'
 
 interface STATICPROPS {
-  staticTasks: any
+  staticTasks: TASK[]
   staticGroups: GROUP[]
   staticCategorys: CATEGORY[]
   staticUsers: USER[]
@@ -298,14 +298,14 @@ const AccountPage: NextPage<STATICPROPS> = ({
                 justifyContent="center"
                 direction="column"
               >
-                <Pagination
+                {/* <Pagination
                   count={pageCount}
                   page={page}
                   variant="text"
                   color="secondary"
                   size="small"
                   onChange={handleChange}
-                />
+                /> */}
               </Grid>
             </List>
           ) : (

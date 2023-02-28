@@ -67,8 +67,8 @@ const Auth = () => {
       await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/authen/jwt/create/`, {
         method: 'POST',
         body: JSON.stringify({
-          email: 'gestUser@gmail.com',
-          password: 'gestUserPassword',
+          email: process.env.NEXT_PUBLIC_GEST_EMAIL,
+          password: process.env.NEXT_PUBLIC_GEST_PASSWORD,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const Auth = () => {
           setIsLoading(false)
           // getProf();
         })
-      router.push('/task')
+      router.push('/account')
       setSnackPack((prev) => [
         ...prev,
         { message: 'ゲストログインしました！', key: new Date().getTime() },
