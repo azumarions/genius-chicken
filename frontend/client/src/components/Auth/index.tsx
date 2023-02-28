@@ -67,8 +67,8 @@ const Auth = () => {
       await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/authen/jwt/create/`, {
         method: 'POST',
         body: JSON.stringify({
-          email: process.env.NEXT_PUBLIC_GEST_EMAIL,
-          password: process.env.NEXT_PUBLIC_GEST_PASSWORD,
+          email: 'gestUser@gmail.com',
+          password: 'gestUserPassword',
         }),
         headers: {
           'Content-Type': 'application/json',
